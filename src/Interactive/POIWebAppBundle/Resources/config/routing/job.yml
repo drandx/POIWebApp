@@ -1,0 +1,30 @@
+poi_job:
+    pattern:  /
+    defaults: { _controller: "POIWebAppBundle:Job:index" }
+
+poi_job_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "POIWebAppBundle:Job:show" }
+
+poi_job_new:
+    pattern:  /new
+    defaults: { _controller: "POIWebAppBundle:Job:new" }
+
+poi_job_create:
+    pattern:  /create
+    defaults: { _controller: "POIWebAppBundle:Job:create" }
+    requirements: { _method: post }
+
+poi_job_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "POIWebAppBundle:Job:edit" }
+
+poi_job_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "POIWebAppBundle:Job:update" }
+    requirements: { _method: post|put }
+
+poi_job_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "POIWebAppBundle:Job:delete" }
+    requirements: { _method: post|delete }
