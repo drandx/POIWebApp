@@ -1,0 +1,6 @@
+poi_web_app:
+    resource: "@POIWebAppBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+

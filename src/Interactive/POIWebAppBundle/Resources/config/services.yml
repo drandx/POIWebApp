@@ -1,0 +1,7 @@
+parameters:
+#    poi_web_app.example.class: Interactive\POIWebAppBundle\Example
+
+services:
+#    poi_web_app.example:
+#        class: %poi_web_app.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
