@@ -3,6 +3,7 @@
 namespace Interactive\POIWebAppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Interactive\POIWebAppBundle\Utils\POIWebApp;
 
 /**
  * Category
@@ -141,4 +142,11 @@ class Category
     {
         return $this->getName() ? $this->getName() : "";
     }
+    
+    
+    public function getSlug()
+    {
+        return POIWebApp::slugify($this->getName());
+    }
+    
 }
