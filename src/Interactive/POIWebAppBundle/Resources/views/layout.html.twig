@@ -3,30 +3,51 @@
     <head>
         <title>
             {% block title %}
+<<<<<<< HEAD
                 Interactive Project - Your best job board
+=======
+                Jobeet - Your best job board
+>>>>>>> origin/master
             {% endblock %}
         </title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         {% block stylesheets %}
+<<<<<<< HEAD
             <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/main.css') }}" type="text/css" media="all" />
         {% endblock %}
         {% block javascripts %}
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('bundles/poiwebapp/images/favicon.ico') }}" />
+=======
+            <link rel="stylesheet" href="{{ asset('bundles/ibwjobeet/css/main.css') }}" type="text/css" media="all" />
+        {% endblock %}
+        {% block javascripts %}
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('bundles/ibwjobeet/images/favicon.ico') }}" />
+>>>>>>> origin/master
     </head>
     <body>
         <div id="container">
             <div id="header">
                 <div class="content">
+<<<<<<< HEAD
                     <h1><a href="{{ path('poi_job') }}">
                         <img src="{{ asset('bundles/poiwebapp/images/logo.jpg') }}" alt="Interactive Job Board" />
+=======
+                    <h1><a href="{{ path('ibw_job') }}">
+                        <img src="{{ asset('bundles/ibwjobeet/images/logo.jpg') }}" alt="Jobeet Job Board" />
+>>>>>>> origin/master
                     </a></h1>
  
                     <div id="sub_header">
                         <div class="post">
                             <h2>Ask for people</h2>
                             <div>
+<<<<<<< HEAD
                                 <a href="{{ path('poi_job') }}">Post a Job</a>
+=======
+                                <a href="{{ path('ibw_job') }}">Post a Job</a>
+>>>>>>> origin/master
                             </div>
                         </div>
  
@@ -66,6 +87,7 @@
            <div id="footer">
                <div class="content">
                    <span class="symfony">
+<<<<<<< HEAD
                        <img src="{{ asset('bundles/poiwebapp/images/jobeet-mini.png') }}" />
                            powered by <a href="http://www.symfony.com/">
                            <img src="{{ asset('bundles/poiwebapp/images/symfony.gif') }}" alt="symfony framework" />
@@ -75,6 +97,17 @@
                        <li><a href="">About Interactive</a></li>
                        <li class="feed"><a href="">Full feed</a></li>
                        <li><a href="">Interactive API</a></li>
+=======
+                       <img src="{{ asset('bundles/ibwjobeet/images/jobeet-mini.png') }}" />
+                           powered by <a href="http://www.symfony.com/">
+                           <img src="{{ asset('bundles/ibwjobeet/images/symfony.gif') }}" alt="symfony framework" />
+                       </a>
+                   </span>
+                   <ul>
+                       <li><a href="">About Jobeet</a></li>
+                       <li class="feed"><a href="">Full feed</a></li>
+                       <li><a href="">Jobeet API</a></li>
+>>>>>>> origin/master
                        <li class="last"><a href="">Affiliates</a></li>
                    </ul>
                </div>
