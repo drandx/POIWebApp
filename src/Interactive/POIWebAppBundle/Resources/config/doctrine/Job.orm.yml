@@ -1,5 +1,6 @@
 Interactive\POIWebAppBundle\Entity\Job:
     type: entity
+    repositoryClass: Interactive\POIWebAppBundle\Repository\JobRepository
     table: job
     id:
         id:
@@ -59,5 +60,5 @@ Interactive\POIWebAppBundle\Entity\Job:
                 name: category_id
                 referencedColumnName: id
     lifecycleCallbacks:
-        prePersist: [ setCreatedAtValue ]
-        preUpdate: [ setUpdatedAtValue ]
+    prePersist: [ setCreatedAtValue, setExpiresAtValue ]
+    preUpdate: [ setUpdatedAtValue ]

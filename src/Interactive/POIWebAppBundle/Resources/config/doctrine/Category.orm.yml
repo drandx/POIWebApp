@@ -1,6 +1,7 @@
 Interactive\POIWebAppBundle\Entity\Category:
     type: entity
     table: category
+    repositoryClass: Interactive\POIWebAppBundle\Repository\CategoryRepository
     id:
         id:
             type: integer

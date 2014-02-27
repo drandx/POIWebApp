@@ -22,12 +22,20 @@ class JobController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('POIWebAppBundle:Job')->findAll();
-
+        //$entities = $em->getRepository('POIWebAppBundle:Job')->findAll();
+        /*$entities = $em->getRepository('POIWebAppBundle:Job')->getActiveJobs();
         return $this->render('POIWebAppBundle:Job:index.html.twig', array(
             'entities' => $entities,
+        ));*/
+        $categories = $em->getRepository('POIWebAppBundle:Category')->getWithJobs();
+        foreach($categories as $category)
+        {
+          $category->setActiveJobs($em->getRepository('POIWebAppBundle:Job')->getActiveJobs($category->getId(),$this->container->getParameter('max_jobs_on_homepage')));
+        }
+        return $this->render('POIWebAppBundle:Job:index.html.twig', array(
+          'categories' => $categories
         ));
+        
     }
     /**
      * Creates a new Job entity.
@@ -95,7 +103,8 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('POIWebAppBundle:Job')->find($id);
+        //$entity = $em->getRepository('POIWebAppBundle:Job')->find($id);
+        $entity = $em->getRepository('POIWebAppBundle:Job')->getActiveJob($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
