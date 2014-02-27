@@ -1,6 +1,9 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
+{% extends 'POIWebAppBundle::layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/job.css') }}" type="text/css" media="all" />
+{% endblock %}
+{% block content %}
     <h1>Job</h1>
 
     <table class="record_properties">
