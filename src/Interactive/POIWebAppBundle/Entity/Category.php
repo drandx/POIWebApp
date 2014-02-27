@@ -143,13 +143,6 @@ class Category
         return $this->getName() ? $this->getName() : "";
     }
     
-    
-    public function getSlug()
-    {
-        return POIWebApp::slugify($this->getName());
-    }
-    
-    
     private $active_jobs;
  
     // ...
@@ -164,4 +157,53 @@ class Category
       return $this->active_jobs;
     }
     
+    private $more_jobs;
+ 
+    // ...
+ 
+    public function setMoreJobs($jobs)
+    {
+        $this->more_jobs = $jobs >=  0 ? $jobs : 0;
+    }
+ 
+    public function getMoreJobs()
+    {
+        return $this->more_jobs;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function setSlugValue()
+    {
+        $this->slug = POIWebApp::slugify($this->getName());
+    }
+    /**
+     * @var string
+     */
+    private $slug;
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }

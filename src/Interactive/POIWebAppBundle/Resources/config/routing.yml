@@ -1,3 +1,7 @@
+POIWebAppBundle_category:
+    pattern: /category/{slug}/{page}
+    defaults: { _controller: POIWebAppBundle:Category:show, page: 1 }
+
 POIWebAppBundle_homepage:
     pattern:  /
     defaults: { _controller: POIWebAppBundle:Job:index }

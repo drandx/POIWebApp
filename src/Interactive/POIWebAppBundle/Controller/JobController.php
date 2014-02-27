@@ -31,6 +31,8 @@ class JobController extends Controller
         foreach($categories as $category)
         {
           $category->setActiveJobs($em->getRepository('POIWebAppBundle:Job')->getActiveJobs($category->getId(),$this->container->getParameter('max_jobs_on_homepage')));
+          $category->setMoreJobs($em->getRepository('POIWebAppBundle:Job')->countActiveJobs($category->getId()) - $this->container->getParameter('max_jobs_on_homepage'));
+          
         }
         return $this->render('POIWebAppBundle:Job:index.html.twig', array(
           'categories' => $categories
