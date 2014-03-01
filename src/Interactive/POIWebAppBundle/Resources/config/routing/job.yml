@@ -2,11 +2,6 @@ poi_job:
     pattern:  /
     defaults: { _controller: "POIWebAppBundle:Job:index" }
 
-poi_job_publish:
-    pattern:  /{token}/publish
-    defaults: { _controller: "POIWebAppBundle:Job:publish" }
-    requirements: { _method: post }
-
 poi_job_show:
     pattern:  /{company}/{location}/{id}/{position}
     defaults: { _controller: "POIWebAppBundle:Job:show" }
@@ -41,3 +36,8 @@ poi_job_delete:
     pattern:  /{token}/delete
     defaults: { _controller: "POIWebAppBundle:Job:delete" }
     requirements: { _method: post|delete }
+    
+poi_job_publish:
+    pattern:  /{token}/publish
+    defaults: { _controller: "POIWebAppBundle:Job:publish" }
+    requirements: { _method: post|update }

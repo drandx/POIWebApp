@@ -297,7 +297,7 @@ class JobController extends Controller
             $this->get('session')->getFlashBag()->add('notice', 'Your job is now online for 30 days.');
         }
 
-        return $this->redirect($this->generateUrl('ibw_job_preview', array(
+        return $this->redirect($this->generateUrl('poi_job_preview', array(
             'company' => $entity->getCompanySlug(),
             'location' => $entity->getLocationSlug(),
             'token' => $entity->getToken(),
