@@ -54,10 +54,16 @@ class JobController extends Controller
             $em->persist($entity);
             $em->flush();
 
-           return $this->redirect($this->generateUrl('poi_job_show', array(
+           /*return $this->redirect($this->generateUrl('poi_job_show', array(
             'company' => $entity->getCompanySlug(),
             'location' => $entity->getLocationSlug(),
             'id' => $entity->getId(),
+            'position' => $entity->getPositionSlug()
+        )));*/
+            return $this->redirect($this->generateUrl('poi_job_preview', array(
+            'company' => $entity->getCompanySlug(),
+            'location' => $entity->getLocationSlug(),
+            'token' => $entity->getToken(),
             'position' => $entity->getPositionSlug()
         )));
            
@@ -194,11 +200,18 @@ class JobController extends Controller
             return $this->redirect($this->generateUrl('poi_job_edit', array('token' => $token)));
         }
 
-        return $this->render('POIWebAppBundle:Job:edit.html.twig', array(
+        /*return $this->render('POIWebAppBundle:Job:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        ));*/
+        
+        return $this->redirect($this->generateUrl('poi_job_preview', array(
+            'company' => $entity->getCompanySlug(),
+            'location' => $entity->getLocationSlug(),
+            'token' => $entity->getToken(), 
+            'position' => $entity->getPositionSlug()
+        )));
     }
     /**
      * Deletes a Job entity.
@@ -244,4 +257,60 @@ class JobController extends Controller
             ->getForm()
         ;
     }
+    
+    public function previewAction($token)
+    {
+        $em = $this->getDoctrine()->getManager();
+ 
+        $entity = $em->getRepository('POIWebAppBundle:Job')->findOneByToken($token);
+ 
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+ 
+        $deleteForm = $this->createDeleteForm($entity->getId());
+        $publishForm = $this->createPublishForm($entity->getToken());
+ 
+        return $this->render('POIWebAppBundle:Job:show.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+            'publish_form' => $publishForm->createView(),
+        ));
+    }
+    public function publishAction(Request $request, $token)
+    {
+        $form = $this->createPublishForm($token);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('POIWebAppBundle:Job')->findOneByToken($token);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Job entity.');
+            }
+
+            $entity->publish();
+            $em->persist($entity);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('notice', 'Your job is now online for 30 days.');
+        }
+
+        return $this->redirect($this->generateUrl('ibw_job_preview', array(
+            'company' => $entity->getCompanySlug(),
+            'location' => $entity->getLocationSlug(),
+            'token' => $entity->getToken(),
+            'position' => $entity->getPositionSlug()
+        )));
+    }
+    
+    private function createPublishForm($token)
+{
+    return $this->createFormBuilder(array('token' => $token))
+        ->add('token', 'hidden')
+        ->getForm()
+    ;
+}
+    
 }
