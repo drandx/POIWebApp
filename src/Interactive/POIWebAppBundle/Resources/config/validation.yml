@@ -1,0 +1,25 @@
+Interactive\POIWebAppBundle\Entity\Job:
+    properties:
+        file:
+            - Image: ~
+        category:
+            - NotBlank: ~
+        type:
+            - NotBlank: ~
+            - Choice: {callback: getTypeValues}
+        company:
+            - NotBlank: ~
+        position:
+            - NotBlank: ~
+        location:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+        how_to_apply:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+        url:
+            - Url: ~
+            

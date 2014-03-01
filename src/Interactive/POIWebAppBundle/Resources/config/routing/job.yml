@@ -18,15 +18,15 @@ poi_job_create:
     requirements: { _method: post }
 
 poi_job_edit:
-    pattern:  /{id}/edit
+    pattern:  /{token}/edit
     defaults: { _controller: "POIWebAppBundle:Job:edit" }
 
 poi_job_update:
-    pattern:  /{id}/update
+    pattern:  /{token}/update
     defaults: { _controller: "POIWebAppBundle:Job:update" }
     requirements: { _method: post|put }
 
 poi_job_delete:
-    pattern:  /{id}/delete
+    pattern:  /{token}/delete
     defaults: { _controller: "POIWebAppBundle:Job:delete" }
     requirements: { _method: post|delete }

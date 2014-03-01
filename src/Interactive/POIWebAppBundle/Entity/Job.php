@@ -94,6 +94,33 @@ class Job
      * @var \Interactive\POIWebAppBundle\Entity\Category
      */
     private $category;
+    
+    /**
+     * @var \Interactive\POIWebAppBundle\Entity\File
+     */
+    public $file;
+    
+    
+    // ... 
+    protected function getUploadDir()
+    {
+        return 'uploads/jobs';
+    }
+ 
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+ 
+    public function getWebPath()
+    {
+        return null === $this->logo ? null : $this->getUploadDir().'/'.$this->logo;
+    }
+ 
+    public function getAbsolutePath()
+    {
+        return null === $this->logo ? null : $this->getUploadRootDir().'/'.$this->logo;
+    }
 
 
     /**
@@ -118,6 +145,31 @@ class Job
 
         return $this;
     }
+    
+    /**
+     * Get file
+     *
+     * @return file 
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Set type
+     *
+     * @param file $type
+     * @return Job
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+    
+    
 
     /**
      * Get type
@@ -510,5 +562,66 @@ class Job
     public function getLocationSlug()
     {
         return POIWebApp::slugify($this->getLocation());
+    }
+    
+    
+    public static function getTypes()
+    {
+        return array('full-time' => 'Full time', 'part-time' => 'Part time', 'freelance' => 'Freelance');
+    }
+    
+    public static function getTypeValues()
+    {
+        return array_keys(self::getTypes());
+    }
+    
+
+     /**
+     * @ORM\PrePersist
+     */
+    public function preUpload()
+    {
+         if (null !== $this->file) {
+             $this->logo = uniqid().'.'.$this->file->guessExtension();
+         }
+    }
+ 
+    /**
+     * @ORM\PostPersist
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+ 
+        // If there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->file->move($this->getUploadRootDir(), $this->logo);
+ 
+        unset($this->file);
+    }
+ 
+    /**
+     * @ORM\PostRemove
+     */
+    public function removeUpload()
+    {
+        if(file_exists($file)) {
+            if ($file = $this->getAbsolutePath()) {
+                unlink($file);
+            }
+        }    
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setTokenValue()
+    {
+        if(!$this->getToken()) {
+            $this->token = sha1($this->getEmail().rand(11111, 99999));
+        }
     }
 }
