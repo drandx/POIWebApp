@@ -11,6 +11,9 @@ Interactive\POIWebAppBundle\Entity\Category:
             type: string
             length: 255
             unique: true
+        description:
+            type: text
+            nullable: true
         slug:
             type: string
             length: 255
@@ -18,6 +21,9 @@ Interactive\POIWebAppBundle\Entity\Category:
     oneToMany:
         jobs:
             targetEntity: Job
+            mappedBy: category
+        points_of_interest:
+            targetEntity: PointOfInterest
             mappedBy: category
     manyToMany:
         affiliates:

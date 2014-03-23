@@ -3,18 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Repository/JobRepository.php</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/config/routing/job.yml</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/Job/edit.html.twig</file>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/config/routing.yml</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/DataFixtures/ORM/LoadJobData.php</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/Category/show.html.twig</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/app/config/parameters.yml</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/Job/list.html.twig</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Entity/Category.php</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/layout.html.twig</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/JobAdmin.twig</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/config/validation.yml</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/config/services.yml</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/Job/admin.html.twig</file>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/Job/index.html.twig</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Controller/CategoryController.php</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/config/doctrine/Job.orm.yml</file>
-            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/config/doctrine/Category.orm.yml</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/app/config/security.yml</file>
         </group>
     </open-files>
 </project-private>

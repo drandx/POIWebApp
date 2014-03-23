@@ -206,4 +206,70 @@ class Category
     {
         return $this->slug;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $points_of_interest;
+
+
+    /**
+     * Add points_of_interest
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\PointOfInterest $pointsOfInterest
+     * @return Category
+     */
+    public function addPointsOfInterest(\Interactive\POIWebAppBundle\Entity\PointOfInterest $pointsOfInterest)
+    {
+        $this->points_of_interest[] = $pointsOfInterest;
+
+        return $this;
+    }
+
+    /**
+     * Remove points_of_interest
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\PointOfInterest $pointsOfInterest
+     */
+    public function removePointsOfInterest(\Interactive\POIWebAppBundle\Entity\PointOfInterest $pointsOfInterest)
+    {
+        $this->points_of_interest->removeElement($pointsOfInterest);
+    }
+
+    /**
+     * Get points_of_interest
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPointsOfInterest()
+    {
+        return $this->points_of_interest;
+    }
+    /**
+     * @var string
+     */
+    private $description;
+
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Category
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
