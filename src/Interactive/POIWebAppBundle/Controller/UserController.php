@@ -19,6 +19,15 @@ class UserController extends Controller
      * Lists all User entities.
      *
      */
+    public function dashboardAction()
+    {
+        return $this->render('POIWebAppBundle:Administrator:dashboard.html.twig', array());
+    }
+    
+    /**
+     * Lists all User entities.
+     *
+     */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
