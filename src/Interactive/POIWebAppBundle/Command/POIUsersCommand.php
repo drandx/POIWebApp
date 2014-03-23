@@ -18,6 +18,9 @@ class POIUsersCommand extends ContainerAwareCommand{
             ->setDescription('Add Jobeet users')
             ->addArgument('username', InputArgument::REQUIRED, 'The username')
             ->addArgument('password', InputArgument::REQUIRED, 'The password')
+            ->addArgument('email', InputArgument::REQUIRED, 'The email') 
+            ->addArgument('firstName', InputArgument::REQUIRED, 'The firstName')
+            ->addArgument('lastName', InputArgument::REQUIRED, 'The lastName')
         ;
     }
 
@@ -25,11 +28,17 @@ class POIUsersCommand extends ContainerAwareCommand{
     {
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
+        $email = $input->getArgument('email');
+        $firstName = $input->getArgument('firstName');
+        $lastName = $input->getArgument('lastName');
 
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $user = new User();
         $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setLastName($lastName);
+        $user->setFirstName($firstName);
         // encode the password
         $factory = $this->getContainer()->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);

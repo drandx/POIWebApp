@@ -1,0 +1,30 @@
+poi_user:
+    pattern:  /userslist
+    defaults: { _controller: "POIWebAppBundle:User:index" }
+
+poi_user_show:
+    pattern:  /user/{id}/show
+    defaults: { _controller: "POIWebAppBundle:User:show" }
+
+poi_user_new:
+    pattern:  /user/new
+    defaults: { _controller: "POIWebAppBundle:User:new" }
+
+poi_user_create:
+    pattern:  /user/create
+    defaults: { _controller: "POIWebAppBundle:User:create" }
+    requirements: { _method: post }
+
+poi_user_edit:
+    pattern:  /user/{id}/edit
+    defaults: { _controller: "POIWebAppBundle:User:edit" }
+
+poi_user_update:
+    pattern:  /user/{id}/update
+    defaults: { _controller: "POIWebAppBundle:User:update" }
+    requirements: { _method: post|put }
+
+poi_user_delete:
+    pattern:  /user/{id}/delete
+    defaults: { _controller: "POIWebAppBundle:User:delete" }
+    requirements: { _method: post|delete }

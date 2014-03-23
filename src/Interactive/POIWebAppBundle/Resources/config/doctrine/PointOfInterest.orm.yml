@@ -1,6 +1,6 @@
 Interactive\POIWebAppBundle\Entity\PointOfInterest:
     type: entity
-    table: points_of_interest
+    table: point_of_interest
     id:
         id:
             type: integer
@@ -31,7 +31,7 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
     manyToOne:
         category:
             targetEntity: Category
-            inversedBy: points_of_interest
+            inversedBy: point_of_interest
             joinColumn:
                 name: category_id
                 referencedColumnName: id

@@ -12,3 +12,13 @@ Interactive\POIWebAppBundle\Entity\User:
         password:
             type: string
             length: 255
+        firstName:
+            type: string
+            length: 255
+        lastName:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+            

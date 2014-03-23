@@ -1,30 +1,30 @@
 poi_point:
-    pattern:  /
+    pattern:  /pointslist/
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:index" }
 
 poi_point_show:
-    pattern:  /{id}/show
+    pattern:  /point/{id}/show
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:show" }
 
 poi_point_new:
-    pattern:  /new
+    pattern:  /point/new
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:new" }
 
 poi_point_create:
-    pattern:  /create
+    pattern:  /point/create
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:create" }
     requirements: { _method: post }
 
 poi_point_edit:
-    pattern:  /{id}/edit
+    pattern:  /point/{id}/edit
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:edit" }
 
 poi_point_update:
-    pattern:  /{id}/update
+    pattern:  /point/{id}/update
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:update" }
     requirements: { _method: post|put }
 
 poi_point_delete:
-    pattern:  /{id}/delete
+    pattern:  /point/{id}/delete
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:delete" }
     requirements: { _method: post|delete }

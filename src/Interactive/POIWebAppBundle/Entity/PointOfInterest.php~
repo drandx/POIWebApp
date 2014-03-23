@@ -265,4 +265,12 @@ class PointOfInterest
     {
         return $this->address;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setExpiresAtValue()
+    {
+        // Add your code here
+    }
 }
