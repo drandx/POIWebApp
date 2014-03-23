@@ -32,7 +32,7 @@ security:
             form_login:
                 login_path:  /login
                 check_path:  /login_check
-                default_target_path: interactive_poiwebapp_homepage
+                default_target_path: POIWebAppBundle_homepage
             logout:
                 path:   /logout
                 target: /
