@@ -1,6 +1,6 @@
 POIWebAppBundle_category:
     pattern: /category/{slug}/{page}
-    defaults: { _controller: POIWebAppBundle:Category:show, page: 1 }
+    defaults: { _controller: POIWebAppBundle:Category:showJobs, page: 1 }
 
 POIWebAppBundle_homepage:
     pattern:  /
@@ -20,7 +20,11 @@ POIWebAppBundle_poi_point:
         
 POIWebAppBundle_poi_user:
         resource: "@POIWebAppBundle/Resources/config/routing/user.yml"
-        prefix:   /admin   
+        prefix:   /admin
+
+POIWebAppBundle_poi_category:
+        resource: "@POIWebAppBundle/Resources/config/routing/category.yml"
+        prefix:   /admin 
        
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

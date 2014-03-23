@@ -1,0 +1,30 @@
+poi_categroy:
+    pattern:  /categorieslist
+    defaults: { _controller: "POIWebAppBundle:Category:index" }
+
+poi_categroy_show:
+    pattern:  /category/{id}/show
+    defaults: { _controller: "POIWebAppBundle:Category:show" }
+
+poi_categroy_new:
+    pattern:  /category/new
+    defaults: { _controller: "POIWebAppBundle:Category:new" }
+
+poi_categroy_create:
+    pattern:  /category/create
+    defaults: { _controller: "POIWebAppBundle:Category:create" }
+    requirements: { _method: post }
+
+poi_categroy_edit:
+    pattern:  /category/{id}/edit
+    defaults: { _controller: "POIWebAppBundle:Category:edit" }
+
+poi_categroy_update:
+    pattern:  /category/{id}/update
+    defaults: { _controller: "POIWebAppBundle:Category:update" }
+    requirements: { _method: post|put }
+
+poi_categroy_delete:
+    pattern:  /category/{id}/delete
+    defaults: { _controller: "POIWebAppBundle:Category:delete" }
+    requirements: { _method: post|delete }
