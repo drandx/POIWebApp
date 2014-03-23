@@ -13,7 +13,11 @@ poi_web_app_homepage:
 POIWebAppBundle_poi_job:
         resource: "@POIWebAppBundle/Resources/config/routing/job.yml"
         prefix:   /poi_job
-
+        
+POIWebAppBundle_poi_point:
+        resource: "@POIWebAppBundle/Resources/config/routing/pointofinterest.yml"
+        prefix:   /poi_point        
+        
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
