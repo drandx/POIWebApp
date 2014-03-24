@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'three' %}
+{% block content %}
     <h1>User</h1>
 
     <table class="record_properties">
@@ -10,19 +10,11 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Username</th>
-                <td>{{ entity.username }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ entity.password }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
+                <th>Nombre</th>
                 <td>{{ entity.firstName }}</td>
             </tr>
             <tr>
-                <th>Lastname</th>
+                <th>Apellido</th>
                 <td>{{ entity.lastName }}</td>
             </tr>
             <tr>
@@ -35,12 +27,12 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('poi_user') }}">
-            Back to the list
+            Home
         </a>
     </li>
     <li>
         <a href="{{ path('poi_user_edit', { 'id': entity.id }) }}">
-            Edit
+            Editar
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

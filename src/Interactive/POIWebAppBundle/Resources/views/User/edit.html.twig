@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'three' %}
+{% block content %}
     <h1>User edit</h1>
 
     {{ form(edit_form) }}
@@ -8,7 +8,7 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('poi_user') }}">
-            Back to the list
+            Home
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

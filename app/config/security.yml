@@ -50,7 +50,7 @@ security:
          #       users:
          #           admin: { password: adminpass, roles: 'ROLE_ADMIN' }
          main:
-            entity: { class: Interactive\POIWebAppBundle\Entity\User, property: username }
+            entity: { class: Interactive\POIWebAppBundle\Entity\User, property: email }
     encoders:
         # Symfony\Component\Security\Core\User\User: plaintext
         Interactive\POIWebAppBundle\Entity\User: sha512

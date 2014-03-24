@@ -50,6 +50,9 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $this->get('interactive.poiwebapp.admin.user_manager')->setUserEncodedPassword($entity);
+            
             $em->persist($entity);
             $em->flush();
 

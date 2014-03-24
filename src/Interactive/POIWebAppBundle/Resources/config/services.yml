@@ -16,3 +16,8 @@ services:
             - ~
             - Interactive\POIWebAppBundle\Entity\Job
             - 'POIWebAppBundle:JobAdmin'
+            
+    interactive.poiwebapp.admin.user_manager:
+        class: Interactive\POIWebAppBundle\DependencyInjection\UserManager
+        arguments:
+            - @security.encoder_factory

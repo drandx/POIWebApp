@@ -1,14 +1,14 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>User creation</h1>
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'three' %}
+{% block content %}
+    <h1>Crear Usuario</h1>
 
     {{ form(form) }}
 
         <ul class="record_actions">
     <li>
         <a href="{{ path('poi_user') }}">
-            Back to the list
+            Home
         </a>
     </li>
 </ul>
