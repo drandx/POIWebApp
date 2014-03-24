@@ -32,10 +32,10 @@ security:
             form_login:
                 login_path:  /login
                 check_path:  /login_check
-                default_target_path: poi_user_dashboard
+                default_target_path: poi_point
             logout:
                 path:   /logout
-                target: /
+                target: /admin
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"

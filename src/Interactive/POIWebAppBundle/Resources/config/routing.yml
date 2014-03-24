@@ -44,3 +44,4 @@ login_check:
     
 logout:
     pattern:   /logout
+    defaults: { _controller: "POIWebAppBundle:User:dashboard" }

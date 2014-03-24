@@ -1,8 +1,8 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Category list</h1>
-
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'two' %}
+{% block content %}
+    <h1>Categorías</h1>
+    
     <table class="records_list">
         <thead>
             <tr>

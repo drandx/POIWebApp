@@ -1,5 +1,5 @@
 poi_point:
-    pattern:  /pointslist/
+    pattern:  /
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:index" }
 
 poi_point_show:

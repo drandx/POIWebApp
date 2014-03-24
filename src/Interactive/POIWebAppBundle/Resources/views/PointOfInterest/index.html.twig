@@ -1,7 +1,7 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>PointOfInterest list</h1>
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'one' %}
+{% block content %}
+    <h1>Puntos de interés</h1>
 
     <table class="records_list">
         <thead>
@@ -46,7 +46,7 @@
         <ul>
         <li>
             <a href="{{ path('poi_point_new') }}">
-                Create a new entry
+                Crear nuevo punto
             </a>
         </li>
     </ul>
