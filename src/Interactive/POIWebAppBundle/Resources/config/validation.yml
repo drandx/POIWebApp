@@ -22,4 +22,13 @@ Interactive\POIWebAppBundle\Entity\Job:
             - Email: ~
         url:
             - Url: ~
-            
+
+Interactive\POIWebAppBundle\Entity\User:
+properties:
+        email:
+            - NotBlank: ~
+            - Email: ~
+        password:
+            - NotBlank: ~ 
+        firstname:
+            - NotBlank: ~

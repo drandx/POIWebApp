@@ -169,9 +169,12 @@ class UserController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $entity = new User();
         $entity = $em->getRepository('POIWebAppBundle:User')->find($id);
-
+        
+        //TODO - Store the old password locally
+        $oldpassword = $entity->getPassword();
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
@@ -179,7 +182,11 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        
+        //If passwords are dfferent means that a new data was entered in the password field
+        if($oldpassword != $entity->getPassword())
+            $this->get('interactive.poiwebapp.admin.user_manager')->setUserEncodedPassword($entity);
+        
         if ($editForm->isValid()) {
             $em->flush();
 
