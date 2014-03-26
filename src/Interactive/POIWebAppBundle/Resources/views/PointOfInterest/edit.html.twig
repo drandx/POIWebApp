@@ -1,8 +1,8 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>PointOfInterest edit</h1>
-
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'one' %}
+{% block content %}
+    <h2 class="sub-header">Editar Punto de Interés</h2>
+{% form_theme edit_form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
     {{ form(edit_form) }}
 
         <ul class="record_actions">

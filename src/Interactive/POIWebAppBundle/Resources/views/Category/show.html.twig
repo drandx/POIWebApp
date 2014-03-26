@@ -1,38 +1,26 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Category</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ entity.slug }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'one' %}
+{% block content %}
+<h2 class="sub-header">Categoría</h2>
+<dl>
+    <dt>Id</dt>
+    <dd>{{ entity.id }}</dd>
+    <dt>Name</dt>
+    <dd>{{ entity.name }}</dd>
+    <dt>Descripción</dt>
+    <dd>{{ entity.description }}</dd>
+    <dt>Slug</dt>
+    <dd>{{ entity.slug }}</dd>
+</dl>
+<ul class="record_actions">
     <li>
         <a href="{{ path('poi_categroy') }}">
-            Back to the list
+            Volver a la lista
         </a>
     </li>
     <li>
         <a href="{{ path('poi_categroy_edit', { 'id': entity.id }) }}">
-            Edit
+            Editar
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

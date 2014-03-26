@@ -20,8 +20,6 @@ class PointOfInterestType extends AbstractType
             ->add('description')
             ->add('address')
             ->add('is_activated')
-            ->add('created_at')
-            ->add('updated_at')
             ->add('category')
         ;
     }

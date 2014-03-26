@@ -1,16 +1,17 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'two' %}
 {% block content %}
-    <h1>Categorías</h1>
-    
-    <table class="records_list">
+<h2 class="sub-header">Categorías</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
                 <th>Slug</th>
-                <th>Actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -21,25 +22,26 @@
                 <td>{{ entity.description }}</td>
                 <td>{{ entity.slug }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('poi_categroy_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('poi_categroy_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <a href="{{ path('poi_categroy_show', { 'id': entity.id }) }}">mostrar</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('poi_categroy_edit', { 'id': entity.id }) }}">editar</a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+</div>
 
-        <ul>
-        <li>
-            <a href="{{ path('poi_categroy_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+<ul>
+    <li>
+        <a href="{{ path('poi_categroy_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
     {% endblock %}

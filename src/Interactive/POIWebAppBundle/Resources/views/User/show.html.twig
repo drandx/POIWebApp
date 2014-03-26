@@ -1,33 +1,22 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'three' %}
 {% block content %}
-    <h1>User</h1>
+<h2 class="sub-header">Usuario</h2>
+<dl>
+    <dt>Id</dt>
+    <dd>{{ entity.id }}</dd>
+    <dt>Nombre</dt>
+    <dd>{{ entity.firstName }}</dd>
+    <dt>Apellido</dt>
+    <dd>{{ entity.lastName }}</dd>
+    <dt>Email</dt>
+    <dd>{{ entity.email }}</dd>
+</dl>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.firstName }}</td>
-            </tr>
-            <tr>
-                <th>Apellido</th>
-                <td>{{ entity.lastName }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
+<ul class="record_actions">
     <li>
         <a href="{{ path('poi_user') }}">
-            Home
+            Volver a la lista
         </a>
     </li>
     <li>

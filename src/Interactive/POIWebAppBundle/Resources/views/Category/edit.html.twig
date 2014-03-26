@@ -1,11 +1,11 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Category edit</h1>
-
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'two' %}
+{% block content %}
+<h2 class="sub-header">Editar Categoría</h2>
+{% form_theme edit_form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
+<ul class="record_actions">
     <li>
         <a href="{{ path('poi_categroy') }}">
             Back to the list

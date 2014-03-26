@@ -1,11 +1,11 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>PointOfInterest creation</h1>
-
+{% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
+{% set menu_selected = 'one' %}
+{% block content %}
+<h2 class="sub-header">Crear Punto de Interés</h2>
+{% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
     {{ form(form) }}
 
-        <ul class="record_actions">
+<ul class="record_actions">
     <li>
         <a href="{{ path('poi_point') }}">
             Back to the list

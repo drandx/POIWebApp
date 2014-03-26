@@ -1,45 +1,46 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'three' %}
 {% block content %}
-    <h1>User list</h1>
+<h2 class="sub-header">Usuarios Administradores</h2>
 
-    <table class="records_list">
+<div class="table-responsive">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <th>Nombre</th>
-                <th>Apellio</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th>Apellido</th>
+                <th>Correo Electrónico</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+            {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('poi_user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.firstName }}</td>
                 <td>{{ entity.lastName }}</td>
                 <td>{{ entity.email }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('poi_user_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('poi_user_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <a href="{{ path('poi_user_show', { 'id': entity.id }) }}">mostrar</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('poi_user_edit', { 'id': entity.id }) }}">editar</a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('poi_user_new') }}">
-                Crear nuevo usuario
-            </a>
-        </li>
-    </ul>
+</div>
+<ul>
+    <li>
+        <a href="{{ path('poi_user_new') }}">
+            Crear nuevo usuario
+        </a>
+    </li>
+</ul>
     {% endblock %}
