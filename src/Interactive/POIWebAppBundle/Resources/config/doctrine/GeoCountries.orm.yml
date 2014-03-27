@@ -1,0 +1,27 @@
+Interactive\POIWebAppBundle\Entity\GeoCountries:
+    type: entity
+    table: geo_countries
+    id:
+        idPais:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: id_pais
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 200
+            fixed: false
+            comment: ''
+        codigo:
+            type: string
+            nullable: true
+            length: 5
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }

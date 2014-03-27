@@ -1,0 +1,35 @@
+Interactive\POIWebAppBundle\Entity\GeoCities:
+    type: entity
+    table: geo_cities
+    indexes:
+        FK_geo_ciudades_1:
+            columns:
+                - id_estados
+    id:
+        idCiudad:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: id_ciudad
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 200
+            fixed: false
+            comment: ''
+    manyToOne:
+        idEstados:
+            targetEntity: GeoStates
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_estados:
+                    referencedColumnName: id_departamento
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

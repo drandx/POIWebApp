@@ -1,0 +1,35 @@
+Interactive\POIWebAppBundle\Entity\GeoStates:
+    type: entity
+    table: geo_states
+    indexes:
+        fk_geo_estados_geo_paises1:
+            columns:
+                - id_pais
+    id:
+        idDepartamento:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            column: id_departamento
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 200
+            fixed: false
+            comment: ''
+    manyToOne:
+        idPais:
+            targetEntity: GeoCountries
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_pais:
+                    referencedColumnName: id_pais
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
