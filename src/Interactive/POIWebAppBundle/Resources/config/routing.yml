@@ -21,6 +21,10 @@ POIWebAppBundle_poi_point:
 POIWebAppBundle_poi_user:
         resource: "@POIWebAppBundle/Resources/config/routing/user.yml"
         prefix:   /admin
+        
+POIWebAppBundle_poi_geocity:
+        resource: "@POIWebAppBundle/Resources/config/routing/geocity.yml"
+        prefix:   /admin
 
 POIWebAppBundle_poi_category:
         resource: "@POIWebAppBundle/Resources/config/routing/category.yml"

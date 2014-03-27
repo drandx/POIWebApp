@@ -1,0 +1,30 @@
+poi_geocity:
+    pattern:  /citieslist
+    defaults: { _controller: "POIWebAppBundle:GeoCity:index" }
+
+poi_geocity_show:
+    pattern:  /city/{id}/show
+    defaults: { _controller: "POIWebAppBundle:GeoCity:show" }
+
+poi_geocity_new:
+    pattern:  /city/new
+    defaults: { _controller: "POIWebAppBundle:GeoCity:new" }
+
+poi_geocity_create:
+    pattern:  /city/create
+    defaults: { _controller: "POIWebAppBundle:GeoCity:create" }
+    requirements: { _method: post }
+
+poi_geocity_edit:
+    pattern:  /city/{id}/edit
+    defaults: { _controller: "POIWebAppBundle:GeoCity:edit" }
+
+poi_geocity_update:
+    pattern:  /city/{id}/update
+    defaults: { _controller: "POIWebAppBundle:GeoCity:update" }
+    requirements: { _method: post|put }
+
+poi_geocity_delete:
+    pattern:  /city/{id}/delete
+    defaults: { _controller: "POIWebAppBundle:GeoCity:delete" }
+    requirements: { _method: post|delete }

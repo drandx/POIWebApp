@@ -1,0 +1,30 @@
+poi_geostate:
+    pattern:  /
+    defaults: { _controller: "POIWebAppBundle:GeoState:index" }
+
+poi_geostate_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "POIWebAppBundle:GeoState:show" }
+
+poi_geostate_new:
+    pattern:  /new
+    defaults: { _controller: "POIWebAppBundle:GeoState:new" }
+
+poi_geostate_create:
+    pattern:  /create
+    defaults: { _controller: "POIWebAppBundle:GeoState:create" }
+    requirements: { _method: post }
+
+poi_geostate_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "POIWebAppBundle:GeoState:edit" }
+
+poi_geostate_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "POIWebAppBundle:GeoState:update" }
+    requirements: { _method: post|put }
+
+poi_geostate_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "POIWebAppBundle:GeoState:delete" }
+    requirements: { _method: post|delete }

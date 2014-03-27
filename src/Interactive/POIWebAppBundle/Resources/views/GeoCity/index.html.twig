@@ -7,7 +7,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nombre</th>
+                <th>Name</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,7 +15,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('poi_geocity_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.name }}</td>
                 <td>
                 <ul>
                     <li>
