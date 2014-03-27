@@ -1,4 +1,4 @@
-Interactive\POIWebAppBundle\Entity\GeoCountries:
+Interactive\POIWebAppBundle\Entity\GeoCountry:
     type: entity
     table: geo_countries
     id:

@@ -1,4 +1,4 @@
-Interactive\POIWebAppBundle\Entity\GeoCities:
+Interactive\POIWebAppBundle\Entity\GeoCity:
     type: entity
     table: geo_cities
     indexes:

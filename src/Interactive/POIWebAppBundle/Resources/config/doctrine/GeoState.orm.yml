@@ -1,4 +1,4 @@
-Interactive\POIWebAppBundle\Entity\GeoStates:
+Interactive\POIWebAppBundle\Entity\GeoState:
     type: entity
     table: geo_states
     indexes:
