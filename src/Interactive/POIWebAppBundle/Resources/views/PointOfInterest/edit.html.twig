@@ -1,16 +1,10 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'one' %}
 {% block content %}
-    <h2 class="sub-header">Editar Punto de Interés</h2>
+<h2 class="sub-header">Editar Punto de Interés</h2>
 {% form_theme edit_form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
     {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('poi_point') }}">
-            Back to the list
-        </a>
-    </li>
+<ul class="record_actions">
     <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

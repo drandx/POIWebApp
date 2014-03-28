@@ -63,10 +63,6 @@ class GeoCity
         $this->idState = $idState;
     }
 
-    public function __toString()
-    {
-        return $this->getName() ? $this->getName() : "";
-    }
 
 
 

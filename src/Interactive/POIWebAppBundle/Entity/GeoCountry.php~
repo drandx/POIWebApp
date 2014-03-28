@@ -5,12 +5,12 @@ namespace Interactive\POIWebAppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * GeoCity
+ * GeoCountry
  *
- * @ORM\Table(name="geo_cities", indexes={@ORM\Index(name="geo_states_id_state_idx", columns={"id_state"})})
+ * @ORM\Table(name="geo_countries")
  * @ORM\Entity
  */
-class GeoCity
+class GeoCountry
 {
     /**
      * @var integer
@@ -29,15 +29,11 @@ class GeoCity
     private $name;
 
     /**
-     * @var \Interactive\POIWebAppBundle\Entity\GeoState
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Interactive\POIWebAppBundle\Entity\GeoState")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_state", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="code", type="string", length=5, nullable=true)
      */
-    private $idState;
-    
+    private $code;
     
     public function getId() {
         return $this->id;
@@ -47,8 +43,8 @@ class GeoCity
         return $this->name;
     }
 
-    public function getIdState() {
-        return $this->idState;
+    public function getCode() {
+        return $this->code;
     }
 
     public function setId($id) {
@@ -59,14 +55,10 @@ class GeoCity
         $this->name = $name;
     }
 
-    public function setIdState(\Interactive\POIWebAppBundle\Entity\GeoState $idState) {
-        $this->idState = $idState;
+    public function setCode($code) {
+        $this->code = $code;
     }
 
-    public function __toString()
-    {
-        return $this->getName() ? $this->getName() : "";
-    }
 
 
 

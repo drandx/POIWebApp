@@ -35,6 +35,12 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
             joinColumn:
                 name: category_id
                 referencedColumnName: id
+        geocity:
+            targetEntity: GeoCity
+            inversedBy: point_of_interest
+            joinColumn:
+                name: geocity_id
+                referencedColumnName: id
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue, setExpiresAtValue ]
         preUpdate: [setUpdatedAtValue ]
