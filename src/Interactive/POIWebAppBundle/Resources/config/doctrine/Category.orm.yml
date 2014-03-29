@@ -18,6 +18,10 @@ Interactive\POIWebAppBundle\Entity\Category:
             type: string
             length: 255
             unique: true
+        image:
+             type: string
+             length: 60
+             unique: true
     oneToMany:
         jobs:
             targetEntity: Job

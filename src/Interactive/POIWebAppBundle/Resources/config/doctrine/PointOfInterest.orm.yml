@@ -6,22 +6,53 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
             type: integer
             generator: { strategy: AUTO }
     fields:
+        name:
+            type: string
+            length: 250
+            nullable: false
+        phone:
+            type: string
+            length: 60
+            nullable: true
+        phone_ext:
+            type: string
+            length: 30
+            nullable: true
+        fax:
+            type: string
+            length: 60
+            nullable: true
+        email:
+            type: string
+            length: 255
+            nullable: true
+        pinhexcolor:
+            type: string
+            length: 20
+            nullable: false
+        schedule:
+            type: string
+            length: 255
+            nullable: true
         latitude:
             type: string
             length: 255
+            nullable: false
         longitude:
             type: string
             length: 255
+            nullable: false
         description:
             type: text
             nullable: true
         address:
             type: string
             legth: 255
-            nullable: true
+            nullable: false
         is_activated:
             type: boolean
             nullable: true
+            default: true
         created_at:
             type: datetime
             nullable: true
@@ -38,6 +69,7 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
         geocity:
             targetEntity: GeoCity
             inversedBy: point_of_interest
+            nullable: false
             joinColumn:
                 name: geocity_id
                 referencedColumnName: id

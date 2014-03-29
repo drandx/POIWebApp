@@ -301,4 +301,200 @@ class PointOfInterest
     {
         return $this->geocity;
     }
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $phone;
+
+    /**
+     * @var string
+     */
+    private $phone_ext;
+
+    /**
+     * @var string
+     */
+    private $fax;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var string
+     */
+    private $pinhexcolor;
+
+    /**
+     * @var string
+     */
+    private $schedule;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return PointOfInterest
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return PointOfInterest
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set phone_ext
+     *
+     * @param string $phoneExt
+     * @return PointOfInterest
+     */
+    public function setPhoneExt($phoneExt)
+    {
+        $this->phone_ext = $phoneExt;
+
+        return $this;
+    }
+
+    /**
+     * Get phone_ext
+     *
+     * @return string 
+     */
+    public function getPhoneExt()
+    {
+        return $this->phone_ext;
+    }
+
+    /**
+     * Set fax
+     *
+     * @param string $fax
+     * @return PointOfInterest
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+
+        return $this;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string 
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return PointOfInterest
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set pinhexcolor
+     *
+     * @param string $pinhexcolor
+     * @return PointOfInterest
+     */
+    public function setPinhexcolor($pinhexcolor)
+    {
+        $this->pinhexcolor = $pinhexcolor;
+
+        return $this;
+    }
+
+    /**
+     * Get pinhexcolor
+     *
+     * @return string 
+     */
+    public function getPinhexcolor()
+    {
+        return $this->pinhexcolor;
+    }
+
+    /**
+     * Set schedule
+     *
+     * @param string $schedule
+     * @return PointOfInterest
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
+     * Get schedule
+     *
+     * @return string 
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
 }

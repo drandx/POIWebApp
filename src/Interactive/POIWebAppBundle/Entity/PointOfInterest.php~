@@ -273,4 +273,32 @@ class PointOfInterest
     {
         // Add your code here
     }
+    /**
+     * @var \Interactive\POIWebAppBundle\Entity\GeoCity
+     */
+    private $geocity;
+
+
+    /**
+     * Set geocity
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\GeoCity $geocity
+     * @return PointOfInterest
+     */
+    public function setGeocity(\Interactive\POIWebAppBundle\Entity\GeoCity $geocity = null)
+    {
+        $this->geocity = $geocity;
+
+        return $this;
+    }
+
+    /**
+     * Get geocity
+     *
+     * @return \Interactive\POIWebAppBundle\Entity\GeoCity 
+     */
+    public function getGeocity()
+    {
+        return $this->geocity;
+    }
 }
