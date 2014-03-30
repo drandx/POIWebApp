@@ -29,6 +29,11 @@ class Category
      * @var \Doctrine\Common\Collections\Collection
      */
     private $affiliates;
+    
+     /**
+     * @var string
+     */
+    private $pinhexcolor;
 
     /**
      * Constructor
@@ -299,5 +304,28 @@ class Category
     public function getImage()
     {
         return $this->image;
+    }
+    
+     /**
+     * Set pinhexcolor
+     *
+     * @param string $pinhexcolor
+     * @return PointOfInterest
+     */
+    public function setPinhexcolor($pinhexcolor)
+    {
+        $this->pinhexcolor = $pinhexcolor;
+
+        return $this;
+    }
+
+    /**
+     * Get pinhexcolor
+     *
+     * @return string 
+     */
+    public function getPinhexcolor()
+    {
+        return $this->pinhexcolor;
     }
 }

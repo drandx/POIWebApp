@@ -1,3 +1,7 @@
+poi_map:
+    pattern:  /map
+    defaults: { _controller: "POIWebAppBundle:PointOfInterest:renderMap" }
+
 poi_point:
     pattern:  /
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:index" }

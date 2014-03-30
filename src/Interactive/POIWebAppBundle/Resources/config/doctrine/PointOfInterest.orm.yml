@@ -26,10 +26,6 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
             type: string
             length: 255
             nullable: true
-        pinhexcolor:
-            type: string
-            length: 20
-            nullable: false
         schedule:
             type: string
             length: 255
@@ -63,6 +59,7 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
         category:
             targetEntity: Category
             inversedBy: point_of_interest
+            nullable: false
             joinColumn:
                 name: category_id
                 referencedColumnName: id

@@ -22,6 +22,10 @@ Interactive\POIWebAppBundle\Entity\Category:
              type: string
              length: 60
              unique: true
+        pinhexcolor:
+            type: string
+            length: 20
+            nullable: true
     oneToMany:
         jobs:
             targetEntity: Job

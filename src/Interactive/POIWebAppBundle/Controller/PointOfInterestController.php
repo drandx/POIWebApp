@@ -16,6 +16,21 @@ class PointOfInterestController extends Controller
 {
 
     /**
+     * Renders a Map
+     * 41.962457, -87.675596
+     */
+    public function renderMapAction()
+    {
+        //TODO - Get the points to fender on the map
+        // $em = $this->getDoctrine()->getManager();
+        //$entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->findAll();
+
+        return $this->render('POIWebAppBundle:PointOfInterest:map.html.twig', array(
+            'latitude' => '41.962457' ,'longitude'=>'-87.675596'  
+        ));
+    }
+    
+    /**
      * Lists all PointOfInterest entities.
      *
      */
@@ -66,9 +81,6 @@ class PointOfInterestController extends Controller
             'action' => $this->generateUrl('poi_point_create'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Crear Punto'));
-
         return $form;
     }
 

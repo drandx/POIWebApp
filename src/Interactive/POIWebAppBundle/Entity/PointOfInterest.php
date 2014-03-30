@@ -329,11 +329,6 @@ class PointOfInterest
     /**
      * @var string
      */
-    private $pinhexcolor;
-
-    /**
-     * @var string
-     */
     private $schedule;
 
 
@@ -450,29 +445,6 @@ class PointOfInterest
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Set pinhexcolor
-     *
-     * @param string $pinhexcolor
-     * @return PointOfInterest
-     */
-    public function setPinhexcolor($pinhexcolor)
-    {
-        $this->pinhexcolor = $pinhexcolor;
-
-        return $this;
-    }
-
-    /**
-     * Get pinhexcolor
-     *
-     * @return string 
-     */
-    public function getPinhexcolor()
-    {
-        return $this->pinhexcolor;
     }
 
     /**

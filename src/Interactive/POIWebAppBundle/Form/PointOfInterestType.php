@@ -17,13 +17,20 @@ class PointOfInterestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('geocity', null, array('required' => true,'label'=>'Ciudad', 'attr' => array('placeholder' => 'Ciudad')))
-            ->add('latitude', null, array('required' => true,'label'=>'Latitud', 'attr' => array('placeholder' => 'Latitud')))
-            ->add('longitude', null, array('required' => true,'label'=>'Longitud', 'attr' => array('placeholder' => 'Longitud')))
+            ->add('name', null, array('required' => true,'label'=>'Nombre *', 'attr' => array('placeholder' => 'Nombre')))    
+            ->add('email', 'email', array('required' => false,'label'=>'Correo eléctronico', 'attr' => array('placeholder' => 'Correo eléctronico')))
+            ->add('phone', null, array('required' => false,'label'=>'Teléfono', 'attr' => array('placeholder' => 'Telefono')))
+            ->add('phone_ext', null, array('required' => false,'label'=>'Fax', 'attr' => array('placeholder' => 'Fax'))) 
+            ->add('fax', null, array('required' => false,'label'=>'Extensión', 'attr' => array('placeholder' => 'Extensión'))) 
+            ->add('geocity', null, array('required' => true,'label'=>'Ciudad *', 'attr' => array('placeholder' => 'Ciudad')))
+            ->add('latitude', null, array('required' => true,'label'=>'Latitud *', 'attr' => array('placeholder' => 'Latitud')))
+            ->add('longitude', null, array('required' => true,'label'=>'Longitud *', 'attr' => array('placeholder' => 'Longitud')))
+            ->add('schedule', null, array('required' => false,'label'=>'Horario', 'attr' => array('placeholder' => 'Horario de atención')))
             ->add('description', null, array('required' => false,'label'=>'Descripción', 'attr' => array('placeholder' => 'Descripción')))
-            ->add('address', null, array('required' => true,'label'=>'Dirección', 'attr' => array('placeholder' => 'Dirección')))
-            ->add('category', null, array('required' => true,'label'=>'Categoría', 'attr' => array('placeholder' => 'Categoría')))
-        ;
+            ->add('address', null, array('required' => true,'label'=>'Dirección *', 'attr' => array('placeholder' => 'Dirección')))
+            ->add('category', null, array('required' => true,'label'=>'Categoría *', 'attr' => array('placeholder' => 'Categoría')))
+            ->add('submit', 'submit', array('label' => 'Crear Punto'));
+            ;
     }
     
     /**

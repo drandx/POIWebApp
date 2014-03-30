@@ -1,7 +1,64 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'one' %}
-{% block content %}
-<h2 class="sub-header">Crear Punto de Interés</h2>
-{% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
-    {{ form(form) }}
+{% block javascripts %}
+ {{ parent() }}
+<script type="text/javascript">
+       function initialize() {
+        var lat = 41.962457;
+        var lon = -87.675596;
+        var myCenter=new google.maps.LatLng(lat,lon);
+        
+        var mapOptions = {
+          center: new google.maps.LatLng(lat, lon),
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+            
+        google.maps.event.addListener(map, 'click', function(e) {
+            placeMarker(e.latLng, map);
+            document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = e.latLng.lat();
+            document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = e.latLng.lng();
+        });
+        
+            
+        var marker=new google.maps.Marker({position:myCenter,
+            animation:google.maps.Animation.BOUNCE});  
+        marker.setMap(map);
+        
+      }
+      
+      function placeMarker(position, map) {
+            var marker = new google.maps.Marker({position: position,map: map});
+            map.panTo(position);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 {% endblock %}
+{% block content %}
+    <h2 class="sub-header">Crear Punto de Interés</h2>
+    {% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
+   {# {{ form(form) }}#}
+    <form class="form-horizontal" name="interactive_poiwebappbundle_pointofinterest" method="post" action="/POIWebApp/web/app_dev.php/admin/point/create">
+   {#{{ form_start(form) }}#}
+        {{ form_errors(form) }}
+        {{ form_row(form.geocity) }}
+        {{ form_row(form.latitude) }}
+        {{ form_row(form.longitude) }}
+        <div class="container-fluid">
+        {#<a href="{{ path('poi_map') }}">Map<a/>#}
+            <div id="map-canvas" class="row" style="height: 400px"/>
+        </div>
+        {#{{ form_row(form.submit) }}#}
+        {{ form_row(form.description) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.category) }}
+        {#<div>
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" type="submit" id="interactive_poiwebappbundle_pointofinterest_submit" name="interactive_poiwebappbundle_pointofinterest[submit]">Crear Punto</button>
+            </div>
+        </div>#}
+        {{ form_end(form) }}
+   </form>
+{% endblock %}
+
