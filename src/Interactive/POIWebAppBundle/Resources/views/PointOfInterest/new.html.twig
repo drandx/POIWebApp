@@ -156,7 +156,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
     <h2 class="sub-header">Crear Punto de Interés</h2>
     {% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
    {# {{ form(form) }}#}
-    <form class="form-horizontal" name="interactive_poiwebappbundle_pointofinterest" method="post" action="/POIWebApp/web/app_dev.php/admin/point/create">
+    <form class="form-horizontal" name="interactive_poiwebappbundle_pointofinterest" method="post" action="/POIWebApp/web/admin/point/create">
    {#{{ form_start(form) }}#}
         {{ form_errors(form) }}
         {{ form_row(form.geocity) }}

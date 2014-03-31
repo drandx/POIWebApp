@@ -12,42 +12,42 @@ class PointOfInterest
     /**
      * @var integer
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      */
-    private $latitude;
+    public $latitude;
 
     /**
      * @var string
      */
-    private $longitude;
+    public $longitude;
 
     /**
      * @var string
      */
-    private $description;
+    public $description;
 
     /**
      * @var boolean
      */
-    private $is_activated;
+    public $is_activated;
 
     /**
      * @var \DateTime
      */
-    private $created_at;
+    public $created_at;
 
     /**
      * @var \DateTime
      */
-    private $updated_at;
+    public $updated_at;
 
     /**
      * @var \Interactive\POIWebAppBundle\Entity\Category
      */
-    private $category;
+    public $category;
 
 
     /**
@@ -240,7 +240,7 @@ class PointOfInterest
     /**
      * @var string
      */
-    private $address;
+    public $address;
 
 
     /**
@@ -276,7 +276,7 @@ class PointOfInterest
     /**
      * @var \Interactive\POIWebAppBundle\Entity\GeoCity
      */
-    private $geocity;
+    public $geocity;
 
 
     /**
@@ -304,32 +304,32 @@ class PointOfInterest
     /**
      * @var string
      */
-    private $name;
+    public $name;
 
     /**
      * @var string
      */
-    private $phone;
+    public $phone;
 
     /**
      * @var string
      */
-    private $phone_ext;
+    public $phone_ext;
 
     /**
      * @var string
      */
-    private $fax;
+    public $fax;
 
     /**
      * @var string
      */
-    private $email;
+    public $email;
 
     /**
      * @var string
      */
-    private $schedule;
+    public $schedule;
 
 
     /**

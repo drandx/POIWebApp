@@ -1,34 +1,42 @@
+#Login-secured routes
 poi_map:
-    pattern:  /map
+    pattern:  /admin/map
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:renderMap" }
 
 poi_point_show:
-    pattern:  /point/{id}/show
+    pattern:  /admin/point/{id}/show
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:show" }
 
 poi_point_new:
-    pattern:  /point/new
+    pattern:  /admin/point/new
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:new" }
 
 poi_point_create:
-    pattern:  /point/create
+    pattern:  /admin/point/create
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:create" }
     requirements: { _method: post }
 
 poi_point_edit:
-    pattern:  /point/{id}/edit
+    pattern:  /admin/point/{id}/edit
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:edit" }
 
 poi_point_update:
-    pattern:  /point/{id}/update
+    pattern:  /admin/point/{id}/update
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:update" }
     requirements: { _method: post|put }
 
 poi_point_delete:
-    pattern:  /point/{id}/delete
+    pattern:  /admin/point/{id}/delete
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:delete" }
     requirements: { _method: post|delete }
     
 poi_point:
-    pattern:  /{page}
+    pattern:  /admin/{page}
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:index", page: 1}
+
+#REST Services
+api_point_bycity:
+    pattern:  /api/points/{cityid}
+    defaults: { _controller: "POIWebAppBundle:PointOfInterest:getPointsbyCity", cityid: 1}
+    requirements:
+        _method: GET

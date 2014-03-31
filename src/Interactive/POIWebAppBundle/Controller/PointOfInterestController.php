@@ -1,7 +1,7 @@
 <?php
 
 namespace Interactive\POIWebAppBundle\Controller;
-
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -15,6 +15,29 @@ use Interactive\POIWebAppBundle\Form\PointOfInterestType;
 class PointOfInterestController extends Controller
 {
 
+    
+    public function getPointsbyCityAction($cityid)
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->findBy(array('geocity' => $cityid));
+        
+        if(count($entities)>0)
+        {
+            $pointsReturn = array('pois' => $entities);
+            $response->setContent(json_encode($pointsReturn));
+            $response->setStatusCode(200);
+        }
+        else
+        {
+            $response->setStatusCode(404);
+        }
+        return $response;
+
+    }
+    
     /**
      * Renders a Map
      * 41.962457, -87.675596
