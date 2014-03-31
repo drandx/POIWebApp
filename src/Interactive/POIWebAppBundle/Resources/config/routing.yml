@@ -14,10 +14,6 @@ POIWebAppBundle_poi_job:
         resource: "@POIWebAppBundle/Resources/config/routing/job.yml"
         prefix:   /poi_job
         
-POIWebAppBundle_poi_point:
-        resource: "@POIWebAppBundle/Resources/config/routing/pointofinterest.yml"
-        prefix:   /admin
-        
 POIWebAppBundle_poi_user:
         resource: "@POIWebAppBundle/Resources/config/routing/user.yml"
         prefix:   /admin
@@ -28,7 +24,11 @@ POIWebAppBundle_poi_geocity:
 
 POIWebAppBundle_poi_category:
         resource: "@POIWebAppBundle/Resources/config/routing/category.yml"
-        prefix:   /admin 
+        prefix:   /admin
+
+POIWebAppBundle_poi_point:
+        resource: "@POIWebAppBundle/Resources/config/routing/pointofinterest.yml"
+        prefix:   /admin
        
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

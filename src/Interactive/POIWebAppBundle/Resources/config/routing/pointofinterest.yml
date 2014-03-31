@@ -2,10 +2,6 @@ poi_map:
     pattern:  /map
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:renderMap" }
 
-poi_point:
-    pattern:  /
-    defaults: { _controller: "POIWebAppBundle:PointOfInterest:index" }
-
 poi_point_show:
     pattern:  /point/{id}/show
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:show" }
@@ -32,3 +28,7 @@ poi_point_delete:
     pattern:  /point/{id}/delete
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:delete" }
     requirements: { _method: post|delete }
+    
+poi_point:
+    pattern:  /{page}
+    defaults: { _controller: "POIWebAppBundle:PointOfInterest:index", page: 1}

@@ -469,4 +469,12 @@ class PointOfInterest
     {
         return $this->schedule;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setIsActivatedVale()
+    {
+        $this->is_activated = true;
+    }
 }

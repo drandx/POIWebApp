@@ -34,14 +34,25 @@ class PointOfInterestController extends Controller
      * Lists all PointOfInterest entities.
      *
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->findAll();
+        
+        $total_pois = $em->getRepository('POIWebAppBundle:PointOfInterest')->countPointsOfInterest();
+        $pois_per_page = $this->container->getParameter('max_points_on_pointslist');
+        $last_page = ceil($total_pois / $pois_per_page);
+        $previous_page = $page > 1 ? $page - 1 : 1;
+        $next_page = $page < $last_page ? $page + 1 : $last_page;
+        
+        $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->getPointsOfInterest($pois_per_page, ($page - 1) * $pois_per_page);
 
         return $this->render('POIWebAppBundle:PointOfInterest:index.html.twig', array(
             'entities' => $entities,
+            'last_page' => $last_page,
+            'previous_page' => $previous_page,
+            'current_page' => $page,
+            'next_page' => $next_page,
+            'total_jobs' => $total_pois
         ));
     }
     /**

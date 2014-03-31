@@ -1,6 +1,7 @@
 Interactive\POIWebAppBundle\Entity\PointOfInterest:
     type: entity
     table: point_of_interest
+    repositoryClass: Interactive\POIWebAppBundle\Repository\PointOfInterestRepository
     id:
         id:
             type: integer
@@ -71,5 +72,5 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
                 name: geocity_id
                 referencedColumnName: id
     lifecycleCallbacks:
-        prePersist: [setCreatedAtValue, setExpiresAtValue ]
+        prePersist: [setCreatedAtValue,setIsActivatedVale]
         preUpdate: [setUpdatedAtValue ]
