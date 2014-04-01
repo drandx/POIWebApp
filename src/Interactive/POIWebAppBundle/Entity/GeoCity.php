@@ -19,14 +19,14 @@ class GeoCity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=200, nullable=false)
      */
-    private $name;
+    public $name;
 
     /**
      * @var \Interactive\POIWebAppBundle\Entity\GeoState
@@ -36,7 +36,7 @@ class GeoCity
      *   @ORM\JoinColumn(name="id_state", referencedColumnName="id")
      * })
      */
-    private $idState;
+    public $idState;
     
     
     public function getId() {

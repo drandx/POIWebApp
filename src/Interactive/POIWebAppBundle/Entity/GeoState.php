@@ -19,14 +19,14 @@ class GeoState
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=200, nullable=false)
      */
-    private $name;
+    public $name;
 
     /**
      * @var \Interactive\POIWebAppBundle\Entity\GeoCountry
@@ -36,7 +36,7 @@ class GeoState
      *   @ORM\JoinColumn(name="id_country", referencedColumnName="id")
      * })
      */
-    private $idCountry;
+    public $idCountry;
     
     public function getId() {
         return $this->id;

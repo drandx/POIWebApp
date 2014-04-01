@@ -15,6 +15,18 @@ use Interactive\POIWebAppBundle\Form\PointOfInterestType;
 class PointOfInterestController extends Controller
 {
 
+    /**
+     * Loads the front end with a mapt
+     * 
+     */
+    public function frontIndexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->findBy(array('geocity' => 1));
+        //$pointsReturn = array('pois' => $entities);
+        $pointsReturn = '{"result":true,"count":1}';
+        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', array('pointsJson'=>$pointsReturn));
+    }
     
     public function getPointsbyCityAction($cityid)
     {
