@@ -41,7 +41,13 @@ poi_point:
 
 #REST Services
 api_point_bycity:
-    pattern:  /api/points/{cityid}
+    pattern:  /api/pointsCity/{cityid}
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:getPointsbyCity", cityid: 1}
     requirements:
         _method: GET
+        
+api_point_byquery:
+    pattern:  /api/pointsQuery
+    defaults: { _controller: "POIWebAppBundle:PointOfInterest:getPointsbyQuery"}
+    requirements:
+        _method: POST
