@@ -14,7 +14,7 @@ class PointOfInterestRepository extends EntityRepository
     public function getPointsOfInterest($max = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('j')
-            ->orderBy('j.geocity', 'DESC');
+            ->orderBy('j.geocity', 'ASC');
  
         if($max) {
             $qb->setMaxResults($max);
