@@ -6,6 +6,75 @@ var currentPopup;
 var bounds = null;
 var Mylat = 4.559997795432589;
 var Mylong = -74.52481269836426;
+//Global Variables
+ var marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, -29)
+    });
+ var infowindow = new google.maps.InfoWindow();
+
+/**
+ * 
+ * @returns {undefined}
+ */
+function setUpAutoComplete()
+{
+    var options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "co"}};
+
+    var input = document.getElementById('googleAutoComplete');
+    var autocomplete = new google.maps.places.Autocomplete(input,options);
+    addAutocompleteListener(autocomplete,false);
+}
+
+function addAutocompleteListener(autocomplete,showMarker)
+{
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            return;
+        }
+
+        // If the place has a geometry, then present it on a map.
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+        }
+        marker.setIcon(/** @type {google.maps.Icon} */({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(place.geometry.location);
+        
+
+        var address = '';
+        if (place.address_components) {
+            address = [
+                (place.address_components[0] && place.address_components[0].short_name || ''),
+                (place.address_components[1] && place.address_components[1].short_name || ''),
+                (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+        }
+
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + '</br>' + place.geometry.location.lat() + ',' + place.geometry.location.lng());
+        if(showMarker)
+        {
+            marker.setVisible(true);
+            infowindow.open(map, marker);
+        }
+        document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = place.geometry.location.lat();
+        document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = place.geometry.location.lng();
+
+    });
+}
 
 /*
  * 
@@ -32,60 +101,21 @@ function initializeSearchMap()
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
-    var infowindow = new google.maps.InfoWindow();
-    var marker = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29)
-    });
-
+   
+    //Adds the click event to add markers on the map at any click
     google.maps.event.addListener(map, 'click', function(e) {
         clearOverlays();
         placeMarker(e.latLng, map);
+        //Hides the marker added by automcomplete
+        infowindow.close();
+        marker.setVisible(false);
         document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = e.latLng.lat();
         document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = e.latLng.lng();
     });
-
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        infowindow.close();
-        marker.setVisible(false);
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-            return;
-        }
-
-        // If the place has a geometry, then present it on a map.
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
-        }
-        marker.setIcon(/** @type {google.maps.Icon} */({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-
-        var address = '';
-        if (place.address_components) {
-            address = [
-                (place.address_components[0] && place.address_components[0].short_name || ''),
-                (place.address_components[1] && place.address_components[1].short_name || ''),
-                (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-        }
-
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + '</br>' + place.geometry.location.lat() + ',' + place.geometry.location.lng());
-        infowindow.open(map, marker);
-
-        document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = place.geometry.location.lat();
-        document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = place.geometry.location.lng();
-
-    });
+    
+    //Adds changed event to automplete object
+    addAutocompleteListener(autocomplete,true);
+    
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
     function setupClickListener(id, types) {
@@ -272,6 +302,36 @@ function restults_markers_v2(data) {
         //alert(point.longitude);
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
         addMarker(pt, point.description);
+    });
+}
+
+function getMarkersbyQuery()
+{
+    var Query = new Object();
+    Query.cities = new Array();
+    Query.categories = new Array();
+    Query.cities.push(1);
+    Query.cities.push(2);
+    Query.cities.push(3);
+    Query.cities.push(4);
+    Query.cities.push(5);
+    Query.categories.push(2);
+    Query.categories.push(3);
+    Query.categories.push(4);
+    Query.categories.push(5);
+    Query.categories.push(6);
+
+    var jsonString = JSON.stringify(Query);
+    var jsonArrayObj = JSON.parse(JSON.stringify(Query));
+
+    $.ajax({
+        data: JSON.stringify(Query),
+        type: 'POST',
+        dataType: 'json',
+        url: 'api/pointsQuery',
+        contentType: 'application/json',
+        success: function(data) {
+        }
     });
 }
 

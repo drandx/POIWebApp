@@ -53,6 +53,7 @@ class PointOfInterestController extends Controller {
         $response->headers->set('Content-Type', 'application/json');
         $requestContent = $request->getContent();
         $requestArray = json_decode($requestContent, true);
+        $testObj = json_decode($requestContent);
         if (true) {
             $response->setStatusCode(200);
             $response->setContent(json_encode($requestArray));
