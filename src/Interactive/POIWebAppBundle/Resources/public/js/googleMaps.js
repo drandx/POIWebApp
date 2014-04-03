@@ -7,11 +7,9 @@ var bounds = null;
 var Mylat = 4.559997795432589;
 var Mylong = -74.52481269836426;
 //Global Variables
- var marker = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29)
-    });
- var infowindow = new google.maps.InfoWindow();
+var myMarker;
+var myInfowindow;
+
 
 /**
  * 
@@ -24,12 +22,22 @@ function setUpAutoComplete()
         componentRestrictions: {country: "co"}};
 
     var input = document.getElementById('googleAutoComplete');
-    var autocomplete = new google.maps.places.Autocomplete(input,options);
-    addAutocompleteListener(autocomplete,false);
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    addAutocompleteListener(autocomplete, false);
 }
 
-function addAutocompleteListener(autocomplete,showMarker)
+function addAutocompleteListener(autocomplete, showMarker)
 {
+    var marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, -29)
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    myMarker = marker;
+    myInfowindow = infowindow;
+
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         infowindow.close();
         marker.setVisible(false);
@@ -53,7 +61,7 @@ function addAutocompleteListener(autocomplete,showMarker)
             scaledSize: new google.maps.Size(35, 35)
         }));
         marker.setPosition(place.geometry.location);
-        
+
 
         var address = '';
         if (place.address_components) {
@@ -65,7 +73,7 @@ function addAutocompleteListener(autocomplete,showMarker)
         }
 
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address + '</br>' + place.geometry.location.lat() + ',' + place.geometry.location.lng());
-        if(showMarker)
+        if (showMarker)
         {
             marker.setVisible(true);
             infowindow.open(map, marker);
@@ -88,6 +96,7 @@ function initializeSearchMap()
         center: new google.maps.LatLng(Mylat, Mylong),
         zoom: 7
     };
+
     map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
@@ -101,21 +110,18 @@ function initializeSearchMap()
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
-   
+
     //Adds the click event to add markers on the map at any click
     google.maps.event.addListener(map, 'click', function(e) {
         clearOverlays();
         placeMarker(e.latLng, map);
-        //Hides the marker added by automcomplete
-        infowindow.close();
-        marker.setVisible(false);
         document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = e.latLng.lat();
         document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = e.latLng.lng();
     });
-    
+
     //Adds changed event to automplete object
-    addAutocompleteListener(autocomplete,true);
-    
+    addAutocompleteListener(autocomplete, true);
+
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
     function setupClickListener(id, types) {
@@ -172,7 +178,7 @@ function initializePoisMap()
  * @returns {undefined}
  */
 function addMarker(location, info) {
-    marker = new google.maps.Marker({position: location, map: map});
+    var marker = new google.maps.Marker({position: location, map: map});
 
     var popup = new google.maps.InfoWindow({content: info, maxWidth: 300});
 
@@ -205,6 +211,9 @@ function addMarkerExisting(marker) {
  */
 //Removes the overlays from the map, but keeps them in the array
 function clearOverlays() {
+    //Hides the marker added by automcomplete
+    myInfowindow.close();
+    myMarker.setVisible(false);
     if (markersArray) {
         for (i in markersArray) {
             //marker.infowindow.close();
