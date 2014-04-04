@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% set jsonData = pointsJson %}
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -58,54 +57,9 @@
                     <p class="pull-right visible-xs">
                         <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Filtros</button>
                     </p>
-          {#<div class="jumbotron">#}
                     <div class="container-fluid">
-                {#<input id="pac-input" class="controls" type="text" placeholder="Ingrese ubicación">#}
-                {#<div id="type-selector" class="controls">
-                    <input type="radio" name="type" id="changetype-all" checked="checked">
-                    <label for="changetype-all">Todo</label>
-
-                    <input type="radio" name="type" id="changetype-establishment">
-                    <label for="changetype-establishment">Establecimientos</label>
-
-                    <input type="radio" name="type" id="changetype-geocode">
-                    <label for="changetype-geocode">GeoCódigos</label>
-                </div>#}
                         <div id="map-canvas" class="row" style="height: 500px"></div>
                     </div>
-          {#</div>#}
-          {#<div class="row">
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/span-->
-            <div class="col-6 col-sm-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/span-->
-          </div>#}<!--/row-->
                 </div><!--/span-->
 
                 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
@@ -121,7 +75,6 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                     <div class="input-group">
-                                        {#<span class="input-group-addon">@</span>#}
                                         <input id="googleAutoComplete" type="text" class="form-control" placeholder="Ciudad">
                                         <input id="interactive_poiwebappbundle_pointofinterest_latitude" type="hidden" class="form-control" placeholder="latitude">
                                         <input id="interactive_poiwebappbundle_pointofinterest_longitude" type="hidden" class="form-control" placeholder="longitude">
@@ -138,24 +91,19 @@
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
+
                                 <div class="panel-body">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            Categoría 1
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            Categoria 2
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="">
-                                            Categoria 3
-                                        </label>
+                                    <!-- Here starts the php loop-->
+                                    <div id="categoriesContainer">
+                                        {% for category in categories %}
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="{{category.id}}" {% if loop.first %}checked{%endif%}>
+                                                {{category.name}}
+                                            </label>
+                                        </div>
+                                        {%endfor%}
+                                        <!-- Here ends the php loop-->
                                     </div>
                                 </div>
                             </div>
@@ -185,26 +133,38 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
         <script src="{{ asset('bundles/poiwebapp/js/googleMaps.js') }}"></script>
         <script type="text/javascript">
-            
-            $( "#googleAutoComplete" ).click(function() {
+            $("#googleAutoComplete").click(function() {
                 document.getElementById('googleAutoComplete').value = "";
             });
-            
-            getMarkersbyQuery();
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: "api/pointsCity/4",
-                success: function(data) {
-                    restults_markers_v2(data);
-                }});
+            /*$( "#googleAutoComplete" ).change(function() {
+                getMarkersbyQuery();
+            });*/
+            $("#categoriesContainer").change(function(){
+                getMarkersbyQuery();   
+            });
+            /*$.ajax({
+             type: "GET",
+             dataType: "json",
+             url: "api/pointsCity/4",
+             success: function(data) {
+             restults_markers_v2(data);
+             }});*/
         </script>
         <script type="text/javascript">
-            //google.maps.event.addDomListener(window, 'load', initializeSearchMap);
-            //initializePoisMap();
-            google.maps.event.addDomListener(window, 'load', initializePoisMap);
-            setUpAutoComplete();
+            google.maps.event.addDomListener(window, 'load', startForm);
+            function AutoCompleteCallback () {
+                this.execute = function() {
+                    getMarkersbyQuery();
+                };
+            }
+            var myCallback = new AutoCompleteCallback();
 
+            setUpAutoComplete(myCallback);
+    
+            function startForm() {
+                initializePoisMap();
+                getMarkersbyQuery();
+            }
         </script>
     {% endblock %}
     </body>

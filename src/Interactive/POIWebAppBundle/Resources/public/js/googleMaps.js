@@ -15,7 +15,7 @@ var myInfowindow;
  * 
  * @returns {undefined}
  */
-function setUpAutoComplete()
+function setUpAutoComplete(myCallBack)
 {
     var options = {
         types: ['(cities)'],
@@ -23,10 +23,16 @@ function setUpAutoComplete()
 
     var input = document.getElementById('googleAutoComplete');
     var autocomplete = new google.maps.places.Autocomplete(input, options);
-    addAutocompleteListener(autocomplete, false);
+    addAutocompleteListener(autocomplete, false, myCallBack);
 }
 
-function addAutocompleteListener(autocomplete, showMarker)
+/**
+ * 
+ * @param {type} autocomplete
+ * @param {type} showMarker
+ * @returns {undefined}
+ */
+function addAutocompleteListener(autocomplete, showMarker, myCallBack)
 {
     var marker = new google.maps.Marker({
         map: map,
@@ -78,6 +84,9 @@ function addAutocompleteListener(autocomplete, showMarker)
             marker.setVisible(true);
             infowindow.open(map, marker);
         }
+        if(myCallBack)  
+            myCallBack.execute();
+        
         document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = place.geometry.location.lat();
         document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = place.geometry.location.lng();
 
@@ -120,7 +129,7 @@ function initializeSearchMap()
     });
 
     //Adds changed event to automplete object
-    addAutocompleteListener(autocomplete, true);
+    addAutocompleteListener(autocomplete, true, null);
 
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
@@ -193,16 +202,6 @@ function addMarker(location, info) {
     //google.maps.event.addListener(popup, "closeclick", function() {map.panTo(center);currentPopup = null;});
 
     markersArray.push(marker);
-}
-
-/*
- * 
- * @param {type} marker
- * @returns {undefined}
- */
-function addMarkerExisting(marker) {
-    markersArray.push(marker);
-
 }
 
 /*
@@ -298,40 +297,23 @@ function restults_markers(data) {
     center = bounds.getCenter();
 }
 
-/*
+/**
  * 
- * @param {type} data
  * @returns {undefined}
- * 
  */
-function restults_markers_v2(data) {
-    $.each(data.pois, function(i, point) {
-        //alert(point.id);
-        //alert(point.latitude);
-        //alert(point.longitude);
-        var pt = new google.maps.LatLng(point.latitude, point.longitude);
-        addMarker(pt, point.description);
-    });
-}
-
 function getMarkersbyQuery()
 {
+    //Creates the query as a json object
+    
+    //gets checked categories
+    var catValues = [];
+     $('#categoriesContainer :checked').each(function() {
+       catValues.push($(this).val());
+     });
+     
     var Query = new Object();
-    Query.cities = new Array();
-    Query.categories = new Array();
-    Query.cities.push(1);
-    Query.cities.push(2);
-    Query.cities.push(3);
-    Query.cities.push(4);
-    Query.cities.push(5);
-    Query.categories.push(2);
-    Query.categories.push(3);
-    Query.categories.push(4);
-    Query.categories.push(5);
-    Query.categories.push(6);
-
-    var jsonString = JSON.stringify(Query);
-    var jsonArrayObj = JSON.parse(JSON.stringify(Query));
+    Query.cityQuery = document.getElementById("googleAutoComplete").value;
+    Query.categories = catValues;
 
     $.ajax({
         data: JSON.stringify(Query),
@@ -340,7 +322,26 @@ function getMarkersbyQuery()
         url: 'api/pointsQuery',
         contentType: 'application/json',
         success: function(data) {
+            clearOverlays();
+            restults_markers_v2(data);
         }
+    });
+}
+
+/*
+ * 
+ * @param {type} data
+ * @returns {undefined}
+ * 
+ */
+function restults_markers_v2(data) {
+    $.each(data, function(i, point) {
+        //alert(point.id);
+        //alert(point.latitude);
+        //alert(point.longitude);
+        var pt = new google.maps.LatLng(point.latitude, point.longitude);
+        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>';
+        addMarker(pt, content);
     });
 }
 

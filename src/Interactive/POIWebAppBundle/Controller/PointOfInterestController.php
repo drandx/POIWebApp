@@ -20,10 +20,13 @@ class PointOfInterestController extends Controller {
      */
     public function frontIndexAction() {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->findBy(array('geocity' => 1));
-        //$pointsReturn = array('pois' => $entities);
-        $pointsReturn = '{"result":true,"count":1}';
-        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', array('pointsJson' => $pointsReturn));
+
+        $categories = $em->getRepository('POIWebAppBundle:Category')->
+                findBy(array(), 
+                 array('name' => 'ASC')
+               );
+        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', 
+                array('categories'=>$categories));
     }
 
     public function getPointsbyCityAction($cityid) {
@@ -49,14 +52,19 @@ class PointOfInterestController extends Controller {
      * 
      */
     public function getPointsbyQueryAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
+        
+        //Query to analyze
         $requestContent = $request->getContent();
         $requestArray = json_decode($requestContent, true);
-        $testObj = json_decode($requestContent);
+        
+        $pointsofinterest = $em->getRepository('POIWebAppBundle:PointOfInterest')->findAll();
+       
         if (true) {
             $response->setStatusCode(200);
-            $response->setContent(json_encode($requestArray));
+            $response->setContent(json_encode($pointsofinterest));
         } else {
             $response->setStatusCode(404);
         }
