@@ -187,8 +187,19 @@ function initializePoisMap()
  * @param {type} info
  * @returns {undefined}
  */
-function addMarker(location, info) {
-    var marker = new google.maps.Marker({position: location, map: map});
+function addMarker(location, info, pinColor) {
+    var marker;
+    
+    if(pinColor !== null)
+    {
+        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|" + pinColor +'|13|b',
+        new google.maps.Size(60, 102),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34)); 
+        marker = new google.maps.Marker({position: location, map: map, icon: pinImage}); 
+    }
+    else
+      marker = new google.maps.Marker({position: location, map: map});  
 
     var popup = new google.maps.InfoWindow({content: info, maxWidth: 600});
 
@@ -291,7 +302,7 @@ function restults_markers(data) {
 
         var pt = new google.maps.LatLng(lat, lng);
         bounds.extend(pt);
-        addMarker(pt, info);
+        addMarker(pt, info, null);
 
 
     });
@@ -340,10 +351,10 @@ function restults_markers_v2(data) {
     $.each(data, function(i, point) {
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
 //        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>' + '<img border="0" align="Left" src="http://bestiariodelbalon.com/wp-content/uploads/Cafam-127x150.jpg">';
-        var content = '<div><strong>' + point.name + '</strong><Strong><br>' + point.address +'</br></Strong>' 
-                + point.description + '<br><Strong>' + 'Teléfono: </Strong>'
-                + point.phone_ext + ' - ' + point.phone + '</br>' +'<Strong>' + 'Horario: </Strong>'+point.schedule;
-        addMarker(pt, content);
+        var content = '<div>'+'<strong>' + point.category + '</strong>'+'<br><strong>' + point.name + '</strong></br><strong>' + point.address +'</strong>' 
+                +'<br>'+point.description +'</br>'+'<strong>' + 'Teléfono: </strong>'
+                + point.phone_ext + ' - ' + point.phone +'<br><strong>' + 'Horario: </strong>'+point.schedule+'</br></div>';
+        addMarker(pt, content, point.pincolor);
     });
 }
 
@@ -419,7 +430,7 @@ function restults_markersUpdate(data) {
 
         var pt = new google.maps.LatLng(lat, lng);
         bounds.extend(pt);
-        addMarker(pt, info);
+        addMarker(pt, info, null);
 
 
     });
