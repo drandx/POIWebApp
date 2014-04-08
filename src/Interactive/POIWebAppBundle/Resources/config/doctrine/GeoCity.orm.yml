@@ -13,7 +13,7 @@ Interactive\POIWebAppBundle\Entity\GeoCity:
             comment: ''
             id: true
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
     fields:
         name:
             type: string
@@ -22,13 +22,10 @@ Interactive\POIWebAppBundle\Entity\GeoCity:
             fixed: false
             comment: ''
     manyToOne:
-        idState:
+        geostate:
             targetEntity: GeoState
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
+            inversedBy: geo_cities
             joinColumns:
                 id_state:
                     referencedColumnName: id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

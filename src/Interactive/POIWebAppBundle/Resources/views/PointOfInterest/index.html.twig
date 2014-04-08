@@ -11,14 +11,14 @@
     <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Cudad</th>
-            <th>Dirección</th>
-            <th>Es Activo</th>
-            <th>Fecha Creación</th>
-            <th>Ultima Actualización</th>
-            <th>Acciones</th>
+            <th><a href="{{ path('poi_point',{'page': current_page}) }}">Id</a></th>
+            <th><a href="{{ path('poi_point',{'sortBy':'name'}) }}">Nombre</a></th>
+            <th><a href="{{ path('poi_point',{'sortBy':'geocity'}) }}">Ciudad</a></th>
+            <th><a href="{{ path('poi_point',{'sortBy':'address'}) }}">Direccion</a></th>
+            <th><a href="{{ path('poi_point',{'sortBy':'is_activated'}) }}">Activo</a></th>
+            <th><a href="{{ path('poi_point',{'sortBy':'created_at'}) }}">Fecha</a></th>
+            <th><a href="{{ path('poi_point',{'sortBy':'updated_at'}) }}">Actualización</a></th>
+            <th><a>Acciones</a></th>
         </tr>
     </thead>
     <tbody>

@@ -36,9 +36,10 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
 {
     var marker = new google.maps.Marker({
         map: map,
-        anchorPoint: new google.maps.Point(0, -29)
+        anchorPoint: new google.maps.Point(0, -29),
+        animation: google.maps.Animation.DROP
     });
-
+        
     var infowindow = new google.maps.InfoWindow();
 
     myMarker = marker;
@@ -174,7 +175,7 @@ function initializePoisMap()
      map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
      bounds = new google.maps.LatLngBounds();*/
     var mapOptions = {
-        zoom: 10,
+        zoom: 7,
         center: new google.maps.LatLng(Mylat, Mylong)
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -189,7 +190,7 @@ function initializePoisMap()
 function addMarker(location, info) {
     var marker = new google.maps.Marker({position: location, map: map});
 
-    var popup = new google.maps.InfoWindow({content: info, maxWidth: 300});
+    var popup = new google.maps.InfoWindow({content: info, maxWidth: 600});
 
     google.maps.event.addListener(marker, "click", function() {
         if (currentPopup != null) {
@@ -323,7 +324,8 @@ function getMarkersbyQuery()
         contentType: 'application/json',
         success: function(data) {
             clearOverlays();
-            restults_markers_v2(data);
+            if(data != null)
+                restults_markers_v2(data);
         }
     });
 }
@@ -336,11 +338,11 @@ function getMarkersbyQuery()
  */
 function restults_markers_v2(data) {
     $.each(data, function(i, point) {
-        //alert(point.id);
-        //alert(point.latitude);
-        //alert(point.longitude);
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
-        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>';
+//        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>' + '<img border="0" align="Left" src="http://bestiariodelbalon.com/wp-content/uploads/Cafam-127x150.jpg">';
+        var content = '<div><strong>' + point.name + '</strong><Strong><br>' + point.address +'</br></Strong>' 
+                + point.description + '<br><Strong>' + 'Teléfono: </Strong>'
+                + point.phone_ext + ' - ' + point.phone + '</br>' +'<Strong>' + 'Horario: </Strong>'+point.schedule;
         addMarker(pt, content);
     });
 }

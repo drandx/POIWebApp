@@ -6,38 +6,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * GeoCity
- *
- * @ORM\Table(name="geo_cities", indexes={@ORM\Index(name="geo_states_id_state_idx", columns={"id_state"})})
- * @ORM\Entity
  */
 class GeoCity
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     public $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=200, nullable=false)
      */
     public $name;
 
-    /**
-     * @var \Interactive\POIWebAppBundle\Entity\GeoState
-     *
-     * @ORM\ManyToOne(targetEntity="Interactive\POIWebAppBundle\Entity\GeoState")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_state", referencedColumnName="id")
-     * })
-     */
-    public $idState;
-    
     
     public function getId() {
         return $this->id;
@@ -47,9 +29,6 @@ class GeoCity
         return $this->name;
     }
 
-    public function getIdState() {
-        return $this->idState;
-    }
 
     public function setId($id) {
         $this->id = $id;
@@ -59,13 +38,38 @@ class GeoCity
         $this->name = $name;
     }
 
-    public function setIdState(\Interactive\POIWebAppBundle\Entity\GeoState $idState) {
-        $this->idState = $idState;
-    }
 
     public function __toString()
     {
         return $this->getName() ? $this->getName() : "";
+    }
+    
+     /**
+     * @var \Interactive\POIWebAppBundle\Entity\GeoState
+     */
+    public $geostate;
+    
+    /**
+     * Set geostate
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\GeoState $state
+     * @return GeoCity
+     */
+    public function setGeostate(\Interactive\POIWebAppBundle\Entity\GeoState $geostate = null)
+    {
+        $this->geostate = $geostate;
+
+        return $this;
+    }
+
+    /**
+     * Get geostate
+     *
+     * @return \Interactive\POIWebAppBundle\Entity\GeoState 
+     */
+    public function getGeostate()
+    {
+        return $this->geostate;
     }
 
 

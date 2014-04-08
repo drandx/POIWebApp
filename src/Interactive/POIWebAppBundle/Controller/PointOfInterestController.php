@@ -22,11 +22,9 @@ class PointOfInterestController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $categories = $em->getRepository('POIWebAppBundle:Category')->
-                findBy(array(), 
-                 array('name' => 'ASC')
-               );
-        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', 
-                array('categories'=>$categories));
+                findBy(array(), array('name' => 'ASC')
+        );
+        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', array('categories' => $categories));
     }
 
     public function getPointsbyCityAction($cityid) {
@@ -55,16 +53,37 @@ class PointOfInterestController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
-        
+
         //Query to analyze
         $requestContent = $request->getContent();
         $requestArray = json_decode($requestContent, true);
         
-        $pointsofinterest = $em->getRepository('POIWebAppBundle:PointOfInterest')->findAll();
-       
+        $cityQyery = $requestArray['cityQuery'];
+        $categoriesQuery = $requestArray['categories'];
+        $queryBreakDown = explode(",", $cityQyery)[0];
+        $stateName = "";
+        $cityName = "";
+        
+        //If he strin is created in this way: City - State, Country
+        if(strpos($queryBreakDown, ' - ')!= FALSE){
+            $cityName = rtrim(ltrim(explode("-", $queryBreakDown)[0]));
+            $stateName = rtrim(ltrim(explode("-", $queryBreakDown)[1]));
+            
+        }
+        else{
+            $cityName = $queryBreakDown;
+            $stateName = "";
+        }
+        
+        $result_points = $em->getRepository('POIWebAppBundle:PointOfInterest')->PointsOfInterestJoinCityState($cityName,$stateName,$categoriesQuery);
+        
+        
+        //$result_points = $em->getRepository('POIWebAppBundle:PointOfInterest')->findAll();
+        
+
         if (true) {
             $response->setStatusCode(200);
-            $response->setContent(json_encode($pointsofinterest));
+            $response->setContent(json_encode($result_points));
         } else {
             $response->setStatusCode(404);
         }
@@ -89,7 +108,7 @@ class PointOfInterestController extends Controller {
      * Lists all PointOfInterest entities.
      *
      */
-    public function indexAction($page) {
+    public function indexAction(Request $request, $page) {
         $em = $this->getDoctrine()->getManager();
 
         $total_pois = $em->getRepository('POIWebAppBundle:PointOfInterest')->countPointsOfInterest();
@@ -99,6 +118,21 @@ class PointOfInterestController extends Controller {
         $next_page = $page < $last_page ? $page + 1 : $last_page;
 
         $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->getPointsOfInterest($pois_per_page, ($page - 1) * $pois_per_page);
+
+        $request = $this->getRequest();
+        $arg = $request->query->get('sortBy');
+
+        if (($arg != null) && $arg != "") {
+            uasort($entities, function ($a, $b) use ($arg) {
+                if (property_exists($a, $arg)) {
+                    if ($a->$arg == $b->$arg) {
+                        return 0;
+                    }
+                    return ($a->$arg < $b->$arg) ? -1 : 1;
+                }
+            });
+        }
+
 
         return $this->render('POIWebAppBundle:PointOfInterest:index.html.twig', array(
                     'entities' => $entities,
