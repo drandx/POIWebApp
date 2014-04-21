@@ -192,7 +192,7 @@ function addMarker(location, info, pinColor) {
     
     if(pinColor !== null)
     {
-        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|" + pinColor +'|13|b',
+        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.75|0|" + pinColor +'|13|b',
         new google.maps.Size(60, 102),
         new google.maps.Point(0,0),
         new google.maps.Point(10, 34)); 
@@ -349,14 +349,28 @@ function getMarkersbyQuery()
  */
 function restults_markers_v2(data) {
     $.each(data, function(i, point) {
+        validateEmptyString(point.phone);
+        
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
 //        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>' + '<img border="0" align="Left" src="http://bestiariodelbalon.com/wp-content/uploads/Cafam-127x150.jpg">';
-        var content = '<div>'+'<strong>' + point.category + '</strong>'+'<br><strong>' + point.name + '</strong></br><strong>' + point.address +'</strong>' 
-                +'<br>'+point.description +'</br>'+'<strong>' + 'Teléfono: </strong>'
-                + point.phone_ext + ' - ' + point.phone +'<br><strong>' + 'Horario: </strong>'+point.schedule+'</br></div>';
+        var content = '<div>'+'<strong>' + point.category + '</strong>'+'<br><strong>' + validateEmptyString(point.name) + '</strong></br><strong>' + validateEmptyString(point.address) +'</strong>' 
+                +'<br>'+validateEmptyString(point.description) +'</br>'+'<strong>' + 'Teléfono: </strong>'
+                + validateEmptyString(point.phone_ext) + ' - ' + validateEmptyString(point.phone) +'<br><strong>' + 'Horario: </strong>'+validateEmptyString(point.schedule)+'</br></div>';
         addMarker(pt, content, point.pincolor);
     });
 }
+
+/**
+ * 
+ * @returns {undefined}
+ */
+function validateEmptyString(field){
+ if(field === null)
+     return"-";
+ else
+     return field;
+}
+
 
 /*
  * 
