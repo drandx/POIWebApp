@@ -1,23 +1,17 @@
 <?php
-
 namespace Interactive\POIWebAppBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * Role
  */
-class Role
+class Role implements RoleInterface
 {
     /**
      * @var integer
      */
     private $id;
 
-    /**
-     * @var string
-     */
-    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -41,30 +35,7 @@ class Role
     {
         return $this->id;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Role
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
+    
     /**
      * Add users
      *
@@ -101,6 +72,34 @@ class Role
     
     public function __toString()
     {
-        return $this->getName() ? $this->getName() : "";
+        return $this->getRole() ? $this->getRole() : "";
+    }
+    /**
+     * @var string
+     */
+    private $role;
+
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return Role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

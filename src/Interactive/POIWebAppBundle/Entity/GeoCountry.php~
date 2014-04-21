@@ -2,36 +2,24 @@
 
 namespace Interactive\POIWebAppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * GeoCountry
- *
- * @ORM\Table(name="geo_countries")
- * @ORM\Entity
  */
 class GeoCountry
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=200, nullable=false)
      */
     private $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="code", type="string", length=5, nullable=true)
      */
     private $code;
     

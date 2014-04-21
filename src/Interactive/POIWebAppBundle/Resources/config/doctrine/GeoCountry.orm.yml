@@ -9,7 +9,7 @@ Interactive\POIWebAppBundle\Entity\GeoCountry:
             comment: ''
             id: true
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
     fields:
         name:
             type: string

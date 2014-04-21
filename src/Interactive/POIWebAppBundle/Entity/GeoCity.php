@@ -2,8 +2,6 @@
 
 namespace Interactive\POIWebAppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * GeoCity
  */

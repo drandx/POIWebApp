@@ -6,7 +6,7 @@ Interactive\POIWebAppBundle\Entity\Role:
             type: integer
             generator: { strategy: AUTO }
     fields:
-        name:
+        role:
             type: string
             length: 255
     manyToMany:
