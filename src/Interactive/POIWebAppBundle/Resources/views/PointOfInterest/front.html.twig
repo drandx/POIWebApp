@@ -96,13 +96,15 @@
                                     <!-- Here starts the php loop-->
                                     <div id="categoriesContainer">
                                         {% for category in categories %}
-                                        <div class="checkbox" style="background-color:#{{category.pinhexcolor}}">
+                                        <div class="checkbox form-inline">
                                             <label>
                                                 {#<input type="checkbox" value="{{category.id}}" {% if loop.first %}checked{%endif%}>#}
                                                 <input type="checkbox" value="{{category.id}}" checked>
                                                 {{category.name}}
                                             </label>
+                                            <a style="background-color:#{{category.pinhexcolor}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</a>
                                         </div>
+                                        
                                         {%endfor%}
                                         <!-- Here ends the php loop-->
                                     </div>
