@@ -9,48 +9,76 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GeoState
 {
+    
     /**
      * @var integer
      */
-    public $id;
+    private $id;
 
     /**
      * @var string
-     *
      */
-    public $name;
+    private $name;
 
     /**
-     * @var integer
+     * @var \Interactive\POIWebAppBundle\Entity\GeoCountry
      */
-    public $idCountry;
-    
-    
-    public function getId() {
+    private $geocountry;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getName() {
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return GeoState
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function getIdCountry() {
-        return $this->idCountry;
+    /**
+     * Set geocountry
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\GeoCountry $geocountry
+     * @return GeoState
+     */
+    public function setGeocountry(\Interactive\POIWebAppBundle\Entity\GeoCountry $geocountry = null)
+    {
+        $this->geocountry = $geocountry;
+
+        return $this;
     }
 
-    public function setId($id) {
-        $this->id = $id;
+    /**
+     * Get geocountry
+     *
+     * @return \Interactive\POIWebAppBundle\Entity\GeoCountry 
+     */
+    public function getGeocountry()
+    {
+        return $this->geocountry;
     }
-
-    public function setName($name) {
-        $this->name = $name;
-    }
-
-    public function setIdCountry($idCountry) {
-        $this->idCountry = $idCountry;
-    }
-
-
-
-
 }

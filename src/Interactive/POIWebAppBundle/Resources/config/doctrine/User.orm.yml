@@ -22,4 +22,12 @@ Interactive\POIWebAppBundle\Entity\User:
         email:
             type: string
             length: 255
+            nullable: false;
+            unique: true;
+    manyToMany:
+        roles:
+            targetEntity: Role
+            mappedBy: users
+            nullable: false
+    lifecycleCallbacks: {  }
             

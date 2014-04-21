@@ -1,0 +1,22 @@
+Interactive\POIWebAppBundle\Entity\Role:
+    type: entity
+    table: role
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 255
+    manyToMany:
+        users:
+            targetEntity: User
+            joinTable:
+                name: user_role
+                joinColumns:
+                    role_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    user_id:
+                        referencedColumnName: id

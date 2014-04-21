@@ -21,5 +21,12 @@ Interactive\POIWebAppBundle\Entity\GeoState:
             length: 200
             fixed: false
             comment: ''
+    manyToOne:
+        geocountry:
+            targetEntity: GeoCountry
+            inversedBy: geo_states
+            joinColumns:
+                id_country:
+                    referencedColumnName: id
     
     lifecycleCallbacks: {  }

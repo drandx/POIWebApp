@@ -17,8 +17,9 @@ class UserType extends AbstractType
         $builder
             ->add('firstName','text', array('label' => 'Nombre','attr' => array('placeholder' => 'Nombre')))
             ->add('lastName','text', array('label' => 'Apellido','attr' => array('placeholder' => 'Apellido')))
-            ->add('password','password', array('label' => 'Contraseña','attr' => array('placeholder' => 'Contraseña')))
-            ->add('email','email', array('label'=>'Correo electrónico','attr' => array('placeholder' => 'email')))
+            ->add('password','password', array('required'=>true,'label' => 'Contraseña *','attr' => array('placeholder' => 'Contraseña')))
+            ->add('roles',null, array('expanded'=>false,'required'=>true,'label' => 'Roles *','attr' => array('placeholder' => 'Roles')))
+            ->add('email','email', array('required'=>true,'label'=>'Correo electrónico *','attr' => array('placeholder' => 'email')))
         ;
     }
     

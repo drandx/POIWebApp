@@ -13,27 +13,27 @@ class Category
     /**
      * @var integer
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      */
-    private $name;
+    public $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $jobs;
+    public $jobs;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $affiliates;
+    public $affiliates;
     
      /**
      * @var string
      */
-    private $pinhexcolor;
+    public $pinhexcolor;
 
     /**
      * Constructor
@@ -148,7 +148,7 @@ class Category
         return $this->getName() ? $this->getName() : "";
     }
     
-    private $active_jobs;
+    public $active_jobs;
  
     // ...
 
@@ -162,7 +162,7 @@ class Category
       return $this->active_jobs;
     }
     
-    private $more_jobs;
+    public $more_jobs;
  
     // ...
  
@@ -186,7 +186,7 @@ class Category
     /**
      * @var string
      */
-    private $slug;
+    public $slug;
 
 
     /**
@@ -214,7 +214,7 @@ class Category
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $points_of_interest;
+    public $points_of_interest;
 
 
     /**
@@ -252,7 +252,7 @@ class Category
     /**
      * @var string
      */
-    private $description;
+    public $description;
 
 
     /**
@@ -280,7 +280,7 @@ class Category
     /**
      * @var string
      */
-    private $image;
+    public $image;
 
 
     /**

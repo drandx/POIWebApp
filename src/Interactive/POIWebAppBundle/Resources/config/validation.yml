@@ -1,3 +1,9 @@
+Interactive\POIWebAppBundle\Entity\User:
+constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+properties:
+        email:
+            - Email: ~
 Interactive\POIWebAppBundle\Entity\Job:
     properties:
         file:
@@ -22,13 +28,3 @@ Interactive\POIWebAppBundle\Entity\Job:
             - Email: ~
         url:
             - Url: ~
-
-Interactive\POIWebAppBundle\Entity\User:
-properties:
-        email:
-            - NotBlank: ~
-            - Email: ~
-        password:
-            - NotBlank: ~ 
-        firstname:
-            - NotBlank: ~

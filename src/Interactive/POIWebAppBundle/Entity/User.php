@@ -1,9 +1,7 @@
 <?php
-
 namespace Interactive\POIWebAppBundle\Entity;
  
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\Mapping as ORM;
  
 /**
  * User
@@ -82,6 +80,7 @@ class User implements UserInterface
     public function getRoles()
     {
         return array('ROLE_ADMIN');
+        //return $this->roles;
     }
  
     public function getSalt()
@@ -181,5 +180,40 @@ class User implements UserInterface
     public function getEmail()
     {
         return $this->email;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $roles;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\Interactive\POIWebAppBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\Role $roles
+     */
+    public function removeRole(\Interactive\POIWebAppBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
     }
 }
