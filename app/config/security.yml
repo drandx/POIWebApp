@@ -28,6 +28,7 @@ security:
             
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/app, roles: ROLE_ADMIN }
         
     providers:
          main:

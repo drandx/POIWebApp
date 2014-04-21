@@ -1,6 +1,6 @@
 #Front end routes
 poi_front:
-    pattern:  /
+    pattern:  /app
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:frontIndex" }
 
 #Login-secured routes
