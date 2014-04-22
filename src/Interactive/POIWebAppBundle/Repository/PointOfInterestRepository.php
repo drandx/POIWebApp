@@ -29,22 +29,16 @@ class PointOfInterestRepository extends EntityRepository {
 //          ->getQuery()
 //          ->getResult();
 
-        
-        if ($geocityName == '')
-        {
-            $geocityName = 'Bogota';
+        if (count($categoriesQuery) == 0) {
+            return null;
         }
-        else{
-            if(count($categoriesQuery) == 0){
-                return null;
-            }
-        }
-        
-        $generalStmt = "SELECT p.*, gc.name as city, cat.image as cat_image, cat.pinhexcolor as pincolor, cat.name as category FROM point_of_interest AS p LEFT "
-                . "JOIN geo_cities AS gc ON (gc.name like '%$geocityName%') INNER JOIN category as cat ON (cat.id = p.category_id) ";
+
+        $generalStmt = "SELECT p.*, gc.name as city, cat.image as cat_image, cat.pinhexcolor as pincolor, "
+                . "cat.name as category FROM point_of_interest AS p LEFT "
+                . "JOIN geo_cities AS gc ON (gc.id = p.geocity_id) INNER JOIN category as cat ON (cat.id = p.category_id) ";
+
         $whereStmt = "";
         $count = 0;
-
         foreach ($categoriesQuery as $value) {
             if ($count == 0) {
                 $whereStmt = " WHERE p.category_id = " . $value;

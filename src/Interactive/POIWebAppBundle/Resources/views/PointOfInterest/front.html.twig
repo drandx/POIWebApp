@@ -102,8 +102,8 @@
                                         {% for category in categories %}
                                         <div class="checkbox form-inline">
                                             <label>
-                                                {#<input type="checkbox" value="{{category.id}}" {% if loop.first %}checked{%endif%}>#}
-                                                <input type="checkbox" value="{{category.id}}" checked>
+                                                <input type="checkbox" value="{{category.id}}" {% if category.id == 12 %}checked{%endif%}>
+                                                {#<input type="checkbox" value="{{category.id}}" checked>#}
                                                 {{category.name}}
                                             </label>
                                             <a style="background-color:#{{category.pinhexcolor}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</a>
