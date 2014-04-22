@@ -24,11 +24,11 @@ security:
                
             logout:
                 path:   /logout
-                target: /admin
+                target: /app
             
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/app, roles: ROLE_ADMIN }
+        - { path: ^/app, roles: ROLE_USER }
         
     providers:
          main:

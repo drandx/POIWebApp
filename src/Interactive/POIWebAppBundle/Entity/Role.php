@@ -1,11 +1,9 @@
 <?php
 namespace Interactive\POIWebAppBundle\Entity;
-use Symfony\Component\Security\Core\Role\RoleInterface;
-
 /**
  * Role
  */
-class Role implements RoleInterface
+class Role
 {
     /**
      * @var integer
@@ -42,10 +40,9 @@ class Role implements RoleInterface
      * @param \Interactive\POIWebAppBundle\Entity\User $users
      * @return Role
      */
-    public function addUser(\Interactive\POIWebAppBundle\Entity\User $users)
+    public function addUser($users)
     {
         $this->users[] = $users;
-
         return $this;
     }
 
@@ -54,7 +51,7 @@ class Role implements RoleInterface
      *
      * @param \Interactive\POIWebAppBundle\Entity\User $users
      */
-    public function removeUser(\Interactive\POIWebAppBundle\Entity\User $users)
+    public function removeUser($users)
     {
         $this->users->removeElement($users);
     }
@@ -70,10 +67,10 @@ class Role implements RoleInterface
     }
     
     
-    public function __toString()
-    {
-        return $this->getRole() ? $this->getRole() : "";
-    }
+//    public function __toString()
+//    {
+//        return $this->getRole() ? $this->getRole() : "";
+//    }
     /**
      * @var string
      */
@@ -101,5 +98,10 @@ class Role implements RoleInterface
     public function getRole()
     {
         return $this->role;
+    }
+    
+    public function __toString()
+    {
+        return $this->getRole() ? $this->getRole() : "";
     }
 }

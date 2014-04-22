@@ -23,11 +23,9 @@ Interactive\POIWebAppBundle\Entity\User:
             type: string
             length: 255
             nullable: false;
-            unique: true;
+            unique: false;
     manyToMany:
         roles:
             targetEntity: Role
             mappedBy: users
-            nullable: false
-    lifecycleCallbacks: {  }
-            
+ 

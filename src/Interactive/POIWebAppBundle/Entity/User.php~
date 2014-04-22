@@ -79,8 +79,12 @@ class User implements UserInterface
  
     public function getRoles()
     {
-        return array('ROLE_ADMIN');
-        //return $this->roles;
+        $roleStrings = array('');
+        foreach ($this->roles as $obj) {
+            $string = $obj->getRole();
+            array_push($roleStrings, $string."");
+        }
+        return $roleStrings;
     }
  
     public function getSalt()

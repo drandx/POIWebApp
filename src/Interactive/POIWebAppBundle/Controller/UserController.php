@@ -4,7 +4,6 @@ namespace Interactive\POIWebAppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Interactive\POIWebAppBundle\Entity\User;
 use Interactive\POIWebAppBundle\Form\UserType;
 
@@ -12,47 +11,45 @@ use Interactive\POIWebAppBundle\Form\UserType;
  * User controller.
  *
  */
-class UserController extends Controller
-{
+class UserController extends Controller {
 
     /**
      * Lists all User entities.
      *
      */
-    public function dashboardAction()
-    {
+    public function dashboardAction() {
         return $this->render('POIWebAppBundle:Administrator:dashboard.html.twig', array());
     }
-    
+
     /**
      * Lists all User entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('POIWebAppBundle:User')->findAll();
 
         return $this->render('POIWebAppBundle:User:index.html.twig', array(
-            'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new User entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new User();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
             $this->get('interactive.poiwebapp.admin.user_manager')->setUserEncodedPassword($entity);
-            
+            foreach ($entity->getRolesArray() as $obj) {
+                $obj->addUser($entity);
+            }
             $em->persist($entity);
             $em->flush();
 
@@ -60,20 +57,19 @@ class UserController extends Controller
         }
 
         return $this->render('POIWebAppBundle:User:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
     /**
-    * Creates a form to create a User entity.
-    *
-    * @param User $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(User $entity)
-    {
+     * Creates a form to create a User entity.
+     *
+     * @param User $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(User $entity) {
         $form = $this->createForm(new UserType(), $entity, array(
             'action' => $this->generateUrl('poi_user_create'),
             'method' => 'POST',
@@ -88,14 +84,13 @@ class UserController extends Controller
      * Displays a form to create a new User entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new User();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('POIWebAppBundle:User:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -103,8 +98,7 @@ class UserController extends Controller
      * Finds and displays a User entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('POIWebAppBundle:User')->find($id);
@@ -116,16 +110,15 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('POIWebAppBundle:User:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),));
     }
 
     /**
      * Displays a form to edit an existing User entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('POIWebAppBundle:User')->find($id);
@@ -138,21 +131,20 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('POIWebAppBundle:User:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a User entity.
-    *
-    * @param User $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(User $entity)
-    {
+     * Creates a form to edit a User entity.
+     *
+     * @param User $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(User $entity) {
         $form = $this->createForm(new UserType(), $entity, array(
             'action' => $this->generateUrl('poi_user_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -162,19 +154,19 @@ class UserController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing User entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $entity = new User();
         $entity = $em->getRepository('POIWebAppBundle:User')->find($id);
-        
+
         //TODO - Store the old password locally
         $oldpassword = $entity->getPassword();
-        
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
@@ -182,29 +174,31 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-        
-        //If passwords are dfferent means that a new data was entered in the password field
-        if($oldpassword != $entity->getPassword())
-            $this->get('interactive.poiwebapp.admin.user_manager')->setUserEncodedPassword($entity);
-        
-        if ($editForm->isValid()) {
-            $em->flush();
 
+        //If passwords are dfferent means that a new data was entered in the password field
+        if ($oldpassword != $entity->getPassword())
+            $this->get('interactive.poiwebapp.admin.user_manager')->setUserEncodedPassword($entity);
+
+        if ($editForm->isValid()) {
+            foreach ($entity->getRolesArray() as $obj) {
+                $obj->addUser($entity);
+            }
+            $em->flush();
             return $this->redirect($this->generateUrl('poi_user_edit', array('id' => $id)));
         }
 
         return $this->render('POIWebAppBundle:User:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a User entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -230,13 +224,13 @@ class UserController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('poi_user_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('poi_user_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

@@ -1,6 +1,6 @@
 <?php
 namespace Interactive\POIWebAppBundle\Entity;
- 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
  
 /**
@@ -75,12 +75,6 @@ class User implements UserInterface
     public function getPassword()
     {
         return $this->password;
-    }
- 
-    public function getRoles()
-    {
-        return array('ROLE_ADMIN');
-        //return $this->roles;
     }
  
     public function getSalt()
@@ -197,12 +191,21 @@ class User implements UserInterface
     /**
      * Add roles
      *
-     * @param \Interactive\POIWebAppBundle\Entity\Role $roles
+     * @param \Doctrine\Common\Collections\ArrayCollection $roles
      * @return User
      */
-    public function addRole(\Interactive\POIWebAppBundle\Entity\Role $roles)
+    public function addRole($roles)
     {
-        $this->roles[] = $roles;
+       if(is_array($roles))
+       {
+           $this->roles = $roles;
+       }
+       else
+       { 
+           $roleArray = array();
+           array_push($roleArray, $roles);
+           $this->roles = $roleArray;
+       }
 
         return $this;
     }
@@ -210,10 +213,26 @@ class User implements UserInterface
     /**
      * Remove roles
      *
-     * @param \Interactive\POIWebAppBundle\Entity\Role $roles
+     * 
      */
-    public function removeRole(\Interactive\POIWebAppBundle\Entity\Role $roles)
+    public function removeRole($roles)
     {
         $this->roles->removeElement($roles);
     }
+    
+    public function getRoles()
+    {
+        $roleStrings = array('');
+        foreach ($this->roles as $obj) {
+            $string = $obj->getRole();
+            array_push($roleStrings, $string."");
+        }
+        return $roleStrings;
+    }
+    
+    public function getRolesArray()
+    {
+        return $this->roles;
+    }
+    
 }

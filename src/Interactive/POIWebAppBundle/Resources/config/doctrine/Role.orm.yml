@@ -1,6 +1,7 @@
 Interactive\POIWebAppBundle\Entity\Role:
     type: entity
     table: role
+    repositoryClass: Interactive\POIWebAppBundle\Repository\RoleRepository
     id:
         id:
             type: integer

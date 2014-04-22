@@ -331,7 +331,7 @@ function getMarkersbyQuery()
         data: JSON.stringify(Query),
         type: 'POST',
         dataType: 'json',
-        url: '../api/pointsQuery',
+        url: 'api/pointsQuery',
         contentType: 'application/json',
         success: function(data) {
             clearOverlays();
