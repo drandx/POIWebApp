@@ -326,7 +326,7 @@ function getMarkersbyQuery()
     var Query = new Object();
     Query.cityQuery = document.getElementById("googleAutoComplete").value;
     Query.categories = catValues;
-
+    $('#loader').show();
     $.ajax({
         data: JSON.stringify(Query),
         type: 'POST',
@@ -335,6 +335,7 @@ function getMarkersbyQuery()
         contentType: 'application/json',
         success: function(data) {
             clearOverlays();
+            $('#loader').hide();
             if(data != null)
                 restults_markers_v2(data);
         }
@@ -358,6 +359,7 @@ function restults_markers_v2(data) {
                 + validateEmptyString(point.phone_ext) + ' - ' + validateEmptyString(point.phone) +'<br><strong>' + 'Horario: </strong>'+validateEmptyString(point.schedule)+'</br></div>';
         addMarker(pt, content, point.pincolor);
     });
+    
 }
 
 /**

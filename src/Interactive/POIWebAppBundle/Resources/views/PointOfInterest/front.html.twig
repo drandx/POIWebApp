@@ -16,7 +16,17 @@
         <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/offcanvas.css') }}" type="text/css" media="all" />
         <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/searchGoogleMap.css') }}" type="text/css" media="all" />
     {% endblock %}
-
+        <style>
+            #loader {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 100%;
+                margin-top: -10px;
+                line-height: 20px;
+                text-align: center;
+            }
+        </style>
         <!-- Just for debugging purposes. Don't actually copy this line! -->
         <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -54,7 +64,6 @@
         </div><!-- /.navbar -->
 
         <div class="container">
-
             <div class="row row-offcanvas row-offcanvas-right">
 
                 <div class="col-xs-12 col-sm-9">
@@ -63,6 +72,9 @@
                     </p>
                     <div class="container-fluid">
                         <div id="map-canvas" class="row" style="height: 500px"></div>
+                        <div id="loader">
+                            <p><img src="{{ asset('bundles/poiwebapp/images/loaderBar.gif') }}" /></p>
+                        </div>
                     </div>
                 </div><!--/span-->
 
