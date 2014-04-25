@@ -43,7 +43,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Mapa</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                           <li><a href="{{ path('poi_point') }}">Administrador</a></li>
+                        <li><a href="{{ path('poi_point') }}">Administrador</a></li>
                         {% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -97,6 +97,14 @@
                             <div id="collapseTwo" class="panel-collapse collapse">
 
                                 <div class="panel-body">
+                                    <div id="selectAllContainer">
+                                        <div class="checkbox form-inline">
+                                            <label>
+                                                <input type="checkbox" id="selectall">
+                                                Seleccionar todo
+                                            </label>
+                                        </div>
+                                    </div>
                                     <!-- Here starts the php loop-->
                                     <div id="categoriesContainer">
                                         {% for category in categories %}
@@ -143,6 +151,10 @@
                 document.getElementById('googleAutoComplete').value = "";
             });
             $("#categoriesContainer").change(function() {
+                getMarkersbyQuery();
+            });
+            $('#selectall').click(function() {
+                $('input:checkbox').prop('checked', this.checked);
                 getMarkersbyQuery();
             });
         </script>
