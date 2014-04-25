@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/PointOfInterest/front.html.twig</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/PointOfInterest/index.html.twig</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/public/js/googleMaps.js</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/PointOfInterest/new.html.twig</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/public/css/searchGoogleMap.css</file>
+        </group>
     </open-files>
 </project-private>
