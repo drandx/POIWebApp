@@ -59,8 +59,12 @@ class PointOfInterestRepository extends EntityRepository {
     }
 
     public function getPointsOfInterest($max = null, $offset = null) {
-        $qb = $this->createQueryBuilder('j')
-                ->orderBy('j.geocity', 'ASC');
+        $qb = $this->getEntityManager()
+          ->createQueryBuilder()
+          ->select('p')
+          ->from('POIWebAppBundle:PointOfInterest', 'p')
+          ->innerJoin('p.geocity', 'gc')
+          ->orderBy('gc.name', 'ASC');
 
         if ($max) {
             $qb->setMaxResults($max);
@@ -81,6 +85,7 @@ class PointOfInterestRepository extends EntityRepository {
           ->createQueryBuilder()
           ->select('p')
           ->from('POIWebAppBundle:PointOfInterest', 'p')
+          ->innerJoin('p.geocity', 'gc')
           ->where('p.description like :p_query')
           ->orWhere('p.name like :p_query')
           ->orWhere('p.phone like :p_query')
@@ -88,8 +93,10 @@ class PointOfInterestRepository extends EntityRepository {
           ->orWhere('p.phone_ext like :p_query')
           ->orWhere('p.fax like :p_query')
           ->orWhere('p.address like :p_query')
+          ->orWhere('gc.name like :p_query')      
           ->setParameter('p_query', '%' . $stringQuery . '%')
-          ->orderBy('p.geocity', 'ASC');
+          ->orderBy('p.geocity', 'ASC')
+          ->orderBy('p.name', 'ASC');
 
         if ($max) {
             $qb->setMaxResults($max);
@@ -110,6 +117,7 @@ class PointOfInterestRepository extends EntityRepository {
           ->createQueryBuilder()
           ->select('count(p.id)')
           ->from('POIWebAppBundle:PointOfInterest', 'p')
+          ->innerJoin('p.geocity', 'gc')
           ->where('p.description like :p_query')
           ->orWhere('p.name like :p_query')
           ->orWhere('p.phone like :p_query')
@@ -117,8 +125,10 @@ class PointOfInterestRepository extends EntityRepository {
           ->orWhere('p.phone_ext like :p_query')
           ->orWhere('p.fax like :p_query')
           ->orWhere('p.address like :p_query')
+          ->orWhere('gc.name like :p_query') 
           ->setParameter('p_query', '%' . $stringQuery . '%')
-          ->orderBy('p.geocity', 'ASC');
+          ->orderBy('p.geocity', 'ASC')
+          ->orderBy('p.name', 'ASC');
         
         $query = $qb->getQuery();
 
