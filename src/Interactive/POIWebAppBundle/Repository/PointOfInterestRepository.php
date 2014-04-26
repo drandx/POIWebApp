@@ -74,6 +74,56 @@ class PointOfInterestRepository extends EntityRepository {
 
         return $query->getResult();
     }
+    
+    public function getPointsOfInterestbyQuery($stringQuery, $max = null, $offset = null) {
+        
+        $qb = $this->getEntityManager()
+          ->createQueryBuilder()
+          ->select('p')
+          ->from('POIWebAppBundle:PointOfInterest', 'p')
+          ->where('p.description like :p_query')
+          ->orWhere('p.name like :p_query')
+          ->orWhere('p.phone like :p_query')
+          ->orWhere('p.email like :p_query')
+          ->orWhere('p.phone_ext like :p_query')
+          ->orWhere('p.fax like :p_query')
+          ->orWhere('p.address like :p_query')
+          ->setParameter('p_query', '%' . $stringQuery . '%')
+          ->orderBy('p.geocity', 'ASC');
+
+        if ($max) {
+            $qb->setMaxResults($max);
+        }
+
+        if ($offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+    
+    public function countPointsOfInterestbyQuery($stringQuery) {
+        
+        $qb = $this->getEntityManager()
+          ->createQueryBuilder()
+          ->select('count(p.id)')
+          ->from('POIWebAppBundle:PointOfInterest', 'p')
+          ->where('p.description like :p_query')
+          ->orWhere('p.name like :p_query')
+          ->orWhere('p.phone like :p_query')
+          ->orWhere('p.email like :p_query')
+          ->orWhere('p.phone_ext like :p_query')
+          ->orWhere('p.fax like :p_query')
+          ->orWhere('p.address like :p_query')
+          ->setParameter('p_query', '%' . $stringQuery . '%')
+          ->orderBy('p.geocity', 'ASC');
+        
+        $query = $qb->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
 
     public function countPointsOfInterest() {
         $qb = $this->createQueryBuilder('j')

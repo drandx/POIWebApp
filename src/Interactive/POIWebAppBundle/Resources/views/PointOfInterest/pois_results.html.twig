@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/jobs.css') }}" type="text/css" media="all" />
 {% endblock %}
 {% block content %}
-<h2 class="sub-header">Puntos de interés</h2>
-{{ include ('POIWebAppBundle:PointOfInterest:list.html.twig', {'entities': entities,'last_page':last_page,'previous_page':previous_page,'next_page':next_page,'current_page':current_page,'total_items':total_items, 'dest_path':'poi_point'}) }}
+<h2 class="sub-header">Resultados</h2>
+{{ include ('POIWebAppBundle:PointOfInterest:list.html.twig', {'entities': entities,'last_page':last_page,'previous_page':previous_page,'next_page':next_page,'current_page':current_page,'total_items':total_items, 'dest_path':'poi_results'}) }}
 <ul>
     <li>
         <a href="{{ path('poi_point_new') }}">

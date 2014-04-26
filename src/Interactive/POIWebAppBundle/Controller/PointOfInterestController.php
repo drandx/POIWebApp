@@ -103,12 +103,50 @@ class PointOfInterestController extends Controller {
                     'latitude' => '41.962457', 'longitude' => '-87.675596'
         ));
     }
+    /**
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param type $page
+     * @return type
+     */
+    public function resultsAction(Request $request, $page) {
+        $session = $this->getRequest()->getSession();
+        $query = $request->request->get('query');
+        if($query){
+            //Stores query in session
+            $session->set('currentQuery',$query);
+        }
+        else{
+            //Gets query from session
+            $query = $session->get('currentQuery');
+        }
+        $em = $this->getDoctrine()->getManager();
+        
+        $pois_per_page = $this->container->getParameter('max_points_on_pointslist');
+        
+        $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->getPointsOfInterestbyQuery($query, $pois_per_page, ($page - 1) * $pois_per_page);
+        
+        
+        $previous_page = $page > 1 ? $page - 1 : 1;
+        $total_pois = $em->getRepository('POIWebAppBundle:PointOfInterest')->countPointsOfInterestbyQuery($query);
+        $last_page = ceil($total_pois / $pois_per_page);
+        $next_page = $page < $last_page ? $page + 1 : $last_page;
+
+        return $this->render('POIWebAppBundle:PointOfInterest:pois_results.html.twig', array(
+                    'entities' => $entities,
+                    'last_page' => $last_page,
+                    'previous_page' => $previous_page,
+                    'current_page' => $page,
+                    'next_page' => $next_page,
+                    'total_items' => $total_pois
+        ));
+    }
 
     /**
      * Lists all PointOfInterest entities.
      *
      */
-    public function indexAction(Request $request, $page) {
+    public function indexAction($page) {
         $em = $this->getDoctrine()->getManager();
 
         $total_pois = $em->getRepository('POIWebAppBundle:PointOfInterest')->countPointsOfInterest();
@@ -119,28 +157,13 @@ class PointOfInterestController extends Controller {
 
         $entities = $em->getRepository('POIWebAppBundle:PointOfInterest')->getPointsOfInterest($pois_per_page, ($page - 1) * $pois_per_page);
 
-        $request = $this->getRequest();
-        $arg = $request->query->get('sortBy');
-
-        if (($arg != null) && $arg != "") {
-            uasort($entities, function ($a, $b) use ($arg) {
-                if (property_exists($a, $arg)) {
-                    if ($a->$arg == $b->$arg) {
-                        return 0;
-                    }
-                    return ($a->$arg < $b->$arg) ? -1 : 1;
-                }
-            });
-        }
-
-
         return $this->render('POIWebAppBundle:PointOfInterest:index.html.twig', array(
                     'entities' => $entities,
                     'last_page' => $last_page,
                     'previous_page' => $previous_page,
                     'current_page' => $page,
                     'next_page' => $next_page,
-                    'total_jobs' => $total_pois
+                    'total_items' => $total_pois
         ));
     }
 

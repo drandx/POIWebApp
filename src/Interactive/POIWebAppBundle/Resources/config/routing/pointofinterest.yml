@@ -4,6 +4,10 @@ poi_front:
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:frontIndex" }
 
 #Login-secured routes
+poi_results:
+    pattern:  /admin/poiresults/{page}
+    defaults: { _controller: "POIWebAppBundle:PointOfInterest:results", page: 1}
+
 poi_map:
     pattern:  /admin/map
     defaults: { _controller: "POIWebAppBundle:PointOfInterest:renderMap" }
