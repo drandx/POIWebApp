@@ -1,8 +1,45 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'one' %}
+{% block stylesheets %}
+ {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/searchGoogleMap.css') }}" type="text/css" media="all" />
+{% endblock%}
+{% block javascripts %}
+ {{ parent() }}
+    <script src="{{ asset('bundles/poiwebapp/js/googleMaps.js') }}"></script>
+    <script type="text/javascript">
+        var latitude = "{{ entity.latitude }}";
+        var longitude = "{{ entity.longitude }}";
+        var myPoint = new google.maps.LatLng(latitude, longitude);
+        google.maps.event.addDomListener(window, 'load', initializeSearchMap(myPoint,true));
+    </script>
+{% endblock %}
 {% block content %}
-<h2 class="sub-header">Editar Punto de Interés</h2>
-{% form_theme edit_form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
-    {{ form(edit_form) }}
-<li>{{ form(delete_form) }}</li>
+    <h2 class="sub-header">Crear Punto de Interés</h2>
+    {% form_theme edit_form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
+   {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.geocity) }}
+        {{ form_row(edit_form.latitude) }}
+        {{ form_row(edit_form.longitude) }}
+        <div class="container-fluid">
+            <input id="pac-input" class="controls" type="text" placeholder="Ingrese ubicación">
+            <div id="type-selector" class="controls">
+                <input type="radio" name="type" id="changetype-all" checked="checked">
+                <label for="changetype-all">Todo</label>
+
+                <input type="radio" name="type" id="changetype-establishment">
+                <label for="changetype-establishment">Establecimientos</label>
+
+                <input type="radio" name="type" id="changetype-geocode">
+                <label for="changetype-geocode">GeoCódigos</label>
+            </div>
+            <div id="map-canvas" class="row" style="height: 400px"></div>
+        </div>
+        {{ form_row(edit_form.description) }}
+        {{ form_row(edit_form.address) }}
+        {{ form_row(edit_form.category) }}
+        
+        {{ form_end(edit_form) }}
+   </form>
 {% endblock %}

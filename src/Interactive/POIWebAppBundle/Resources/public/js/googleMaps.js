@@ -46,6 +46,7 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
     myInfowindow = infowindow;
 
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        clearOverlays();
         infowindow.close();
         marker.setVisible(false);
         var place = autocomplete.getPlace();
@@ -100,7 +101,7 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
  * @param {type} long
  * @returns {undefined}
  */
-function initializeSearchMap()
+function initializeSearchMap(point,setMarker)
 {
     var mapOptions = {
         center: new google.maps.LatLng(Mylat, Mylong),
@@ -144,6 +145,11 @@ function initializeSearchMap()
     setupClickListener('changetype-all', []);
     setupClickListener('changetype-establishment', ['establishment']);
     setupClickListener('changetype-geocode', ['geocode']);
+    
+    if(setMarker){
+        placeMarker(point,map);
+        map.setZoom(17);
+    }
 }
 
 /**

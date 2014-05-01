@@ -181,7 +181,7 @@ class PointOfInterestController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('poi_point_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('poi_point_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('POIWebAppBundle:PointOfInterest:new.html.twig', array(

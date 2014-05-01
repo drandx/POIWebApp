@@ -93,7 +93,7 @@ class PointOfInterestRepository extends EntityRepository {
           ->orWhere('p.phone_ext like :p_query')
           ->orWhere('p.fax like :p_query')
           ->orWhere('p.address like :p_query')
-          ->orWhere('gc.name like :p_query')      
+          ->orWhere('gc.name like :p_query') 
           ->setParameter('p_query', '%' . $stringQuery . '%')
           ->orderBy('p.geocity', 'ASC')
           ->orderBy('p.name', 'ASC');

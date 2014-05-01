@@ -14,15 +14,12 @@
 {% block content %}
     <h2 class="sub-header">Crear Punto de Interés</h2>
     {% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
-   {# {{ form(form) }}#}
-    <form class="form-horizontal" name="interactive_poiwebappbundle_pointofinterest" method="post" action="/POIWebApp/web/admin/point/create">
-   {#{{ form_start(form) }}#}
+   {{ form_start(form) }}
         {{ form_errors(form) }}
         {{ form_row(form.geocity) }}
         {{ form_row(form.latitude) }}
         {{ form_row(form.longitude) }}
         <div class="container-fluid">
-        {#<a href="{{ path('poi_map') }}">Map<a/>#}
             <input id="pac-input" class="controls" type="text" placeholder="Ingrese ubicación">
             <div id="type-selector" class="controls">
                 <input type="radio" name="type" id="changetype-all" checked="checked">
@@ -36,15 +33,10 @@
             </div>
             <div id="map-canvas" class="row" style="height: 400px"></div>
         </div>
-        {#{{ form_row(form.submit) }}#}
         {{ form_row(form.description) }}
         {{ form_row(form.address) }}
         {{ form_row(form.category) }}
-        {#<div>
-            <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" type="submit" id="interactive_poiwebappbundle_pointofinterest_submit" name="interactive_poiwebappbundle_pointofinterest[submit]">Crear Punto</button>
-            </div>
-        </div>#}
+        
         {{ form_end(form) }}
    </form>
 {% endblock %}
