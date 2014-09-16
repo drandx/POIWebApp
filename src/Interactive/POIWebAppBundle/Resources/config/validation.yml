@@ -3,6 +3,7 @@ constraints:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
 properties:
         email:
+            - NotBlank: ~
             - Email: ~
 Interactive\POIWebAppBundle\Entity\Job:
     properties:

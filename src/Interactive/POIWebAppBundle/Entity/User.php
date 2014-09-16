@@ -1,6 +1,5 @@
 <?php
 namespace Interactive\POIWebAppBundle\Entity;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
  
 /**

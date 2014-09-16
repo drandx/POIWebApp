@@ -44,6 +44,9 @@ class UserController extends Controller {
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
+        $validator = $this->get('validator');
+        $errors = $validator->validate($entity);
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $this->get('interactive.poiwebapp.admin.user_manager')->setUserEncodedPassword($entity);
