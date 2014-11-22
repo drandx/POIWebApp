@@ -1,0 +1,41 @@
+Interactive\POIWebAppBundle\Entity\RoutePoint:
+    type: entity
+    table: route_point
+    repositoryClass: Interactive\POIWebAppBundle\Repository\RoutePointRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 250
+            nullable: false
+        latitude:
+            type: string
+            length: 255
+            nullable: false
+        longitude:
+            type: string
+            length: 255
+            nullable: false
+        description:
+            type: text
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime
+            nullable: true
+    manyToOne:
+        route:
+            targetEntity: Route
+            inversedBy: route_point
+            nullable: false
+            joinColumn:
+                name: route_id
+                referencedColumnName: id       
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue,setIsActivatedVale]
+        preUpdate: [setUpdatedAtValue ]

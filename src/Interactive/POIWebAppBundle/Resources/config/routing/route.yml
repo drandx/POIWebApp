@@ -1,0 +1,30 @@
+poi_route:
+    path:     /
+    defaults: { _controller: "POIWebAppBundle:Route:index" }
+
+poi_route_show:
+    path:     /{id}/show
+    defaults: { _controller: "POIWebAppBundle:Route:show" }
+
+poi_route_new:
+    path:     /new
+    defaults: { _controller: "POIWebAppBundle:Route:new" }
+
+poi_route_create:
+    path:     /create
+    defaults: { _controller: "POIWebAppBundle:Route:create" }
+    requirements: { _method: post }
+
+poi_route_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "POIWebAppBundle:Route:edit" }
+
+poi_route_update:
+    path:     /{id}/update
+    defaults: { _controller: "POIWebAppBundle:Route:update" }
+    requirements: { _method: post|put }
+
+poi_route_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "POIWebAppBundle:Route:delete" }
+    requirements: { _method: post|delete }

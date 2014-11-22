@@ -1,0 +1,28 @@
+Interactive\POIWebAppBundle\Entity\Route:
+    type: entity
+    table: route
+    repositoryClass: Interactive\POIWebAppBundle\Repository\RouteRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            length: 255
+            unique: true
+        description:
+            type: text
+            nullable: true
+        slug:
+            type: string
+            length: 255
+            unique: true
+    oneToMany:
+        route_points:
+            targetEntity: RoutePoint
+            mappedBy: route
+    lifecycleCallbacks:
+        prePersist: [ setSlugValue ]
+        preUpdate: [ setSlugValue ]
+

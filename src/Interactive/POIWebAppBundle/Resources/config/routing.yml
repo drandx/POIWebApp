@@ -1,3 +1,11 @@
+poi_web_app_poi_route_point:
+    resource: "@POIWebAppBundle/Resources/config/routing/routepoint.yml"
+    prefix:   /poi_route_point
+
+poi_web_app_poi_route:
+    resource: "@POIWebAppBundle/Resources/config/routing/route.yml"
+    prefix:   /poi_route
+
 #All routes insed are secured      
 POIWebAppBundle_poi_user:
         resource: "@POIWebAppBundle/Resources/config/routing/user.yml"

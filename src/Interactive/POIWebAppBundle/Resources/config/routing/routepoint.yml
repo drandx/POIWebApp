@@ -1,0 +1,30 @@
+poi_route_point:
+    path:     /
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:index" }
+
+poi_route_point_show:
+    path:     /{id}/show
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:show" }
+
+poi_route_point_new:
+    path:     /new
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:new" }
+
+poi_route_point_create:
+    path:     /create
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:create" }
+    requirements: { _method: post }
+
+poi_route_point_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:edit" }
+
+poi_route_point_update:
+    path:     /{id}/update
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:update" }
+    requirements: { _method: post|put }
+
+poi_route_point_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "POIWebAppBundle:RoutePoint:delete" }
+    requirements: { _method: post|delete }
