@@ -106,11 +106,39 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                        Seleccione la categoría
+                                        Seleccione la ruta
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
+
+                                <div class="panel-body">
+                                    <!-- Here starts the php loop-->
+                                    <div id="categoriesContainer">
+                                        {% for route in routes %}
+                                        <div class="checkbox form-inline">
+                                            <label>
+                                                <input type="checkbox" value="{{route.id}}" {% if route.id == 12 %}checked{%endif%}>
+                                                {#<input type="checkbox" value="{{category.id}}" checked>#}
+                                                {{route.name}}
+                                            </label>
+                                        </div>
+
+                                        {%endfor%}
+                                        <!-- Here ends the php loop-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                        Seleccione la categoría
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
 
                                 <div class="panel-body">
                                     <div id="selectAllContainer">

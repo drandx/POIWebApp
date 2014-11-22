@@ -24,7 +24,12 @@ class PointOfInterestController extends Controller {
         $categories = $em->getRepository('POIWebAppBundle:Category')->
                 findBy(array(), array('name' => 'ASC')
         );
-        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', array('categories' => $categories));
+        
+        $routes = $em->getRepository('POIWebAppBundle:Route')->
+                findBy(array(), array('name' => 'ASC')
+        );
+        
+        return $this->render('POIWebAppBundle:PointOfInterest:front.html.twig', array('categories' => $categories,'routes'=>$routes));
     }
 
     public function getPointsbyCityAction($cityid) {
