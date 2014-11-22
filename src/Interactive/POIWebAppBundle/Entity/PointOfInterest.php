@@ -477,4 +477,32 @@ class PointOfInterest
     {
         $this->is_activated = true;
     }
+    /**
+     * @var \Interactive\POIWebAppBundle\Entity\Route
+     */
+    private $route;
+
+
+    /**
+     * Set route
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\Route $route
+     * @return PointOfInterest
+     */
+    public function setRoute(\Interactive\POIWebAppBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \Interactive\POIWebAppBundle\Entity\Route 
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
 }

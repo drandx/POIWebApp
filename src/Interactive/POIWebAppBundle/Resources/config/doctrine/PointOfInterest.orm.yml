@@ -71,6 +71,13 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
             joinColumn:
                 name: geocity_id
                 referencedColumnName: id
+        route:
+            targetEntity: Route
+            inversedBy: point_of_interest
+            nullable: true
+            joinColumn:
+                name: route_id
+                referencedColumnName: id
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue,setIsActivatedVale]
         preUpdate: [setUpdatedAtValue ]
