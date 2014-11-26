@@ -2,11 +2,17 @@
 
 namespace Interactive\POIWebAppBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
 use Interactive\POIWebAppBundle\Entity\Route;
 use Interactive\POIWebAppBundle\Form\RouteType;
+
 
 /**
  * Route controller.
@@ -15,6 +21,29 @@ use Interactive\POIWebAppBundle\Form\RouteType;
 class RouteController extends Controller
 {
 
+    /**
+     * 
+     * @param type $GET
+     * 
+     */
+    public function getRoutePointsAction($id) {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+
+        $em = $this->getDoctrine()->getManager();
+        $points = $em->getRepository('POIWebAppBundle:RoutePoint')->findBy(array('route' => $id));
+
+        if (count($points) > 0) {
+            $routesReturn = array('points' => $points);
+            $json =  json_encode($routesReturn);
+            $response->setContent($json);
+            $response->setStatusCode(200);
+        } else {
+            $response->setStatusCode(404);
+        }
+        return $response;
+    }
+    
     /**
      * Lists all Route entities.
      *

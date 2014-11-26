@@ -1,13 +1,13 @@
 <?php
 
 namespace Interactive\POIWebAppBundle\Entity;
-
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * RoutePoint
  */
-class RoutePoint
+class RoutePoint implements JsonSerializable
 {
     /**
      * @var integer
@@ -242,5 +242,15 @@ class RoutePoint
     public function setUpdatedAtValue()
     {
         // Add your code here
+    }
+    
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'latitude'=> $this->latitude,
+            'longitude'=> $this->longitude,
+            'route'=> $this->route,
+        );
     }
 }

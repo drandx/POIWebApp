@@ -28,6 +28,15 @@ function setUpAutoComplete(myCallBack)
 
 /**
  * 
+ * @returns {undefined}
+ */
+function getRoutesbyQuery()
+{
+  alert("Hello World");
+}
+
+/**
+ * 
  * @param {type} autocomplete
  * @param {type} showMarker
  * @returns {undefined}
@@ -314,7 +323,6 @@ function restults_markers(data) {
     });
     center = bounds.getCenter();
 }
-
 /**
  * 
  * @returns {undefined}

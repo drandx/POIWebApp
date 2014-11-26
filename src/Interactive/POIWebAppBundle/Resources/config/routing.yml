@@ -23,14 +23,6 @@ POIWebAppBundle_poi_point:
         resource: "@POIWebAppBundle/Resources/config/routing/pointofinterest.yml"
         prefix:   /
 
-POIWebAppBundle_poi_route:
-        resource: "@POIWebAppBundle/Resources/config/routing/route.yml"
-        prefix:   /poi_route
-        
-POIWebAppBundle_poi_route_point:
-        resource: "@POIWebAppBundle/Resources/config/routing/routepoint.yml"
-        prefix:   /poi_route_point
-  
 login:
     pattern:   /login
     defaults:  { _controller: POIWebAppBundle:Default:login }

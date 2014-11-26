@@ -1,13 +1,13 @@
 <?php
 
 namespace Interactive\POIWebAppBundle\Entity;
-
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Route
  */
-class Route
+class Route implements JsonSerializable
 {
     /**
      * @var integer
@@ -159,5 +159,14 @@ class Route
     public function setSlugValue()
     {
         // Add your code here
+    }
+    
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name'=> $this->name,
+            'description'=> $this->description,
+        );
     }
 }
