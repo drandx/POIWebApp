@@ -34,8 +34,7 @@ class RouteController extends Controller
         $points = $em->getRepository('POIWebAppBundle:RoutePoint')->findBy(array('route' => $id));
 
         if (count($points) > 0) {
-            $routesReturn = array('points' => $points);
-            $json =  json_encode($routesReturn);
+            $json =  json_encode($points);
             $response->setContent($json);
             $response->setStatusCode(200);
         } else {

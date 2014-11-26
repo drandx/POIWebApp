@@ -2,6 +2,7 @@
 var map;
 var center = null;
 var markersArray = [];
+var waypts = [];
 var currentPopup;
 var bounds = null;
 var Mylat = 4.559997795432589;
@@ -9,7 +10,8 @@ var Mylong = -74.52481269836426;
 //Global Variables
 var myMarker;
 var myInfowindow;
-
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
 
 /**
  * 
@@ -28,15 +30,6 @@ function setUpAutoComplete(myCallBack)
 
 /**
  * 
- * @returns {undefined}
- */
-function getRoutesbyQuery()
-{
-  alert("Hello World");
-}
-
-/**
- * 
  * @param {type} autocomplete
  * @param {type} showMarker
  * @returns {undefined}
@@ -48,13 +41,13 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
         anchorPoint: new google.maps.Point(0, -29),
         animation: google.maps.Animation.DROP
     });
-        
+
     var infowindow = new google.maps.InfoWindow();
 
     myMarker = marker;
     myInfowindow = infowindow;
 
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
         clearOverlays();
         infowindow.close();
         marker.setVisible(false);
@@ -95,9 +88,9 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
             marker.setVisible(true);
             infowindow.open(map, marker);
         }
-        if(myCallBack)  
+        if (myCallBack)
             myCallBack.execute();
-        
+
         document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = place.geometry.location.lat();
         document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = place.geometry.location.lng();
 
@@ -110,15 +103,14 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
  * @param {type} long
  * @returns {undefined}
  */
-function initializeSearchMap(point,setMarker)
+function initializeSearchMap(point, setMarker)
 {
     var mapOptions = {
         center: new google.maps.LatLng(Mylat, Mylong),
         zoom: 7
     };
 
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
     var input = /** @type {HTMLInputElement} */(
             document.getElementById('pac-input'));
@@ -132,7 +124,7 @@ function initializeSearchMap(point,setMarker)
 
 
     //Adds the click event to add markers on the map at any click
-    google.maps.event.addListener(map, 'click', function(e) {
+    google.maps.event.addListener(map, 'click', function (e) {
         clearOverlays();
         placeMarker(e.latLng, map);
         document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = e.latLng.lat();
@@ -146,7 +138,7 @@ function initializeSearchMap(point,setMarker)
     // Autocomplete.
     function setupClickListener(id, types) {
         var radioButton = document.getElementById(id);
-        google.maps.event.addDomListener(radioButton, 'click', function() {
+        google.maps.event.addDomListener(radioButton, 'click', function () {
             autocomplete.setTypes(types);
         });
     }
@@ -154,11 +146,12 @@ function initializeSearchMap(point,setMarker)
     setupClickListener('changetype-all', []);
     setupClickListener('changetype-establishment', ['establishment']);
     setupClickListener('changetype-geocode', ['geocode']);
-    
-    if(setMarker){
-        placeMarker(point,map);
+
+    if (setMarker) {
+        placeMarker(point, map);
         map.setZoom(17);
     }
+    
 }
 
 /**
@@ -189,11 +182,13 @@ function initializePoisMap()
      };
      map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
      bounds = new google.maps.LatLngBounds();*/
+    directionsDisplay = new google.maps.DirectionsRenderer();
     var mapOptions = {
         zoom: 7,
         center: new google.maps.LatLng(Mylat, Mylong)
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    directionsDisplay.setMap(map);
 }
 
 /*
@@ -204,21 +199,21 @@ function initializePoisMap()
  */
 function addMarker(location, info, pinColor) {
     var marker;
-    
-    if(pinColor !== null)
+
+    if (pinColor !== null)
     {
-        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.75|0|" + pinColor +'|13|b',
-        new google.maps.Size(60, 102),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34)); 
-        marker = new google.maps.Marker({position: location, map: map, icon: pinImage}); 
+        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.75|0|" + pinColor + '|13|b',
+                new google.maps.Size(60, 102),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(10, 34));
+        marker = new google.maps.Marker({position: location, map: map, icon: pinImage});
     }
     else
-      marker = new google.maps.Marker({position: location, map: map});  
+        marker = new google.maps.Marker({position: location, map: map});
 
     var popup = new google.maps.InfoWindow({content: info, maxWidth: 600});
 
-    google.maps.event.addListener(marker, "click", function() {
+    google.maps.event.addListener(marker, "click", function () {
         if (currentPopup != null) {
             currentPopup.close();
             currentPopup = null;
@@ -248,81 +243,6 @@ function clearOverlays() {
     }
 }
 
-
-/*
- * 
- * @param {type} idRoute
- * @returns {undefined}
- */
-//Setea los marcadores, limpiando el mapa y llamando la funcion de ajax
-function setMarkers(idRoute) {
-    clearOverlays();
-    getMarkersbyRuta(idRoute);
-}
-
-
-/*
- * 
- * @param {type} idRuta
- * @returns {undefined}
- */
-//AJAX Code
-//Init Geo Points
-function getMarkersbyRuta(idRuta) {
-    $.ajax({
-        data: "idroute=" + idRuta,
-        type: "GET",
-        dataType: "json",
-        url: "includes/get_markers.php",
-        success: function(data) {
-            restults_markers(data);
-        }
-    });
-}
-
-/*
- * 
- * @param {type} data
- * @returns {undefined}
- * 
- */
-function restults_markers(data) {
-    if (data['alert']) {
-        alert('Se ha enviado una señal de alerta, lat: ' + data['alert'].lat + ', lng: ' + data['alert'].lng + ', fecha y hora: ' + data['alert'].alertTime);
-    }
-
-    $.each(data, function(index, value) {
-
-        var lat = data[index].tGeoLat;
-        var lng = data[index].tGeoLng;
-        var fecha = data[index].dFechaRegistro;
-        var idruta = data[index].tIDRoute;
-
-        var activo = "";
-
-        if (data[index].bActivo == 0)
-            activo = "Ruta inactiva";
-        else
-            activo = "Ruta activa";
-
-
-        var info = "<br>Fecha: " + fecha + " - " + activo + "</br>";
-
-
-
-        if (index == 0)
-        {
-            initialize(lat, lng);
-        }
-
-        var pt = new google.maps.LatLng(lat, lng);
-        bounds.extend(pt);
-        addMarker(pt, info, null);
-
-
-    });
-    center = bounds.getCenter();
-}
 /**
  * 
  * @returns {undefined}
@@ -330,13 +250,13 @@ function restults_markers(data) {
 function getMarkersbyQuery()
 {
     //Creates the query as a json object
-    
+
     //gets checked categories
     var catValues = [];
-     $('#categoriesContainer :checked').each(function() {
-       catValues.push($(this).val());
-     });
-     
+    $('#categoriesContainer :checked').each(function () {
+        catValues.push($(this).val());
+    });
+
     var Query = new Object();
     Query.cityQuery = document.getElementById("googleAutoComplete").value;
     Query.categories = catValues;
@@ -347,10 +267,10 @@ function getMarkersbyQuery()
         dataType: 'json',
         url: 'api/pointsQuery',
         contentType: 'application/json',
-        success: function(data) {
+        success: function (data) {
             clearOverlays();
             $('#loader').hide();
-            if(data != null)
+            if (data != null)
                 restults_markers_v2(data);
         }
     });
@@ -363,106 +283,104 @@ function getMarkersbyQuery()
  * 
  */
 function restults_markers_v2(data) {
-    $.each(data, function(i, point) {
+    $.each(data, function (i, point) {
         validateEmptyString(point.phone);
-        
+
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
 //        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>' + '<img border="0" align="Left" src="http://bestiariodelbalon.com/wp-content/uploads/Cafam-127x150.jpg">';
-        var content = '<div>'+'<strong>' + point.category + '</strong>'+'<br><strong>' + validateEmptyString(point.name) + '</strong></br><strong>' + validateEmptyString(point.address) +'</strong>' 
-                +'<br>'+validateEmptyString(point.description) +'</br>'+'<strong>' + 'Teléfono: </strong>'
-                + validateEmptyString(point.phone_ext) + ' - ' + validateEmptyString(point.phone) +'<br><strong>' + 'Horario: </strong>'+validateEmptyString(point.schedule)+'</br></div>';
+        var content = '<div>' + '<strong>' + point.category + '</strong>' + '<br><strong>' + validateEmptyString(point.name) + '</strong></br><strong>' + validateEmptyString(point.address) + '</strong>'
+                + '<br>' + validateEmptyString(point.description) + '</br>' + '<strong>' + 'Teléfono: </strong>'
+                + validateEmptyString(point.phone_ext) + ' - ' + validateEmptyString(point.phone) + '<br><strong>' + 'Horario: </strong>' + validateEmptyString(point.schedule) + '</br></div>';
         addMarker(pt, content, point.pincolor);
     });
-    
+
 }
 
 /**
  * 
  * @returns {undefined}
  */
-function validateEmptyString(field){
- if(field === null)
-     return"-";
- else
-     return field;
+function validateEmptyString(field) {
+    if (field === null)
+        return"-";
+    else
+        return field;
 }
 
 
-/*
+/**
  * 
  * @returns {undefined}
  */
-//Update Geo Points
-function updateMarkers() {
-    var idRoute = document.getElementById("idruta").value;
-    clearOverlays();
-    getMarkersbyRutaUpdate(idRoute);
-}
-
-/*
- * 
- * @param {type} idRuta
- * @returns {undefined}
- * 
- */
-function getMarkersbyRutaUpdate(idRuta) {
+function getRoutesbyQuery()
+{
+    $('#loader').show();
     $.ajax({
-        data: "idroute=" + idRuta,
-        type: "GET",
-        dataType: "json",
-        url: "includes/get_markers.php",
-        success: function(data) {
-            restults_markersUpdate(data);
+        type: 'GET',
+        dataType: 'json',
+        //TODO - Get real selected route
+        url: 'api/routePoints/1',
+        success: function (data) {
+            $('#loader').hide();
+            if (data != null)
+                route_markers(data);
         }
     });
 }
-/**
+
+
+/*
  * 
  * @param {type} data
  * @returns {undefined}
+ * 
  */
-function restults_markersUpdate(data) {
+function route_markers(data) {
+    waypts = [];
+    $.each(data, function (i, point) {
+        validateEmptyString(point.phone);
+        var pt = new google.maps.LatLng(point.latitude, point.longitude);
 
-    if (data != null) {
-        if (data[0].bActivo == 0) {
-            alert("El usuario ha finalizado la ruta");
-            clearInterval(idInterval);
-
-            var cmb = document.getElementById("rutas");
-            cmb.options[cmb.selectedIndex].text = " -- Ruta Inactiva -- ";
-
-            var val = cmb.options[cmb.selectedIndex].value;
-            var valor_array = val.split("_");
-
-            var newstring = valor_array[0] + "_" + valor_array[1] + "_" + valor_array[2] + "_0";
-            cmb.options[cmb.selectedIndex].value = newstring;
-
-
-        }
-    }
-
-    $.each(data, function(index, value) {
-
-        var lat = data[index].tGeoLat;
-        var lng = data[index].tGeoLng;
-        var fecha = data[index].dFechaRegistro;
-        var idruta = data[index].tIDRoute;
-        var activo = "";
-
-        if (data[index].bActivo == 0) {
-            activo = "Ruta inactiva";
-        }
-        else
-            activo = "Ruta activa";
-
-
-        var info = "<br>Fecha: " + fecha + " - " + activo + "</br>";
-
-        var pt = new google.maps.LatLng(lat, lng);
-        bounds.extend(pt);
-        addMarker(pt, info, null);
-
-
+        waypts.push({
+            location: pt,
+            stopover: true});
     });
-    center = bounds.getCenter();
+    route_calculations();
+}
+
+
+/**
+ * 
+ * 
+ */
+function route_calculations() {
+    //var start = document.getElementById('start').value;
+    //var end = document.getElementById('end').value;
+    //var waypts = [];
+    //var checkboxArray = document.getElementById('waypoints');
+    
+    var request = {
+        origin: "4427 N Wolcott Ave, Chicago, IL",
+        destination: "243 S Wabash Ave, Chicago, IL",
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+    
+    directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            //var route = response.routes[0];
+            //var summaryPanel = document.getElementById('directions_panel');
+            //summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            /*for (var i = 0; i < route.legs.length; i++) {
+                var routeSegment = i + 1;
+                summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+                summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+            }*/
+        }
+    });
 }
