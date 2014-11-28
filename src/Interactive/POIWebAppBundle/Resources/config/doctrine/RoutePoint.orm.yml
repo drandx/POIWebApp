@@ -28,6 +28,12 @@ Interactive\POIWebAppBundle\Entity\RoutePoint:
         updated_at:
             type: datetime
             nullable: true
+        isOrigin:
+            type: integer
+            nullable: true
+        isDestination:
+            type: integer 
+            nullable: true
     manyToOne:
         route:
             targetEntity: Route

@@ -84,7 +84,7 @@
 
                 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                     <div class="panel-group" id="accordion">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" style="display: none;">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -110,11 +110,12 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseTwo" class="panel-collapse collapse">
+                            <div id="collapseTwo" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                     <!-- Here starts the php loop-->
                                     <div id="routesContainer">
                                         <select id="routesSelect">
+                                            <option value="-1">Seleccione la Ruta</option>
                                             {% for route in routes %}
                                                 <option value="{{route.id}}">{{route.name}}</option>
                                              {%endfor%}
@@ -158,6 +159,20 @@
                                         {%endfor%}
                                         <!-- Here ends the php loop-->
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                        Detalles de la Ruta
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse">
+                                <div id="directions_panel" class="panel-body">
+                                    
                                 </div>
                             </div>
                         </div>

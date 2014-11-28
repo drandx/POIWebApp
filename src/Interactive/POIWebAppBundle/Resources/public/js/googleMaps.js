@@ -7,9 +7,12 @@ var currentPopup;
 var bounds = null;
 var Mylat = 4.559997795432589;
 var Mylong = -74.52481269836426;
-//Global Variables
 var myMarker;
 var myInfowindow;
+
+//Google routes properties
+var destinationPoint;
+var originPoint;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 
@@ -151,7 +154,7 @@ function initializeSearchMap(point, setMarker)
         placeMarker(point, map);
         map.setZoom(17);
     }
-    
+
 }
 
 /**
@@ -314,18 +317,24 @@ function validateEmptyString(field) {
  */
 function getRoutesbyQuery()
 {
-    $('#loader').show();
-    $.ajax({
-        type: 'GET',
-        dataType: 'json',
-        //TODO - Get real selected route
-        url: 'api/routePoints/1',
-        success: function (data) {
-            $('#loader').hide();
-            if (data != null)
-                route_markers(data);
-        }
-    });
+    var selectedRote = $('#routesSelect').val();
+    if (selectedRote != -1)
+    {
+        $('#loader').show();
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            //TODO - Get real selected route
+            url: 'api/routePoints/' + selectedRote,
+            success: function (data) {
+                $('#loader').hide();
+                if (data != null)
+                    route_markers(data);
+            }
+        });
+
+    }
+
 }
 
 
@@ -340,10 +349,16 @@ function route_markers(data) {
     $.each(data, function (i, point) {
         validateEmptyString(point.phone);
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
-
-        waypts.push({
-            location: pt,
-            stopover: true});
+        if ((point.IsOrigin != null) && (point.IsOrigin == 1))
+            originPoint = pt;
+        else if ((point.IsDestination != null) && (point.IsDestination == 1))
+            destinationPoint = pt;
+        else
+        {
+            waypts.push({
+                location: pt,
+                stopover: true});
+        }
     });
     route_calculations();
 }
@@ -358,29 +373,33 @@ function route_calculations() {
     //var end = document.getElementById('end').value;
     //var waypts = [];
     //var checkboxArray = document.getElementById('waypoints');
-    
+    var originPosition = new google.maps.LatLng('41.962394', '-87.675923');
+    var destinationPosition = new google.maps.LatLng('41.878368', '-87.625311');
+
+
+
     var request = {
-        origin: "4427 N Wolcott Ave, Chicago, IL",
-        destination: "243 S Wabash Ave, Chicago, IL",
+        origin: originPoint,
+        destination: destinationPoint,
         waypoints: waypts,
         optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING
     };
-    
+
     directionsService.route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
-            //var route = response.routes[0];
-            //var summaryPanel = document.getElementById('directions_panel');
-            //summaryPanel.innerHTML = '';
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions_panel');
+            summaryPanel.innerHTML = '';
             // For each route, display summary information.
-            /*for (var i = 0; i < route.legs.length; i++) {
+            for (var i = 0; i < route.legs.length; i++) {
                 var routeSegment = i + 1;
-                summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+                summaryPanel.innerHTML += '<b>Segmento : ' + routeSegment + '</b><br>';
                 summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
                 summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
                 summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-            }*/
+            }
         }
     });
 }

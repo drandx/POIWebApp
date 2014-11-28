@@ -251,6 +251,64 @@ class RoutePoint implements JsonSerializable
             'latitude'=> $this->latitude,
             'longitude'=> $this->longitude,
             'route'=> $this->route,
+            'IsOrigin'=> $this->isOrigin,
+            'IsDestination'=> $this->isDestination,
         );
+    }
+    /**
+     * @var int
+     */
+    private $isOrigin;
+
+    /**
+     * @var int
+     */
+    private $isDestination;
+
+
+    /**
+     * Set isOrigin
+     *
+     * @param \int $isOrigin
+     * @return RoutePoint
+     */
+    public function setIsOrigin($isOrigin)
+    {
+        $this->isOrigin = $isOrigin;
+
+        return $this;
+    }
+
+    /**
+     * Get isOrigin
+     *
+     * @return \int 
+     */
+    public function getIsOrigin()
+    {
+        return $this->isOrigin;
+    }
+
+    /**
+     * Set isDestination
+     *
+     * @param \int $isDestination
+     * @return RoutePoint
+     */
+    public function setIsDestination($isDestination)
+    {
+        $this->isDestination = $isDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get isDestination
+     *
+     * @return \int 
+     */
+    public function getIsDestination()
+    {
+        return $this->isDestination;
     }
 }
