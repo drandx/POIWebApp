@@ -1,44 +1,51 @@
 {% extends 'POIWebAppBundle:Administrator:dashboard.html.twig' %}
 {% set menu_selected = 'one' %}
 {% block stylesheets %}
- {{ parent() }}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/poiwebapp/css/searchGoogleMap.css') }}" type="text/css" media="all" />
 {% endblock%}
 {% block javascripts %}
- {{ parent() }}
+    {{ parent() }}
     <script src="{{ asset('bundles/poiwebapp/js/googleMaps.js') }}"></script>
+    <script src="{{ asset('bundles/poiwebapp/js/poiwebappActions.js') }}"></script>
     <script type="text/javascript">
         google.maps.event.addDomListener(window, 'load', initializeSearchMap);
+    </script>
+    <script type="text/javascript">
+        $("#interactive_poiwebappbundle_pointofinterest_route").change(function () {
+            var selectedRote = $('#interactive_poiwebappbundle_pointofinterest_route').val();
+            getRoutePointsbyRouteId(selectedRote);
+        });
     </script>
 {% endblock %}
 {% block content %}
     <h2 class="sub-header">Crear Punto de Interés</h2>
     {% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
-   {{ form_start(form) }}
-        {{ form_errors(form) }}
-        {{ form_row(form.route) }}
-        {{ form_row(form.geocity) }}
-        {{ form_row(form.latitude) }}
-        {{ form_row(form.longitude) }}
-        <div class="container-fluid">
-            <input id="pac-input" class="controls" type="text" placeholder="Ingrese ubicación">
-            <div id="type-selector" class="controls">
-                <input type="radio" name="type" id="changetype-all" checked="checked">
-                <label for="changetype-all">Todo</label>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.route) }}
+    {{ form_row(form.near_route_point) }}
+    {{ form_row(form.geocity) }}
+    {{ form_row(form.latitude) }}
+    {{ form_row(form.longitude) }}
+    <div class="container-fluid">
+        <input id="pac-input" class="controls" type="text" placeholder="Ingrese ubicación">
+        <div id="type-selector" class="controls">
+            <input type="radio" name="type" id="changetype-all" checked="checked">
+            <label for="changetype-all">Todo</label>
 
-                <input type="radio" name="type" id="changetype-establishment">
-                <label for="changetype-establishment">Establecimientos</label>
+            <input type="radio" name="type" id="changetype-establishment">
+            <label for="changetype-establishment">Establecimientos</label>
 
-                <input type="radio" name="type" id="changetype-geocode">
-                <label for="changetype-geocode">GeoCódigos</label>
-            </div>
-            <div id="map-canvas" class="row" style="height: 400px"></div>
+            <input type="radio" name="type" id="changetype-geocode">
+            <label for="changetype-geocode">GeoCódigos</label>
         </div>
-        {{ form_row(form.description) }}
-        {{ form_row(form.address) }}
-        {{ form_row(form.category) }}
-        
-        {{ form_end(form) }}
-   </form>
+        <div id="map-canvas" class="row" style="height: 400px"></div>
+    </div>
+    {{ form_row(form.description) }}
+    {{ form_row(form.address) }}
+    {{ form_end(form) }}
+</form>
 {% endblock %}
 

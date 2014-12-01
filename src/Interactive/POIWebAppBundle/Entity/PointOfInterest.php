@@ -505,4 +505,32 @@ class PointOfInterest
     {
         return $this->route;
     }
+    /**
+     * @var \Interactive\POIWebAppBundle\Entity\RoutePoint
+     */
+    private $near_route_point;
+
+
+    /**
+     * Set near_route_point
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\RoutePoint $nearRoutePoint
+     * @return PointOfInterest
+     */
+    public function setNearRoutePoint(\Interactive\POIWebAppBundle\Entity\RoutePoint $nearRoutePoint = null)
+    {
+        $this->near_route_point = $nearRoutePoint;
+
+        return $this;
+    }
+
+    /**
+     * Get near_route_point
+     *
+     * @return \Interactive\POIWebAppBundle\Entity\RoutePoint 
+     */
+    public function getNearRoutePoint()
+    {
+        return $this->near_route_point;
+    }
 }

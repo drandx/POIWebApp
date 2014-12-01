@@ -248,6 +248,7 @@ class RoutePoint implements JsonSerializable
     {
         return array(
             'id' => $this->id,
+            'name'=> $this->name,
             'latitude'=> $this->latitude,
             'longitude'=> $this->longitude,
             'route'=> $this->route,
@@ -310,5 +311,10 @@ class RoutePoint implements JsonSerializable
     public function getIsDestination()
     {
         return $this->isDestination;
+    }
+    
+     public function __toString()
+    {
+        return $this->getName() ? $this->getName() : "";
     }
 }

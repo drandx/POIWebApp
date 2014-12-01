@@ -78,6 +78,14 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
             joinColumn:
                 name: route_id
                 referencedColumnName: id
+        near_route_point:
+            targetEntity: RoutePoint
+            inversedBy: point_of_interest
+            nullable: true
+            joinColumn:
+                name: near_route_point_id
+                referencedColumnName: id        
+             
     lifecycleCallbacks:
         prePersist: [setCreatedAtValue,setIsActivatedVale]
         preUpdate: [setUpdatedAtValue ]
