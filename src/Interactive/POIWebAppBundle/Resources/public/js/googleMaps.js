@@ -253,16 +253,16 @@ function clearOverlays() {
 function getMarkersbyQuery()
 {
     //Creates the query as a json object
-
+    var selectedRoute = $('#routesSelect').val();
     //gets checked categories
     var catValues = [];
     $('#categoriesContainer :checked').each(function () {
         catValues.push($(this).val());
     });
-
     var Query = new Object();
     Query.cityQuery = document.getElementById("googleAutoComplete").value;
     Query.categories = catValues;
+    Query.route = selectedRoute;
     $('#loader').show();
     $.ajax({
         data: JSON.stringify(Query),
@@ -392,6 +392,8 @@ function route_calculations() {
             var route = response.routes[0];
             var summaryPanel = document.getElementById('directions_panel');
             summaryPanel.innerHTML = '';
+            var totalDistance = 0;
+            var totalDuration = 0;            
             // For each route, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
                 var routeSegment = i + 1;
@@ -399,7 +401,12 @@ function route_calculations() {
                 summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
                 summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
                 summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                totalDistance += route.legs[i].distance.value;
+                totalDuration += route.legs[i].duration.value;
             }
+            totalDistance = totalDistance/1000;
+            summaryPanel.innerHTML += '<b>Distacia Total : ' + totalDistance.toFixed(1) + ' Km</b><br>';
+            //summaryPanel.innerHTML += '<b>Duración Total : ' + totalDuration + '</b><br>';
         }
     });
 }

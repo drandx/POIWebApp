@@ -16,6 +16,7 @@
     {% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
    {{ form_start(form) }}
         {{ form_errors(form) }}
+        {{ form_row(form.route) }}
         {{ form_row(form.geocity) }}
         {{ form_row(form.latitude) }}
         {{ form_row(form.longitude) }}

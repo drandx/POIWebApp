@@ -27,8 +27,8 @@ class PointOfInterestType extends AbstractType
             ->add('description', null, array('required' => false,'label'=>'Descripción', 'attr' => array('placeholder' => 'Descripción')))
             ->add('address', null, array('required' => true,'label'=>'Dirección *', 'attr' => array('placeholder' => 'Dirección')))
             ->add('category', null, array('required' => true,'label'=>'Categoría *', 'attr' => array('placeholder' => 'Categoría')))
+            ->add('route', null, array('required' => true,'label'=>'Ruta *', 'attr' => array('placeholder' => 'Ruta')))
             ->add('submit', 'submit', array('label' => 'Crear Punto'));
-            ;
     }
     
     /**

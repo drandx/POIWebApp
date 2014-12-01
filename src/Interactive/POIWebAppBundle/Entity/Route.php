@@ -169,4 +169,9 @@ class Route implements JsonSerializable
             'description'=> $this->description,
         );
     }
+    
+     public function __toString()
+    {
+        return $this->getName() ? $this->getName() : "";
+    }
 }

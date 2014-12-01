@@ -65,6 +65,7 @@ class PointOfInterestController extends Controller {
         
         $cityQyery = $requestArray['cityQuery'];
         $categoriesQuery = $requestArray['categories'];
+        $route = $requestArray['route'];
         $queryBreakDown = explode(",", $cityQyery)[0];
         $stateName = "";
         $cityName = "";
@@ -80,7 +81,7 @@ class PointOfInterestController extends Controller {
             $stateName = "";
         }
         
-        $result_points = $em->getRepository('POIWebAppBundle:PointOfInterest')->PointsOfInterestJoinCityState($cityName,$stateName,$categoriesQuery);
+        $result_points = $em->getRepository('POIWebAppBundle:PointOfInterest')->PointsOfInterestJoinCityState($cityName,$stateName,$categoriesQuery,$route);
         
         
         //$result_points = $em->getRepository('POIWebAppBundle:PointOfInterest')->findAll();

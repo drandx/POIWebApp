@@ -149,7 +149,7 @@
                                         {% for category in categories %}
                                             <div class="checkbox form-inline">
                                                 <label>
-                                                    <input type="checkbox" value="{{category.id}}" {% if category.id == 12 %}checked{%endif%}>
+                                                    <input type="checkbox" value="{{category.id}}">
                                                     {#<input type="checkbox" value="{{category.id}}" checked>#}
                                                     {{category.name}}
                                                 </label>
@@ -207,6 +207,7 @@
                     getMarkersbyQuery();
                 });
                 $("#routesSelect").change(function () {
+                    getMarkersbyQuery();
                     getRoutesbyQuery();
                 });
                 $('#selectall').click(function () {

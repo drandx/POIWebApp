@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class PointOfInterestRepository extends EntityRepository {
 
-    public function PointsOfInterestJoinCityState($geocityName, $geoStateName, $categoriesQuery) {
+    public function PointsOfInterestJoinCityState($geocityName, $geoStateName, $categoriesQuery, $route) {
 //        return $this->getEntityManager()
 //          ->createQueryBuilder()
 //          ->select('p')
@@ -35,13 +35,13 @@ class PointOfInterestRepository extends EntityRepository {
 
         $generalStmt = "SELECT p.*, gc.name as city, cat.image as cat_image, cat.pinhexcolor as pincolor, "
                 . "cat.name as category FROM point_of_interest AS p LEFT "
-                . "JOIN geo_cities AS gc ON (gc.id = p.geocity_id) INNER JOIN category as cat ON (cat.id = p.category_id) ";
+                . "JOIN geo_cities AS gc ON (gc.id = p.geocity_id) INNER JOIN category as cat ON (cat.id = p.category_id) WHERE p.route_id = " . $route;
 
         $whereStmt = "";
         $count = 0;
         foreach ($categoriesQuery as $value) {
             if ($count == 0) {
-                $whereStmt = " WHERE p.category_id = " . $value;
+                $whereStmt = " and ( p.category_id = " . $value;
             } else {
                 $whereStmt = $whereStmt . " OR p.category_id = " . $value;
             }
@@ -49,7 +49,7 @@ class PointOfInterestRepository extends EntityRepository {
         }
 
         if ($whereStmt != "") {
-            $generalStmt .= $whereStmt;
+            $generalStmt .= $whereStmt . ")";
         }
         $stmt = $this->getEntityManager()->getConnection()->prepare($generalStmt);
         $stmt->execute();
