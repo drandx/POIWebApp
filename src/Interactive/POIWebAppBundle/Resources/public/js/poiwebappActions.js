@@ -1,15 +1,18 @@
+var actionUrl = "";
+
 /**
  * 
  * @returns {undefined}
  */
 function getRoutePointsbyRouteId(id)
 {
+    var url = actionUrl+'/'+id;
     if (id != -1)
     {
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '../../api/routePoints/' + id,
+            url: url,
             success: function (data) {
                 if (data != null)
                     route_points_handler(data);

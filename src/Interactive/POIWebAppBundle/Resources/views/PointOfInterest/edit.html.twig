@@ -7,19 +7,29 @@
 {% block javascripts %}
  {{ parent() }}
     <script src="{{ asset('bundles/poiwebapp/js/googleMaps.js') }}"></script>
+    <script src="{{ asset('bundles/poiwebapp/js/poiwebappActions.js') }}"></script>
     <script type="text/javascript">
         var latitude = "{{ entity.latitude }}";
         var longitude = "{{ entity.longitude }}";
         var myPoint = new google.maps.LatLng(latitude, longitude);
         google.maps.event.addDomListener(window, 'load', initializeSearchMap(myPoint,true));
     </script>
+    <script type="text/javascript">
+        $("#interactive_poiwebappbundle_pointofinterest_route").change(function () {
+            actionUrl = '{{ path('api_point_route_point') }}';
+            var selectedRote = $('#interactive_poiwebappbundle_pointofinterest_route').val();
+            getRoutePointsbyRouteId(selectedRote);
+        });
+    </script>
 {% endblock %}
 {% block content %}
-    <h2 class="sub-header">Crear Punto de Interés</h2>
+    <h2 class="sub-header">Editar Punto de Interés</h2>
     {% form_theme edit_form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
    {{ form_start(edit_form) }}
         {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.category) }}
         {{ form_row(edit_form.route) }}
+        {{ form_row(edit_form.near_route_point) }}
         {{ form_row(edit_form.geocity) }}
         {{ form_row(edit_form.latitude) }}
         {{ form_row(edit_form.longitude) }}
@@ -39,8 +49,6 @@
         </div>
         {{ form_row(edit_form.description) }}
         {{ form_row(edit_form.address) }}
-        {{ form_row(edit_form.category) }}
-        
         {{ form_end(edit_form) }}
    </form>
 {% endblock %}

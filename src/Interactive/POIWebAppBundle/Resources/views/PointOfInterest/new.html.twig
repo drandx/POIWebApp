@@ -13,6 +13,7 @@
     </script>
     <script type="text/javascript">
         $("#interactive_poiwebappbundle_pointofinterest_route").change(function () {
+            actionUrl = '{{ path('api_point_route_point') }}';
             var selectedRote = $('#interactive_poiwebappbundle_pointofinterest_route').val();
             getRoutePointsbyRouteId(selectedRote);
         });

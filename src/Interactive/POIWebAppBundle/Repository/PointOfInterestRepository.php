@@ -34,8 +34,8 @@ class PointOfInterestRepository extends EntityRepository {
         }
 
         $generalStmt = "SELECT p.*, gc.name as city, cat.image as cat_image, cat.pinhexcolor as pincolor, "
-                . "cat.name as category FROM point_of_interest AS p LEFT "
-                . "JOIN geo_cities AS gc ON (gc.id = p.geocity_id) INNER JOIN category as cat ON (cat.id = p.category_id) WHERE p.route_id = " . $route;
+                . "cat.name as category, rp.latitude AS rp_latitude, rp.longitude AS rp_longitude  FROM point_of_interest AS p LEFT "
+                . "JOIN geo_cities AS gc ON (gc.id = p.geocity_id) INNER JOIN category as cat ON (cat.id = p.category_id) LEFT JOIN route_point as rp ON (rp.id = p.near_route_point_id) WHERE p.route_id = " . $route;
 
         $whereStmt = "";
         $count = 0;

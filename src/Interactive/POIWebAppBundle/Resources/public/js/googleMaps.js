@@ -16,6 +16,8 @@ var originPoint;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 
+//Google adjacent routes
+var adjacentDirectionsDisplay = [];
 /**
  * 
  * @returns {undefined}
@@ -273,8 +275,10 @@ function getMarkersbyQuery()
         success: function (data) {
             clearOverlays();
             $('#loader').hide();
-            if (data != null)
+            if (data != null){
                 restults_markers_v2(data);
+                near_points_route_calculations();
+            }
         }
     });
 }
@@ -295,6 +299,11 @@ function restults_markers_v2(data) {
                 + '<br>' + validateEmptyString(point.description) + '</br>' + '<strong>' + 'Teléfono: </strong>'
                 + validateEmptyString(point.phone_ext) + ' - ' + validateEmptyString(point.phone) + '<br><strong>' + 'Horario: </strong>' + validateEmptyString(point.schedule) + '</br></div>';
         addMarker(pt, content, point.pincolor);
+        
+        if((point.rp_latitude != null) && (point.rp_longitude != null))
+        {
+            near_points_route_calculations(point.rp_latitude,point.rp_longitude,point.latitude, point.longitude);
+        }
     });
 
 }
@@ -409,4 +418,50 @@ function route_calculations() {
             //summaryPanel.innerHTML += '<b>Duración Total : ' + totalDuration + '</b><br>';
         }
     });
+}
+
+
+/**
+ * 
+ * 
+ */
+function near_points_route_calculations(initLat, initLng, finishLat, finishLng) {
+    var routeIndex = adjacentDirectionsDisplay.length;
+    
+    //Google routes properties
+    adjacentDirectionsDisplay[routeIndex] = new google.maps.DirectionsRenderer();
+    adjacentDirectionsDisplay[routeIndex].setMap(map);
+    
+    var rendererOptions = {suppressMarkers : true, preserveViewport : true, polylineOptions : {strokeColor:"#DEB887",strokeWeight:8}};
+    
+    adjacentDirectionsDisplay[routeIndex].setOptions(rendererOptions);
+    
+    
+    var originPosition = new google.maps.LatLng(initLat, initLng);
+    var destinationPosition = new google.maps.LatLng(finishLat, finishLng);
+
+    var request = {
+        origin: originPosition,
+        destination: destinationPosition,
+        optimizeWaypoints: false,
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+
+    directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            adjacentDirectionsDisplay[routeIndex].setDirections(response);
+        }
+    });
+}
+
+
+function clear_adjacent_routes()
+{
+    //adjacentDirectionsDisplay = [];
+    for (i = 0; i < adjacentDirectionsDisplay.length; i++) 
+    { 
+        var routeDirection = adjacentDirectionsDisplay[i];
+        routeDirection.setMap(null);
+    }
+    adjacentDirectionsDisplay = [];
 }

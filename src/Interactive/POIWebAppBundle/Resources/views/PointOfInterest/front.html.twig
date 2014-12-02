@@ -204,6 +204,7 @@
                     document.getElementById('googleAutoComplete').value = "";
                 });
                 $("#categoriesContainer").change(function () {
+                    clear_adjacent_routes();
                     getMarkersbyQuery();
                 });
                 $("#routesSelect").change(function () {
@@ -212,6 +213,7 @@
                 });
                 $('#selectall').click(function () {
                     $('input:checkbox').prop('checked', this.checked);
+                    clear_adjacent_routes();
                     getMarkersbyQuery();
                 });
             </script>
