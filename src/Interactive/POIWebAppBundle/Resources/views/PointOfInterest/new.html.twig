@@ -24,12 +24,12 @@
     {% form_theme form 'POIWebAppBundle:Form:interactiveFiledsTemplate.html.twig' %}
     {{ form_start(form) }}
     {{ form_errors(form) }}
+    {{ form_row(form.name) }}
     {{ form_row(form.category) }}
     {{ form_row(form.route) }}
     {{ form_row(form.near_route_point) }}
     {{ form_row(form.geocity) }}
-    {{ form_row(form.latitude) }}
-    {{ form_row(form.longitude) }}
+    {{ form_row(form.address) }}
     <div class="container-fluid">
         <input id="pac-input" class="controls" type="text" placeholder="Ingrese ubicación">
         <div id="type-selector" class="controls">
@@ -44,8 +44,9 @@
         </div>
         <div id="map-canvas" class="row" style="height: 400px"></div>
     </div>
+    {{ form_row(form.latitude) }}
+    {{ form_row(form.longitude) }}
     {{ form_row(form.description) }}
-    {{ form_row(form.address) }}
     {{ form_end(form) }}
 </form>
 {% endblock %}

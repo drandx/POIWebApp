@@ -3,10 +3,8 @@
     <thead>
         <tr>
             <th><a href="#">Nombre</a></th>
-            <th><a href="#">Ciudad</a></th>
             <th><a href="#">Direccion</a></th>
-            <th><a href="#">Activo</a></th>
-            <th><a href="#">Fecha</a></th>
+            <th><a href="#">Fecha Creación</a></th>
             <th><a href="#">Actualización</a></th>
             <th><a>Acciones</a></th>
         </tr>
@@ -15,9 +13,7 @@
         {% for entity in entities %}
         <tr>
             <td>{{ entity.name }}</td>
-            <td>{{ entity.geocity }}</td>
             <td>{{ entity.address }}</td>
-            <td>{{ entity.isactivated }}</td>
             <td>{% if entity.createdat %}{{ entity.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>{% if entity.updatedat %}{{ entity.updatedat|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>

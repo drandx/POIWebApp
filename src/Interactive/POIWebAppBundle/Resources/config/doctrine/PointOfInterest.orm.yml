@@ -67,7 +67,7 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
         geocity:
             targetEntity: GeoCity
             inversedBy: point_of_interest
-            nullable: false
+            nullable: true
             joinColumn:
                 name: geocity_id
                 referencedColumnName: id
