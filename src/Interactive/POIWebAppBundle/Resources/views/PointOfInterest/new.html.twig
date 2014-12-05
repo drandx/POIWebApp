@@ -8,6 +8,8 @@
     {{ parent() }}
     <script src="{{ asset('bundles/poiwebapp/js/googleMaps.js') }}"></script>
     <script src="{{ asset('bundles/poiwebapp/js/poiwebappActions.js') }}"></script>
+    <script src="{{asset('bundles/poiwebapp/js/bootstrap-fileupload.js')}}"></script>
+    <script src="{{asset('bundles/poiwebapp/js/bootstrap-fileupload.min.js')}}"></script>
     <script type="text/javascript">
         google.maps.event.addDomListener(window, 'load', initializeSearchMap);
     </script>
@@ -47,6 +49,14 @@
     {{ form_row(form.latitude) }}
     {{ form_row(form.longitude) }}
     {{ form_row(form.description) }}
+    <!--div class="container-fluid">
+        <span class="btn btn-file">
+            <span class="fileupload-new">Select file</span>
+            <span class="fileupload-exists">Change</span>
+            <input type="file" name="img"/>
+        </span>
+    </div-->
+    {{ form_row(form.img) }}
     {{ form_end(form) }}
 </form>
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Interactive\POIWebAppBundle\Entity\PointOfInterest;
 use Interactive\POIWebAppBundle\Form\PointOfInterestType;
+use Interactive\POIWebAppBundle\Model\UploadFileMover;
 
 /**
  * PointOfInterest controller.
@@ -181,6 +182,12 @@ class PointOfInterestController extends Controller {
         $entity = new PointOfInterest();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        
+        $imgFile = $form["img"]->getData();
+        $uploadFileMover = new UploadFileMover();
+        
+        $res = $uploadFileMover->processImageFile($imgFile);
+
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
