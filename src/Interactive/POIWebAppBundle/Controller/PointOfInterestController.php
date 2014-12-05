@@ -307,17 +307,34 @@ class PointOfInterestController extends Controller {
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-
+        
+        
         $entity = $em->getRepository('POIWebAppBundle:PointOfInterest')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PointOfInterest entity.');
         }
-
+        
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        
+        //Image handling
+        $imgFile = $editForm["img"]->getData();
+        $uploadFileMover = new UploadFileMover();
+        
+        $res = $uploadFileMover->processImageFile($imgFile);
+        
+        if(!$res['status']){
+            //$editForm->get('img')->addError(new FormError($res['content']));
+        }
+        else{
+            $img_path = $this->getRequest()->getBasePath() . DIRECTORY_SEPARATOR . $res['content'];
+            $entity->setImgPath($img_path);
+        }
+        //End image handling
+        
+        
         if ($editForm->isValid()) {
             $em->flush();
 

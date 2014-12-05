@@ -5,6 +5,7 @@
         <group>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Model/Document.php</file>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Entity/PointOfInterest.php</file>
+            <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Form/PointOfInterestType.php</file>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/PointOfInterest/edit.html.twig</file>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Resources/views/PointOfInterest/new.html.twig</file>
             <file>file:/Applications/MAMP/htdocs/POIWebApp/src/Interactive/POIWebAppBundle/Model/UploadFileMover.php</file>
