@@ -2,10 +2,11 @@
 
 namespace Interactive\POIWebAppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PointOfInterest
+ * PointOfInteres
  */
 class PointOfInterest
 {
@@ -505,4 +506,59 @@ class PointOfInterest
     {
         return $this->route;
     }
+    /**
+     * @var \Interactive\POIWebAppBundle\Entity\RoutePoint
+     */
+    private $near_route_point;
+
+
+    /**
+     * Set near_route_point
+     *
+     * @param \Interactive\POIWebAppBundle\Entity\RoutePoint $nearRoutePoint
+     * @return PointOfInterest
+     */
+    public function setNearRoutePoint(\Interactive\POIWebAppBundle\Entity\RoutePoint $nearRoutePoint = null)
+    {
+        $this->near_route_point = $nearRoutePoint;
+
+        return $this;
+    }
+
+    /**
+     * Get near_route_point
+     *
+     * @return \Interactive\POIWebAppBundle\Entity\RoutePoint 
+     */
+    public function getNearRoutePoint()
+    {
+        return $this->near_route_point;
+    }
+    
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $img;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setImg(UploadedFile $file = null)
+    {
+        $this->img = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+    
 }

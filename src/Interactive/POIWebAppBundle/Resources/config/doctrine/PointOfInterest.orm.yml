@@ -46,6 +46,10 @@ Interactive\POIWebAppBundle\Entity\PointOfInterest:
             type: string
             legth: 255
             nullable: false
+        img_path:
+            type: string
+            legth: 255
+            nullable: false
         is_activated:
             type: boolean
             nullable: true

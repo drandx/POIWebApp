@@ -24,8 +24,10 @@ class UploadFileMover {
         $targetFileName = $relativePath . DIRECTORY_SEPARATOR . $originalName;
         $targetFilePath = $uploadBasePath . DIRECTORY_SEPARATOR . $targetFileName;
         
-        $ext = $file->guessExtension();
-        $targetFilePath = $targetFilePath .$ext;
+        $oName = $file->getClientOriginalName();
+        $name_array = explode('.', $oName);
+        $ext = $name_array[sizeof($name_array) - 1];
+        
         
         /*$i=1;
         while (file_exists($targetFilePath) && md5_file($file->getPath()) != md5_file($targetFilePath)) {
@@ -37,6 +39,9 @@ class UploadFileMover {
                 $targetFilePath = $targetFilePath . $i++;
             }
         }*/
+        
+        //TODO - Remove this line when above comments are removed
+        $targetFilePath = $targetFilePath . '.' . $ext;
 
 
         $targetDir = $uploadBasePath . DIRECTORY_SEPARATOR . $relativePath;
@@ -69,9 +74,9 @@ class UploadFileMover {
                     //Start Uploading File
                     $document = new Document();
                     $document->setFile($image);
-                    $document->setSubDirectory('points_of_interest');
+                    $document->setSubDirectory('uploads/points_of_interest');
                     $document->processFile();
-                    $uploadedURL = $uploadedURL = $document->getUploadDirectory() . DIRECTORY_SEPARATOR . $document->getSubDirectory() . DIRECTORY_SEPARATOR . $image->getBasename();
+                    $uploadedURL = $document->getFilePersistencePath();
                 } else {
                     $status = false;
                     $message = 'Invalid File Type';

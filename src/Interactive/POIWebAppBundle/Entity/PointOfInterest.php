@@ -561,4 +561,32 @@ class PointOfInterest
         return $this->img;
     }
     
+    /**
+     * @var string
+     */
+    public $img_path;
+
+
+    /**
+     * Set img_path
+     *
+     * @param string $imgPath
+     * @return PointOfInterest
+     */
+    public function setImgPath($imgPath)
+    {
+        $this->img_path = $imgPath;
+
+        return $this;
+    }
+
+    /**
+     * Get img_path
+     *
+     * @return string 
+     */
+    public function getImgPath()
+    {
+        return $this->img_path;
+    }
 }

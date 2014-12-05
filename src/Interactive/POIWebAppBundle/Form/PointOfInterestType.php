@@ -29,7 +29,7 @@ class PointOfInterestType extends AbstractType
             ->add('category', null, array('required' => true,'label'=>'Categoría *', 'attr' => array('placeholder' => 'Categoría')))
             ->add('route', null, array('required' => true,'label'=>'Ruta *', 'attr' => array('placeholder' => 'Ruta')))
             ->add('near_route_point', null, array('required' => false,'label'=>'Punto de ruta cercano', 'attr' => array('placeholder' => 'Punto Cercano')))
-            ->add('img', 'file', array('label' => 'Imagen *'))    
+            ->add('img', 'file', array('required' => false,'label' => 'Imagen'))    
             ->add('submit', 'submit', array('label' => 'Crear Punto'));
     }
     

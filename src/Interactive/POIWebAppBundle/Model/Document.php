@@ -27,7 +27,7 @@ class Document
     
     static public function getUploadDirectory()
     {
-         return __DIR__.'/../../../../web/uploads';
+         return __DIR__.'/../../../../web';
     }
     public function setSubDirectory($dir)
     {

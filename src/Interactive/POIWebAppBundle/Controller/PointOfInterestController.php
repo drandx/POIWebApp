@@ -4,6 +4,7 @@ namespace Interactive\POIWebAppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Interactive\POIWebAppBundle\Entity\PointOfInterest;
 use Interactive\POIWebAppBundle\Form\PointOfInterestType;
@@ -187,9 +188,16 @@ class PointOfInterestController extends Controller {
         $uploadFileMover = new UploadFileMover();
         
         $res = $uploadFileMover->processImageFile($imgFile);
+        
+        if(!$res['status']){
+            $form->get('img')->addError(new FormError($res['content']));
+        }
+        else{
+            $img_path = $this->getRequest()->getBasePath() . DIRECTORY_SEPARATOR . $res['content'];
+            $entity->setImgPath($img_path);
+        }
 
-
-        if ($form->isValid()) {
+        if ($form->isValid() && ($res['status'] == true)) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -258,7 +266,7 @@ class PointOfInterestController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('POIWebAppBundle:PointOfInterest')->find($id);
 
         if (!$entity) {
