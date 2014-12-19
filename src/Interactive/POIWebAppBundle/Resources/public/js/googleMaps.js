@@ -295,7 +295,7 @@ function restults_markers_v2(data) {
 
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
 //        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>' + '<img border="0" align="Left" src="http://bestiariodelbalon.com/wp-content/uploads/Cafam-127x150.jpg">';
-        var content = '<div>' + '<strong>' + point.category + '</strong>' + '<br>' + validateEmptyString(point.description) + '</br>' + '<br> <img src="'+point.img_path+'" style="height: 150px; width: 150px; margin-bottom: 20px"> </br>' +'</div>';
+        var content = '<div>' + '<strong>' + point.category + '</strong>' + '<br><strong>' + point.name + '</strong></br>' +'<br>' + validateEmptyString(point.description) + '</br>' + '<br> <img src="'+point.img_path+'" style="height: 150px; width: 150px; margin-bottom: 20px"> </br>' +'</div>';
         addMarker(pt, content, point.pincolor);
         
         if((point.rp_latitude != null) && (point.rp_longitude != null))
