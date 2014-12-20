@@ -86,6 +86,7 @@ class PointOfInterestRepository extends EntityRepository {
           ->select('p')
           ->from('POIWebAppBundle:PointOfInterest', 'p')
           ->innerJoin('p.geocity', 'gc')
+          ->innerJoin('p.category', 'pc')      
           ->where('p.description like :p_query')
           ->orWhere('p.name like :p_query')
           ->orWhere('p.phone like :p_query')
@@ -93,7 +94,8 @@ class PointOfInterestRepository extends EntityRepository {
           ->orWhere('p.phone_ext like :p_query')
           ->orWhere('p.fax like :p_query')
           ->orWhere('p.address like :p_query')
-          ->orWhere('gc.name like :p_query') 
+          ->orWhere('gc.name like :p_query')
+          ->orWhere('pc.name like :p_query')      
           ->setParameter('p_query', '%' . $stringQuery . '%')
           ->orderBy('p.geocity', 'ASC')
           ->orderBy('p.name', 'ASC');

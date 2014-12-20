@@ -315,6 +315,15 @@ class RoutePoint implements JsonSerializable
     
      public function __toString()
     {
-        return $this->getName() ? $this->getName() : "";
+        $orDest = "";
+        
+        if($this->isOrigin)
+            $orDest = " - Punto Inicial";
+        else if($this->isDestination)
+            $orDest = " - Punto Final";
+        else
+            $orDest = "";
+        
+        return $this->id . " - " . $this->name . $orDest;
     }
 }
