@@ -147,21 +147,47 @@
                                     <!-- Here starts the php loop-->
                                     <div id="categoriesContainer">
                                         {% for category in categories %}
-                                            <div class="checkbox form-inline">
-                                                <label>
-                                                    <input type="checkbox" value="{{category.id}}">
-                                                    {#<input type="checkbox" value="{{category.id}}" checked>#}
-                                                    {{category.name}}
-                                                </label>
-                                                <a style="background-color:#{{category.pinhexcolor}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</a>
-                                            </div>
-
+                                            {% if category.id != 17 %}
+                                                <div class="checkbox form-inline">
+                                                    <label>
+                                                        <input type="checkbox" value="{{category.id}}">
+                                                        {#<input type="checkbox" value="{{category.id}}" checked>#}
+                                                        {{category.name}}
+                                                    </label>
+                                                    <a style="background-color:#{{category.pinhexcolor}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</a>
+                                                </div>
+                                            {% endif %}
                                         {%endfor%}
                                         <!-- Here ends the php loop-->
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                        Pozos de producción
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse">
+
+                                <div class="panel-body">
+                                    <!--div id="selectAllContainer">
+                                        <div class="checkbox form-inline">
+                                            <label>
+                                                <input type="checkbox" id="selectallPozos">
+                                                Seleccionar todo
+                                            </label>
+                                        </div>
+                                    </div-->
+                                    <div id="pozosProduccionContainer">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -204,16 +230,20 @@
                     document.getElementById('googleAutoComplete').value = "";
                 });
                 $("#categoriesContainer").change(function () {
-                    clear_adjacent_routes();
                     getMarkersbyQuery();
+                });
+                $("#pozosProduccionContainer").change(function () {
+                    clearOverlays(pozosMarkeryLayer);
+                    clear_adjacent_routes();
+                    drawPozosdeProduccion();
                 });
                 $("#routesSelect").change(function () {
                     getMarkersbyQuery();
                     getRoutesbyQuery();
+                    getPozosdeProduccionbyQuery();
                 });
                 $('#selectall').click(function () {
                     $('input:checkbox').prop('checked', this.checked);
-                    clear_adjacent_routes();
                     getMarkersbyQuery();
                 });
             </script>

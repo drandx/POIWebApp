@@ -1,7 +1,9 @@
 //Google Maps Code
 var map;
 var center = null;
-var markersArray = [];
+var categoryMarkeryLayer = [];
+var pozosMarkeryLayer = [];
+
 var waypts = [];
 var currentPopup;
 var bounds = null;
@@ -9,6 +11,7 @@ var Mylat = 4.559997795432589;
 var Mylong = -74.52481269836426;
 var myMarker;
 var myInfowindow;
+var PozosProduccionId = 17;
 
 //Google routes properties
 var destinationPoint;
@@ -18,6 +21,11 @@ var directionsService = new google.maps.DirectionsService();
 
 //Google adjacent routes
 var adjacentDirectionsDisplay = [];
+
+//Pozos de Produccion
+var pozosDeProduccionbyRoute = [];
+
+
 /**
  * 
  * @returns {undefined}
@@ -53,7 +61,7 @@ function addAutocompleteListener(autocomplete, showMarker, myCallBack)
     myInfowindow = infowindow;
 
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        clearOverlays();
+        clearOverlays(categoryMarkeryLayer);
         infowindow.close();
         marker.setVisible(false);
         var place = autocomplete.getPlace();
@@ -130,7 +138,7 @@ function initializeSearchMap(point, setMarker)
 
     //Adds the click event to add markers on the map at any click
     google.maps.event.addListener(map, 'click', function (e) {
-        clearOverlays();
+        clearOverlays(categoryMarkeryLayer);
         placeMarker(e.latLng, map);
         document.getElementById("interactive_poiwebappbundle_pointofinterest_latitude").value = e.latLng.lat();
         document.getElementById("interactive_poiwebappbundle_pointofinterest_longitude").value = e.latLng.lng();
@@ -168,7 +176,7 @@ function initializeSearchMap(point, setMarker)
 function placeMarker(position, map) {
     var marker = new google.maps.Marker({position: position, map: map});
     map.panTo(position);
-    markersArray.push(marker);
+    categoryMarkeryLayer.push(marker);
 }
 
 /*
@@ -202,7 +210,7 @@ function initializePoisMap()
  * @param {type} info
  * @returns {undefined}
  */
-function addMarker(location, info, pinColor) {
+function addMarker(location, info, pinColor, markerLayer) {
     var marker;
 
     if (pinColor !== null)
@@ -228,7 +236,7 @@ function addMarker(location, info, pinColor) {
     });
     //google.maps.event.addListener(popup, "closeclick", function() {map.panTo(center);currentPopup = null;});
 
-    markersArray.push(marker);
+    markerLayer.push(marker);
 }
 
 /*
@@ -236,14 +244,14 @@ function addMarker(location, info, pinColor) {
  * @returns {undefined}
  */
 //Removes the overlays from the map, but keeps them in the array
-function clearOverlays() {
+function clearOverlays(arrayLayer) {
     //Hides the marker added by automcomplete
     myInfowindow.close();
     myMarker.setVisible(false);
-    if (markersArray) {
-        for (i in markersArray) {
+    if (arrayLayer) {
+        for (i in arrayLayer) {
             //marker.infowindow.close();
-            markersArray[i].setMap(null);
+            arrayLayer[i].setMap(null);
         }
     }
 }
@@ -273,14 +281,14 @@ function getMarkersbyQuery()
         url: 'api/pointsQuery',
         contentType: 'application/json',
         success: function (data) {
-            clearOverlays();
+            clearOverlays(categoryMarkeryLayer);
             $('#loader').hide();
             if (data != null){
                 restults_markers_v2(data);
-                near_points_route_calculations();
             }
         }
     });
+
 }
 
 /*
@@ -296,12 +304,7 @@ function restults_markers_v2(data) {
         var pt = new google.maps.LatLng(point.latitude, point.longitude);
 //        var content = '<div><strong>' + point.name + '</strong><br>' + point.address + '</br>' + '<img border="0" align="Left" src="http://bestiariodelbalon.com/wp-content/uploads/Cafam-127x150.jpg">';
         var content = '<div>' + '<strong>' + point.category + '</strong>' + '<br><strong>' + point.name + '</strong></br>' +'<br>' + validateEmptyString(point.description) + '</br>' + '<br> <img src="'+point.img_path+'" style="height: 150px; width: 150px; margin-bottom: 20px"> </br>' +'</div>';
-        addMarker(pt, content, point.pincolor);
-        
-        if((point.rp_latitude != null) && (point.rp_longitude != null))
-        {
-            near_points_route_calculations(point.rp_latitude,point.rp_longitude,point.latitude, point.longitude);
-        }
+        addMarker(pt, content, point.pincolor, categoryMarkeryLayer);
     });
 
 }
@@ -373,6 +376,105 @@ function route_markers(data) {
 
 /**
  * 
+ * @returns {undefined}
+ */
+function getPozosdeProduccionbyQuery()
+{
+    //Creates the query as a json object
+    var selectedRoute = $('#routesSelect').val();
+    
+    //Queryies only for Pozos de Producción.
+    var catValues = [];
+    catValues.push(PozosProduccionId);
+    
+    var Query = new Object();
+    Query.cityQuery = document.getElementById("googleAutoComplete").value;
+    Query.categories = catValues;
+    Query.route = selectedRoute;
+    $('#loader').show();
+    $.ajax({
+        data: JSON.stringify(Query),
+        type: 'POST',
+        dataType: 'json',
+        url: 'api/pointsQuery',
+        contentType: 'application/json',
+        success: function (data) {
+            clear_adjacent_routes();
+            clearOverlays(pozosMarkeryLayer);
+            $('#loader').hide();
+            if (data != null){
+                populatePozosProduccionBox(data);
+            }
+        }
+    });
+}
+
+function populatePozosProduccionBox(data)
+{
+    var container = document.getElementById("pozosProduccionContainer");
+    pozosDeProduccionbyRoute = [];
+    container.innerHTML = '';
+
+    $.each(data, function (i, point) {
+        validateEmptyString(point.phone);
+        pozosDeProduccionbyRoute.push(point);
+
+        var divElement = document.createElement('div');
+        divElement.className = "checkbox form-inline";
+        
+        var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = point.name;
+        checkbox.value = point.id;
+        checkbox.id = point.id;
+
+        var label = document.createElement('label');
+        label.htmlFor = point.id;
+        label.appendChild(document.createTextNode(point.name));
+
+        divElement.appendChild(checkbox);
+        divElement.appendChild(label);
+        
+        container.appendChild(divElement);
+        
+        
+    });
+    
+}
+
+/**
+ * 
+ * 
+ */
+function drawPozosdeProduccion()
+{
+    var pozosValues = [];
+    
+    $('#pozosProduccionContainer :checked').each(function () {
+        pozosValues.push($(this).val());
+    });
+    for (var i = 0; i < pozosValues.length; i++) 
+    {
+        for (var j = 0; j < pozosDeProduccionbyRoute.length; j++) 
+        {
+            var point = pozosDeProduccionbyRoute[j];
+
+            if(point.id == pozosValues[i])
+            {
+                var pt = new google.maps.LatLng(point.latitude, point.longitude);
+                var content = '<div>' + '<strong>' + point.category + '</strong>' + '<br><strong>' + point.name + '</strong></br>' + '<br>' + validateEmptyString(point.description) + '</br>' + '<br> <img src="' + point.img_path + '" style="height: 150px; width: 150px; margin-bottom: 20px"> </br>' + '</div>';
+                addMarker(pt, content, point.pincolor, pozosMarkeryLayer);
+                near_points_route_calculations(point.rp_latitude,point.rp_longitude,point.latitude, point.longitude);
+                
+                break;
+            }
+        }
+    }
+}
+
+
+/**
+ * 
  * 
  */
 function route_calculations() {
@@ -403,8 +505,10 @@ function route_calculations() {
             var totalDuration = 0;            
             // For each route, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
-                var routeSegment = i + 1;
-                summaryPanel.innerHTML += '<b>Segmento : ' + routeSegment + '</b><br>';
+                var segmentInitPoint = String.fromCharCode(97 + i);
+                var segmentEndPoint = String.fromCharCode(97 + (i +1));
+                
+                summaryPanel.innerHTML += '<b>Segmento : ' + segmentInitPoint.toUpperCase() + ' - ' + segmentEndPoint.toUpperCase() + '</b><br>';
                 summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
                 summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
                 summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
@@ -424,15 +528,14 @@ function route_calculations() {
  * 
  */
 function near_points_route_calculations(initLat, initLng, finishLat, finishLng) {
-    var routeIndex = adjacentDirectionsDisplay.length;
+    var directions = new google.maps.DirectionsRenderer();
+    adjacentDirectionsDisplay.push(directions);
+    
+    directions.setMap(map);
     
     //Google routes properties
-    adjacentDirectionsDisplay[routeIndex] = new google.maps.DirectionsRenderer();
-    adjacentDirectionsDisplay[routeIndex].setMap(map);
-    
     var rendererOptions = {suppressMarkers : true, preserveViewport : true, polylineOptions : {strokeColor:"#DEB887",strokeWeight:8}};
-    
-    adjacentDirectionsDisplay[routeIndex].setOptions(rendererOptions);
+    directions.setOptions(rendererOptions);
     
     
     var originPosition = new google.maps.LatLng(initLat, initLng);
@@ -441,15 +544,16 @@ function near_points_route_calculations(initLat, initLng, finishLat, finishLng) 
     var request = {
         origin: originPosition,
         destination: destinationPosition,
-        optimizeWaypoints: false,
+        optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING
     };
 
     directionsService.route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-            adjacentDirectionsDisplay[routeIndex].setDirections(response);
+            directions.setDirections(response);
         }
     });
+   
 }
 
 
