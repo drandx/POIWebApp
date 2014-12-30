@@ -234,7 +234,8 @@
                 });
                 $("#pozosProduccionContainer").change(function () {
                     clearOverlays(pozosMarkeryLayer);
-                    clear_adjacent_routes();
+                    //clear_adjacent_routes();
+                    clearPolyLines();
                     drawPozosdeProduccion();
                 });
                 $("#routesSelect").change(function () {

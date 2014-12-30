@@ -25,6 +25,9 @@ var adjacentDirectionsDisplay = [];
 //Pozos de Produccion
 var pozosDeProduccionbyRoute = [];
 
+//PolyLines
+var polyLinesArray = [];
+
 
 /**
  * 
@@ -399,7 +402,8 @@ function getPozosdeProduccionbyQuery()
         url: 'api/pointsQuery',
         contentType: 'application/json',
         success: function (data) {
-            clear_adjacent_routes();
+            //clear_adjacent_routes();
+            clearPolyLines();
             clearOverlays(pozosMarkeryLayer);
             $('#loader').hide();
             if (data != null){
@@ -409,6 +413,11 @@ function getPozosdeProduccionbyQuery()
     });
 }
 
+/**
+ * 
+ * @param {type} data
+ * @returns {undefined}
+ */
 function populatePozosProduccionBox(data)
 {
     var container = document.getElementById("pozosProduccionContainer");
@@ -464,8 +473,8 @@ function drawPozosdeProduccion()
                 var pt = new google.maps.LatLng(point.latitude, point.longitude);
                 var content = '<div>' + '<strong>' + point.category + '</strong>' + '<br><strong>' + point.name + '</strong></br>' + '<br>' + validateEmptyString(point.description) + '</br>' + '<br> <img src="' + point.img_path + '" style="height: 150px; width: 150px; margin-bottom: 20px"> </br>' + '</div>';
                 addMarker(pt, content, point.pincolor, pozosMarkeryLayer);
-                near_points_route_calculations(point.rp_latitude,point.rp_longitude,point.latitude, point.longitude);
-                
+                //near_points_route_calculations(point.rp_latitude,point.rp_longitude,point.latitude, point.longitude);
+                drawPolyLine(point.rp_latitude,point.rp_longitude,point.latitude, point.longitude);
                 break;
             }
         }
@@ -556,7 +565,10 @@ function near_points_route_calculations(initLat, initLng, finishLat, finishLng) 
    
 }
 
-
+/**
+ * 
+ * @returns {undefined}
+ */
 function clear_adjacent_routes()
 {
     //adjacentDirectionsDisplay = [];
@@ -566,4 +578,56 @@ function clear_adjacent_routes()
         routeDirection.setMap(null);
     }
     adjacentDirectionsDisplay = [];
+}
+
+/**
+ * 
+ * @param {type} initLat
+ * @param {type} initLong
+ * @param {type} endLat
+ * @param {type} endLng
+ * @returns {undefined}
+ */
+function drawPolyLine(initLat, initLong, endLat, endLng) {
+    // Define a symbol using SVG path notation, with an opacity of 1.
+    var lineSymbol = {
+        path: 'M 0,-1 0,1',
+        strokeOpacity: 1,
+        scale: 4
+    };
+
+    var lineCoordinates = [
+        new google.maps.LatLng(initLat, initLong),
+        new google.maps.LatLng(endLat, endLng)
+    ];
+
+    // Create the polyline, passing the symbol in the 'icons' property.
+    // Give the line an opacity of 0.
+    // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
+    var line = new google.maps.Polyline({
+        path: lineCoordinates,
+        geodesic: true,
+        strokeOpacity: 0,
+        icons: [{
+                icon: lineSymbol,
+                offset: '0',
+                repeat: '20px'
+            }]
+    });
+    
+    line.setMap(map);
+    
+    polyLinesArray.push(line);
+}
+
+/**
+ * 
+ * @returns {undefined}
+ */
+function clearPolyLines(){
+    for (i = 0; i < polyLinesArray.length; i++) 
+    { 
+        var polyLine = polyLinesArray[i];
+        polyLine.setMap(null);
+    }
 }
