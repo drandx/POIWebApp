@@ -172,18 +172,11 @@
                                 </h4>
                             </div>
                             <div id="collapseFive" class="panel-collapse collapse">
-
                                 <div class="panel-body">
-                                    <!--div id="selectAllContainer">
-                                        <div class="checkbox form-inline">
-                                            <label>
-                                                <input type="checkbox" id="selectallPozos">
-                                                Seleccionar todo
-                                            </label>
-                                        </div>
-                                    </div-->
                                     <div id="pozosProduccionContainer">
-                                        
+                                        <select id="pozosSelect">
+                                            <option value="-1">Seleccione el Pozo</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +225,13 @@
                 $("#categoriesContainer").change(function () {
                     getMarkersbyQuery();
                 });
-                $("#pozosProduccionContainer").change(function () {
+                /*$("#pozosProduccionContainer").change(function () {
+                    clearOverlays(pozosMarkeryLayer);
+                    //clear_adjacent_routes();
+                    clearPolyLines();
+                    drawPozosdeProduccion();
+                });*/
+                $("#pozosSelect").change(function () {
                     clearOverlays(pozosMarkeryLayer);
                     //clear_adjacent_routes();
                     clearPolyLines();

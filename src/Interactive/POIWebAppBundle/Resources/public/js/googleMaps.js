@@ -407,7 +407,8 @@ function getPozosdeProduccionbyQuery()
             clearOverlays(pozosMarkeryLayer);
             $('#loader').hide();
             if (data != null){
-                populatePozosProduccionBox(data);
+                //populatePozosProduccionCheckBox(data);
+                populatePozosProduccionComboBox(data);
             }
         }
     });
@@ -418,7 +419,7 @@ function getPozosdeProduccionbyQuery()
  * @param {type} data
  * @returns {undefined}
  */
-function populatePozosProduccionBox(data)
+function populatePozosProduccionCheckBox(data)
 {
     var container = document.getElementById("pozosProduccionContainer");
     pozosDeProduccionbyRoute = [];
@@ -450,6 +451,24 @@ function populatePozosProduccionBox(data)
     });
     
 }
+
+/**
+ * 
+ * @param {type} data
+ * @returns {undefined}
+ */
+function populatePozosProduccionComboBox(data)
+{
+    pozosDeProduccionbyRoute = [];
+    $('#pozosSelect').find('option').remove().end().append('<option value="0">Seleccione el Pozo</option>').val('0');
+    var options = $("#pozosSelect");
+    $.each(data, function (i, point) {
+        pozosDeProduccionbyRoute.push(point);
+        options.append($("<option />").val(point.id).text(point.name));
+    });
+    
+}
+
 
 /**
  * 
